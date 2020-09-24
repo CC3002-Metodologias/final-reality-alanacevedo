@@ -1,8 +1,9 @@
-package com.github.cc3002.finalreality.model.character;
+package com.github.alanacevedo.finalreality.model.character;
 
-import com.github.cc3002.finalreality.model.character.player.CharacterClass;
-import com.github.cc3002.finalreality.model.character.player.PlayerCharacter;
-import com.github.cc3002.finalreality.model.weapon.Weapon;
+import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
+import com.github.alanacevedo.finalreality.model.character.player.PlayerCharacter;
+import com.github.alanacevedo.finalreality.model.weapon.Weapon;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -19,9 +20,9 @@ public abstract class AbstractCharacter implements ICharacter {
 
   protected final BlockingQueue<ICharacter> turnsQueue;
   protected final String name;
-  private final CharacterClass characterClass;
-  private Weapon equippedWeapon = null;
-  private ScheduledExecutorService scheduledExecutor;
+  protected final CharacterClass characterClass;
+  protected Weapon equippedWeapon = null;
+  protected ScheduledExecutorService scheduledExecutor;
 
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
       @NotNull String name, CharacterClass characterClass) {
@@ -46,7 +47,7 @@ public abstract class AbstractCharacter implements ICharacter {
   /**
    * Adds this character to the turns queue.
    */
-  private void addToQueue() {
+  protected void addToQueue() {
     turnsQueue.add(this);
     scheduledExecutor.shutdown();
   }
@@ -54,13 +55,6 @@ public abstract class AbstractCharacter implements ICharacter {
   @Override
   public String getName() {
     return name;
-  }
-
-  @Override
-  public void equip(Weapon weapon) {
-    if (this instanceof PlayerCharacter) {
-      this.equippedWeapon = weapon;
-    }
   }
 
   @Override

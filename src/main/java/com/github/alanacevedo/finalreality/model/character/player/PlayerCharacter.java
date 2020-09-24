@@ -1,16 +1,18 @@
-package com.github.cc3002.finalreality.model.character.player;
+package com.github.alanacevedo.finalreality.model.character.player;
 
-import com.github.cc3002.finalreality.model.character.AbstractCharacter;
-import com.github.cc3002.finalreality.model.character.ICharacter;
+import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
+import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+
+import com.github.alanacevedo.finalreality.model.weapon.Weapon;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A class that holds all the information of a single character of the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author M. Alan Acevedo Salazar
  */
 public class PlayerCharacter extends AbstractCharacter {
 
@@ -46,5 +48,11 @@ public class PlayerCharacter extends AbstractCharacter {
     final PlayerCharacter that = (PlayerCharacter) o;
     return getCharacterClass() == that.getCharacterClass()
         && getName().equals(that.getName());
+  }
+  /**
+   * Equips a weapon to the character.
+   */
+  public void equip(Weapon weapon) {
+    this.equippedWeapon = weapon;
   }
 }
