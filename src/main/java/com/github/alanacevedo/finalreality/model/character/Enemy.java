@@ -4,6 +4,8 @@ import com.github.alanacevedo.finalreality.model.character.player.CharacterClass
 
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.TimeUnit;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -15,6 +17,7 @@ import org.jetbrains.annotations.NotNull;
 public class Enemy extends AbstractCharacter {
 
   private final int weight;
+  protected final CharacterClass characterClass =CharacterClass.ENEMY;
 
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
@@ -22,7 +25,7 @@ public class Enemy extends AbstractCharacter {
    */
   public Enemy(@NotNull final String name, final int weight,
       @NotNull final BlockingQueue<ICharacter> turnsQueue) {
-    super(turnsQueue, name, CharacterClass.ENEMY);
+    super(turnsQueue, name);
     this.weight = weight;
   }
 
@@ -43,6 +46,14 @@ public class Enemy extends AbstractCharacter {
     }
     final Enemy enemy = (Enemy) o;
     return getWeight() == enemy.getWeight();
+  }
+
+  @Override
+  public void waitTurn(){
+    super.waitTurn();
+    var enemy = (Enemy) this;
+    scheduledExecutor
+            .schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
   }
 
   @Override
