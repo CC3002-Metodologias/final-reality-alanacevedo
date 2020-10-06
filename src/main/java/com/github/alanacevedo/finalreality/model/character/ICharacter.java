@@ -1,7 +1,6 @@
 package com.github.alanacevedo.finalreality.model.character;
 
-import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
-import com.github.alanacevedo.finalreality.model.weapon.Weapon;
+
 
 /**
  * This represents a character from the game.

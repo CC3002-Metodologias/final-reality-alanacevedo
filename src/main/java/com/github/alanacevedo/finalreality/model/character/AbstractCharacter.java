@@ -1,27 +1,35 @@
 package com.github.alanacevedo.finalreality.model.character;
 
 
-import com.github.alanacevedo.finalreality.model.character.player.PlayerCharacter;
-
-
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
  * An abstract class that holds the common behaviour of all the characters in the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author <M. Alan Acevedo Salazar>
  */
 public abstract class AbstractCharacter implements ICharacter {
 
   protected final BlockingQueue<ICharacter> turnsQueue;
-  protected final String name;
   protected ScheduledExecutorService scheduledExecutor;
+  protected final String name;
+  protected int HP;
+  protected int DEF;
 
+  /**
+   * Initializes a character.
+   *
+   * @param turnsQueue
+   *    the queue with the characters waiting for their turn
+   *
+   * @param name
+   *    Character's name.
+   */
 
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
       @NotNull String name) {

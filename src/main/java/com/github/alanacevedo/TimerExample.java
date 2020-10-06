@@ -2,7 +2,7 @@ package com.github.alanacevedo;
 
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
-import com.github.alanacevedo.finalreality.model.character.player.PlayerCharacter;
+import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
 import com.github.alanacevedo.finalreality.model.weapon.Weapon;
 import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
 
@@ -21,7 +21,7 @@ public class TimerExample {
     for (int i = 0; i < 10; i++) {
       // Gives a random speed to each character to generate different waiting times
       var weapon = new Weapon("", 0, rng.nextInt(50), WeaponType.KNIFE);
-      var character = new PlayerCharacter(Integer.toString(i), queue,
+      var character = new AbsPlayerCharacter(Integer.toString(i), queue,
           CharacterClass.THIEF);
       character.equip(weapon);
       character.waitTurn();
