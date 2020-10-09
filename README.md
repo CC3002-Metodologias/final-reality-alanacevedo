@@ -15,5 +15,21 @@ Broadly speaking for the combat the player has a group of characters to control 
 enemies controlled by the computer.
 
 ---
+Entrega: Tarea 1
+----------------
+Para esta entrega el programa no presenta funcionalidad, solo se construyó la base para el desarrollo del proyecto.
 
-**The rest of the documentation is left for the users of this template to complete**
+Dentro del modelo se encuentran personajes, que pueden diferenciarse
+a gran escala como personajes de la party del guador (PC) y enemigos
+que no son controlados por el jugador (NPC). Los PC pueden ser una de las
+5 clases Knight, Thief, Engineer, Black Mage, y White Mage, siendo estos últimos
+un tipo de "PC Mago", que tiene un atributo adicional relacionado con la magia que se
+implementará en un futuro. 
+
+Los PC pueden equiparse armas que son representadas como un objeto. Las armas se pueden clasificar como
+arcos, espadas, hachas, bastones, y cuchillos. Dependiendo de la clase del PC, estos pueden equiparse sólo
+ciertos tipos de armas.
+
+
+
+
