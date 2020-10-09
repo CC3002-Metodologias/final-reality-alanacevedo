@@ -2,7 +2,7 @@ package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
-import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
+import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
 import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,48 +10,50 @@ import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 
 /**
- * a class that represents a Thief character
+ * a class that represents a White Mage character
  */
 
-public class Thief extends AbsPlayerCharacter {
+public class BlackMage extends AbsMageCharacter {
 
     /**
-     * Initializes an Thief character
+     * Initializes a Black Mage character
      * @param name
      *      name of the character
      * @param turnsQueue
      *      the queue with the characters waiting for their turn
-     * @param HP default: 100
+     * @param HP default: 80
      *     this character's hit points (health points)
-     * @param DEF default: 15
+     * @param DEF default: 10
      *     this character's defense points
+     * @param MP default: 100
+     *      this characters' magic points (mana points)
      */
 
-    public Thief(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
-                  int HP, int DEF) {
-        super(name, turnsQueue,CharacterClass.THIEF, HP, DEF);
-        allowedWeapons = new WeaponType[]{WeaponType.SWORD, WeaponType.BOW, WeaponType.KNIFE};
-
+    public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
+                     int HP, int DEF, int MP){
+        super(name, turnsQueue, CharacterClass.BLACK_MAGE, HP, DEF, MP);
+        allowedWeapons = new WeaponType[] {WeaponType.STAFF, WeaponType.KNIFE};
     }
 
-    public Thief(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue) {
-        this(name, turnsQueue, 100, 15);
+    public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue){
+        this(name, turnsQueue, 80, 10, 100);
     }
-
 
     /**
      * Función utilizada junto a equals.
-     * @return Hashcode
+     * @return
+     *      Hashcode
      */
     @Override
     public int hashCode() {
-        return Objects.hash(getCharacterClass(), getCharacterHP(), getCharacterDEF(), getName());
+        return Objects.hash(getCharacterClass(), getCharacterHP(), getCharacterDEF(),
+                getCharacterMP(), getName());
     }
 
     /**
      *
      * @param o Other Object (Character ideally)
-     * @return
+     *  @return
      *     true if 'o' has the same characteristics as this character.
      */
     @Override
@@ -59,13 +61,14 @@ public class Thief extends AbsPlayerCharacter {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbsPlayerCharacter)) {
+        if (!(o instanceof AbsMageCharacter)) {
             return false;
         }
-        final AbsPlayerCharacter that = (AbsPlayerCharacter) o;
+        final AbsMageCharacter that = (AbsMageCharacter) o;
         return getCharacterClass() == that.getCharacterClass()
                 && getName().equals(that.getName())
                 && getCharacterHP() == that.getCharacterHP()
-                && getCharacterDEF() == that.getCharacterDEF();
+                && getCharacterDEF() == that.getCharacterDEF()
+                && getCharacterMP() == that.getCharacterMP();
     }
 }

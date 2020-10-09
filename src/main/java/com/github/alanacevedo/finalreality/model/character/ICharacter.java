@@ -21,4 +21,14 @@ public interface ICharacter {
    * Returns this character's name.
    */
   String getName();
+
+  /**
+   * Returns character's health points
+   */
+  int getCharacterHP();
+
+  /**
+   * Returns character's defense points
+   */
+  int getCharacterDEF();
 }

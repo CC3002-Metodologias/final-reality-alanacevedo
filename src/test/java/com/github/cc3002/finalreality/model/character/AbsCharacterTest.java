@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
+import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
+import com.github.alanacevedo.finalreality.model.character.player.charClasses.Knight;
 import com.github.alanacevedo.finalreality.model.weapon.Weapon;
 import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
 import java.util.ArrayList;
@@ -17,10 +19,10 @@ import org.junit.jupiter.api.Test;
  * Abstract class containing the common tests for all the types of characters.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author <M. Alan Acevedo Salazar>
  * @see ICharacter
  */
-public abstract class AbstractCharacterTest {
+public abstract class AbsCharacterTest {
 
   protected BlockingQueue<ICharacter> turns;
   protected List<ICharacter> testCharacters;
@@ -29,18 +31,24 @@ public abstract class AbstractCharacterTest {
   /**
    * Checks that the character waits the appropriate amount of time for it's turn.
    */
+
   @Test
   void waitTurnTest() {
+    testCharacters = new ArrayList<>();
+    Knight character = new Knight("Juan", turns, 3, 2);
+    Weapon wpn = new Weapon("espadita", 15, 10, WeaponType.SWORD);
+    character.equip(wpn);
+
+    testCharacters.add(character);
     Assertions.assertTrue(turns.isEmpty());
-    tryToEquip(testCharacters.get(0));
     testCharacters.get(0).waitTurn();
     try {
       // Thread.sleep is not accurate so this values may be changed to adjust the
       // acceptable error margin.
       // We're testing that the character waits approximately 1 second.
-      Thread.sleep(900);
+      Thread.sleep(800);
       Assertions.assertEquals(0, turns.size());
-      Thread.sleep(200);
+      Thread.sleep(500);
       Assertions.assertEquals(1, turns.size());
       Assertions.assertEquals(testCharacters.get(0), turns.peek());
     } catch (InterruptedException e) {
@@ -48,14 +56,12 @@ public abstract class AbstractCharacterTest {
     }
   }
 
-  private void tryToEquip(ICharacter character) {
-    character.equip(testWeapon);
-  }
 
   protected void checkConstruction(final ICharacter expectedCharacter,
       final ICharacter testEqualCharacter,
       final ICharacter sameClassDifferentCharacter,
       final ICharacter differentClassCharacter) {
+    assertEquals(expectedCharacter, expectedCharacter);
     assertEquals(expectedCharacter, testEqualCharacter);
     assertNotEquals(sameClassDifferentCharacter, testEqualCharacter);
     assertNotEquals(testEqualCharacter, differentClassCharacter);

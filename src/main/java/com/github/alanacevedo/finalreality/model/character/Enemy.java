@@ -53,6 +53,29 @@ public class Enemy extends AbstractCharacter {
     return weight;
   }
 
+  /**
+   * Returns the damage of this enemy.
+   */
+  public int getATK(){
+    return ATK;
+  }
+
+  /**
+   * Función utilizada junto a equals.
+   * @return Hashcode
+   */
+  @Override
+  public int hashCode() {
+    return Objects.hash(getWeight(),getName(), getCharacterDEF(), getCharacterHP(),
+            getATK());
+  }
+
+  /**
+   *
+   * @param o Other Object
+   *  @return
+   *     true if 'o' has the same characteristics as this enemy.
+   */
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
@@ -62,7 +85,11 @@ public class Enemy extends AbstractCharacter {
       return false;
     }
     final Enemy enemy = (Enemy) o;
-    return getWeight() == enemy.getWeight();
+    return getWeight() == enemy.getWeight()
+            && getATK() == enemy.getATK()
+            && getCharacterHP() == enemy.getCharacterHP()
+            && getName().equals(enemy.getName())
+            && getCharacterDEF() == enemy.getCharacterDEF();
   }
 
   @Override
@@ -73,8 +100,5 @@ public class Enemy extends AbstractCharacter {
             .schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(getWeight());
-  }
+
 }

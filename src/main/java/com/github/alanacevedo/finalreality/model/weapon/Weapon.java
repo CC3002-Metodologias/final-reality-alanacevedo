@@ -19,6 +19,14 @@ public class Weapon {
    * Creates a weapon with a name, a base damage, speed and it's type.
    *
    * @see WeaponType
+   * @param name
+   *    name of the weapon
+   * @param damage
+   *    damage this weapon deals
+   * @param weight
+   *    weight of the weapon
+   * @param  type
+   *    type of the weapon.
    */
   public Weapon(final String name, final int damage, final int weight,
       final WeaponType type) {
@@ -28,22 +36,44 @@ public class Weapon {
     this.type = type;
   }
 
-  private String getName() {
+  /**
+   * @return
+   *    weapon name
+   */
+  public String getName() {
     return name;
   }
 
-  private int getDamage() {
+  /**
+   * @return
+   *    weapon damage
+   */
+  public int getDamage() {
     return ATK;
   }
 
+  /**
+   * @return
+   *    weapon weight
+   */
   public int getWeight() {
     return weight;
   }
 
-  private WeaponType getType() {
+  /**
+   * @return
+   *    weapon type
+   */
+  public WeaponType getType() {
     return type;
   }
 
+  /**
+   *
+   * @param o Other Object
+   *  @return
+   *     true if 'o' has the same characteristics as this weapon.
+   */
   @Override
   public boolean equals(final Object o) {
     if (this == o) {
@@ -59,6 +89,10 @@ public class Weapon {
         getType() == weapon.getType();
   }
 
+  /**
+   * Función utilizada junto a equals.
+   * @return Hashcode
+   */
   @Override
   public int hashCode() {
     return Objects.hash(getName(), getDamage(), getWeight(), getType());

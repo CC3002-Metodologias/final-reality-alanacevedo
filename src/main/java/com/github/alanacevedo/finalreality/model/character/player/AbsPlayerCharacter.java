@@ -46,30 +46,7 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
     this.DEF = DEF;
   }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(getCharacterClass());
-  }
 
-  @Override
-  public boolean equals(final Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (!(o instanceof AbsPlayerCharacter)) {
-      return false;
-    }
-    final AbsPlayerCharacter that = (AbsPlayerCharacter) o;
-    return getCharacterClass() == that.getCharacterClass()
-        && getName().equals(that.getName());
-  }
-
-  @Override
-  public void waitTurn(){
-    super.waitTurn();
-    scheduledExecutor
-            .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
-  }
   /**
    * Equips this character with a weapon.
    * @param weapon
@@ -96,4 +73,12 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
   public CharacterClass getCharacterClass() {
     return characterClass;
   }
+
+  @Override
+  public void waitTurn(){
+    super.waitTurn();
+    scheduledExecutor
+            .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+  }
+
 }

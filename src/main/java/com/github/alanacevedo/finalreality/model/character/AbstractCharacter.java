@@ -37,10 +37,12 @@ public abstract class AbstractCharacter implements ICharacter {
     this.name = name;
   }
 
-  @Override
-  public void waitTurn() {
-    scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
-  }
+  /**
+   * @param o other Object
+   * @return
+   *    true if this object is equal to 'o'
+   */
+  public abstract boolean equals(Object o);
 
   /**
    * Adds this character to the turns queue.
@@ -48,6 +50,11 @@ public abstract class AbstractCharacter implements ICharacter {
   protected void addToQueue() {
     turnsQueue.add(this);
     scheduledExecutor.shutdown();
+
+  }
+  @Override
+  public void waitTurn() {
+    scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
   }
 
   @Override
@@ -55,5 +62,13 @@ public abstract class AbstractCharacter implements ICharacter {
     return name;
   }
 
+  @Override
+  public int getCharacterHP(){
+    return HP;
+  }
 
+  @Override
+  public int getCharacterDEF(){
+    return DEF;
+  }
 }

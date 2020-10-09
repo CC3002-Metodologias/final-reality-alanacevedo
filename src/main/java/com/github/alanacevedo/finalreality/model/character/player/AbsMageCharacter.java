@@ -32,10 +32,12 @@ public abstract class AbsMageCharacter extends AbsPlayerCharacter {
         this.MP = MP;
     }
 
-    public AbsMageCharacter(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
-                            final CharacterClass characterClass) {
-        this(name, turnsQueue, characterClass, 80, 5, 100);
 
+    /**
+     * @return
+     *     this characters Mana Points (Magic points)
+     */
+    public int getCharacterMP(){
+        return this.MP;
     }
-
 }
