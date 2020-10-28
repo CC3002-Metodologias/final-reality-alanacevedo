@@ -4,14 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
-import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.Knight;
-import com.github.alanacevedo.finalreality.model.weapon.Weapon;
-import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
+import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import com.github.alanacevedo.finalreality.model.weapon.Knife;
+import com.github.alanacevedo.finalreality.model.weapon.Sword;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -26,17 +28,18 @@ public abstract class AbsCharacterTest {
 
   protected BlockingQueue<ICharacter> turns;
   protected List<ICharacter> testCharacters;
-  protected Weapon testWeapon;
+  protected AbstractWeapon testWeapon;
 
   /**
    * Checks that the character waits the appropriate amount of time for it's turn.
    */
 
+
   @Test
   void waitTurnTest() {
     testCharacters = new ArrayList<>();
     Knight character = new Knight("Juan", turns, 3, 2);
-    Weapon wpn = new Weapon("espadita", 15, 10, WeaponType.SWORD);
+    AbstractWeapon wpn = new Sword("espadita", 15, 10);
     character.equip(wpn);
 
     testCharacters.add(character);
@@ -55,6 +58,7 @@ public abstract class AbsCharacterTest {
       e.printStackTrace();
     }
   }
+  
 
 
   protected void checkConstruction(final ICharacter expectedCharacter,
@@ -70,7 +74,7 @@ public abstract class AbsCharacterTest {
 
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
-    testWeapon = new Weapon("Test", 15, 10, WeaponType.AXE);
+    testWeapon = new Knife("Test", 15, 10);
     testCharacters = new ArrayList<>();
   }
 }

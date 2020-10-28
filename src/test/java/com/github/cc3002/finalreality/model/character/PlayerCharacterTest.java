@@ -9,10 +9,13 @@ import com.github.alanacevedo.finalreality.model.character.Enemy;
 import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
+import com.github.alanacevedo.finalreality.model.weapon.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,7 +32,7 @@ class PlayerCharacterTest extends AbsCharacterTest {
   private static final String WHITE_MAGE_NAME = "Eiko";
   private static final String ENGINEER_NAME = "Cid";
   private static final String THIEF_NAME = "Zidane";
-  private static final String ENEMY_NAME = "Skeleton";
+
   int testHP = 100;
   int testDEF = 50;
   int testMP = 80;
@@ -39,23 +42,32 @@ class PlayerCharacterTest extends AbsCharacterTest {
   private Map <CharacterClass, AbstractCharacter> characters;
   private Map <CharacterClass, AbstractCharacter> charactersCopy;
   private Map <CharacterClass, AbstractCharacter> charactersDiff;
+  BlackMage testBlackMage;
+  Knight testKnight;
+  Thief testThief;
+  Engineer testEngineer;
+  WhiteMage testWhiteMage;
 
 
   /**
    * Setup method.
-   * Creates a new character named Vivi with 10 speed and links it to a turn queue.
    */
   @BeforeEach
   void setUp() {
     super.basicSetUp();
 
+    BlackMage testBlackMage = new BlackMage(BLACK_MAGE_NAME, turns, testHP, testDEF, testMP);
+    Knight testKnight = new Knight(KNIGHT_NAME, turns, testHP, testDEF);
+    Thief testThief = new Thief(THIEF_NAME, turns, testHP, testDEF);
+    Engineer testEngineer = new Engineer(ENGINEER_NAME, turns, testHP, testDEF);
+    WhiteMage testWhiteMage = new WhiteMage(WHITE_MAGE_NAME, turns, testHP, testDEF, testMP);
+
     characters = new EnumMap<>(CharacterClass.class);
-    characters.put(CharacterClass.BLACK_MAGE, new BlackMage(BLACK_MAGE_NAME, turns, testHP, testDEF, testMP));
-    characters.put(CharacterClass.KNIGHT, new Knight(KNIGHT_NAME, turns, testHP, testDEF));
-    characters.put(CharacterClass.THIEF, new Thief(THIEF_NAME, turns, testHP, testDEF));
-    characters.put(CharacterClass.ENGINEER, new Engineer(ENGINEER_NAME, turns, testHP, testDEF));
-    characters.put(CharacterClass.WHITE_MAGE,new WhiteMage(WHITE_MAGE_NAME, turns, testHP, testDEF, testMP));
-    characters.put(CharacterClass.ENEMY, new Enemy(ENEMY_NAME, testWeight, turns, testHP, testDEF, testATK ));
+    characters.put(CharacterClass.BLACK_MAGE, testBlackMage);
+    characters.put(CharacterClass.KNIGHT, testKnight);
+    characters.put(CharacterClass.THIEF, testThief);
+    characters.put(CharacterClass.ENGINEER, testEngineer);
+    characters.put(CharacterClass.WHITE_MAGE, testWhiteMage);
 
     charactersCopy = new EnumMap<>(CharacterClass.class);
     charactersCopy.put(CharacterClass.BLACK_MAGE, new BlackMage(BLACK_MAGE_NAME, turns, testHP, testDEF, testMP));
@@ -63,7 +75,6 @@ class PlayerCharacterTest extends AbsCharacterTest {
     charactersCopy.put(CharacterClass.THIEF, new Thief(THIEF_NAME, turns, testHP, testDEF));
     charactersCopy.put(CharacterClass.ENGINEER, new Engineer(ENGINEER_NAME, turns, testHP, testDEF));
     charactersCopy.put(CharacterClass.WHITE_MAGE,new WhiteMage(WHITE_MAGE_NAME, turns, testHP, testDEF, testMP));
-    charactersCopy.put(CharacterClass.ENEMY, new Enemy(ENEMY_NAME, testWeight, turns, testHP, testDEF, testATK ));
 
 
     charactersDiff = new EnumMap<>(CharacterClass.class);
@@ -72,7 +83,6 @@ class PlayerCharacterTest extends AbsCharacterTest {
     charactersDiff.put(CharacterClass.THIEF, new Thief("Charlie", turns));
     charactersDiff.put(CharacterClass.ENGINEER, new Engineer("Charlie", turns));
     charactersDiff.put(CharacterClass.WHITE_MAGE,new WhiteMage("Charlie", turns));
-    charactersDiff.put(CharacterClass.ENEMY, new Enemy("Jorgito", 3, turns, 1, 5, 6 ));
 
   }
 
@@ -96,19 +106,6 @@ class PlayerCharacterTest extends AbsCharacterTest {
     }
   }
 
-
-  @Test
-  void equipWeaponTest() {
-    for (var charClass : CharacterClass.values()) {
-      if (charClass != CharacterClass.ENEMY){
-        var character = (AbsPlayerCharacter) characters.get(charClass);
-        assertNull(character.getEquippedWeapon());
-        character.equip(testWeapon);
-        assertEquals(testWeapon, character.getEquippedWeapon());
-        assertNotEquals(testWeapon, character);
-      }
-    }
-  }
 
   @Test
   void whiteMageTest(){
@@ -173,4 +170,105 @@ class PlayerCharacterTest extends AbsCharacterTest {
     assertNotEquals(expectedChar, difDEF);
     assertNotEquals(expectedChar, difCLASS);
   }
+
+
+  // Test equipar armas
+  @Test
+  void equipWeaponTest() {
+    BlackMage testBlackMage = new BlackMage(BLACK_MAGE_NAME, turns, testHP, testDEF, testMP);
+    Knight testKnight = new Knight(KNIGHT_NAME, turns, testHP, testDEF);
+    Thief testThief = new Thief(THIEF_NAME, turns, testHP, testDEF);
+    Engineer testEngineer = new Engineer(ENGINEER_NAME, turns, testHP, testDEF);
+    WhiteMage testWhiteMage = new WhiteMage(WHITE_MAGE_NAME, turns, testHP, testDEF, testMP);
+
+    Axe testAxe = new Axe("Hacha", testATK, testWeight);
+    Sword testSword = new Sword("Espada", testATK, testWeight);
+    Knife testKnife = new Knife("Cuchillo", testATK, testWeight);
+    Bow testBow = new Bow("Arco", testATK, testWeight);
+    Staff testStaff = new Staff("Bastón", testATK, testWeight, 10);
+
+    // Test equipar armas a Knight. Debería sólo poder equipar Sword, Axe, Knife.
+
+    // En un comienzo no debería tener un arma equipada
+    assertNull(testKnight.getEquippedWeapon());
+    testKnight.equip(testAxe);
+    assertEquals(testKnight.getEquippedWeapon(), testAxe);
+    testKnight.equip(testSword);
+    assertEquals(testKnight.getEquippedWeapon(), testSword);
+    testKnight.equip(testKnife);
+    assertEquals(testKnight.getEquippedWeapon(), testKnife);
+    testKnight.equip(testBow);
+    assertEquals(testKnight.getEquippedWeapon(), testKnife);
+    assertNotEquals(testKnight.getEquippedWeapon(), testBow);
+    testKnight.equip(testStaff);
+    assertEquals(testKnight.getEquippedWeapon(), testKnife);
+    assertNotEquals(testKnight.getEquippedWeapon(), testStaff);
+
+    // Test equipar armas a Engineer. Debería sólo poder equipar Axe, Bow.
+
+    assertNull(testEngineer.getEquippedWeapon());
+    testEngineer.equip(testAxe);
+    assertEquals(testEngineer.getEquippedWeapon(), testAxe);
+    testEngineer.equip(testSword);
+    assertNotEquals(testEngineer.getEquippedWeapon(), testSword);
+    assertEquals(testEngineer.getEquippedWeapon(), testAxe);
+    testEngineer.equip(testKnife);
+    assertNotEquals(testEngineer.getEquippedWeapon(), testKnife);
+    assertEquals(testEngineer.getEquippedWeapon(), testAxe);
+    testEngineer.equip(testBow);
+    assertEquals(testEngineer.getEquippedWeapon(), testBow);
+    testEngineer.equip(testStaff);
+    assertNotEquals(testEngineer.getEquippedWeapon(), testStaff);
+    assertEquals(testEngineer.getEquippedWeapon(), testBow);
+
+    // Test equipar armas a Thief. Debería sólo poder equipar Sword, Knife, Bow.
+
+    assertNull(testThief.getEquippedWeapon());
+    testThief.equip(testAxe);
+    assertNull(testThief.getEquippedWeapon());
+    assertNotEquals(testThief.getEquippedWeapon(), testAxe);
+    testThief.equip(testSword);
+    assertEquals(testThief.getEquippedWeapon(), testSword);
+    testThief.equip(testKnife);
+    assertEquals(testThief.getEquippedWeapon(), testKnife);
+    assertNotEquals(testThief.getEquippedWeapon(), testSword);
+    testThief.equip(testBow);
+    assertEquals(testThief.getEquippedWeapon(), testBow);
+    assertNotEquals(testThief.getEquippedWeapon(), testKnife);
+    testThief.equip(testStaff);
+    assertEquals(testThief.getEquippedWeapon(), testBow);
+    assertNotEquals(testThief.getEquippedWeapon(), testStaff);
+
+    // Test equipar armas a BlackMage. Debería poder equipar Knife, Staff.
+
+    assertNull(testBlackMage.getEquippedWeapon());
+    testBlackMage.equip(testAxe);
+    assertNull(testBlackMage.getEquippedWeapon());
+    testBlackMage.equip(testSword);
+    assertNull(testBlackMage.getEquippedWeapon());
+    testBlackMage.equip(testKnife);
+    assertEquals(testBlackMage.getEquippedWeapon(), testKnife);
+    testBlackMage.equip(testBow);
+    assertNotEquals(testBlackMage.getEquippedWeapon(), testBow);
+    assertEquals(testBlackMage.getEquippedWeapon(), testKnife);
+    testBlackMage.equip(testStaff);
+    assertNotEquals(testBlackMage.getEquippedWeapon(), testKnife);
+    assertEquals(testBlackMage.getEquippedWeapon(), testStaff);
+
+    // Test equipar armas a WhiteMage. Debería poder equipar Staff.
+
+    assertNull(testWhiteMage.getEquippedWeapon());
+    testWhiteMage.equip(testAxe);
+    assertNull(testWhiteMage.getEquippedWeapon());
+    testWhiteMage.equip(testSword);
+    assertNull(testWhiteMage.getEquippedWeapon());
+    testWhiteMage.equip(testKnife);
+    assertNull(testWhiteMage.getEquippedWeapon());
+    testWhiteMage.equip(testBow);
+    assertNull(testWhiteMage.getEquippedWeapon());
+    testWhiteMage.equip(testStaff);
+    assertEquals(testWhiteMage.getEquippedWeapon(), testStaff);
+
+  }
+
 }

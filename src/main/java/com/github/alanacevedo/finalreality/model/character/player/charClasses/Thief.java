@@ -3,7 +3,10 @@ package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
-import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
+import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
+import com.github.alanacevedo.finalreality.model.weapon.Bow;
+import com.github.alanacevedo.finalreality.model.weapon.Knife;
+import com.github.alanacevedo.finalreality.model.weapon.Sword;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -30,7 +33,6 @@ public class Thief extends AbsPlayerCharacter {
     public Thief(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                   int HP, int DEF) {
         super(name, turnsQueue,CharacterClass.THIEF, HP, DEF);
-        allowedWeapons = new WeaponType[]{WeaponType.SWORD, WeaponType.BOW, WeaponType.KNIFE};
 
     }
 
@@ -67,5 +69,12 @@ public class Thief extends AbsPlayerCharacter {
                 && getName().equals(that.getName())
                 && getCharacterHP() == that.getCharacterHP()
                 && getCharacterDEF() == that.getCharacterDEF();
+    }
+
+    // Equipamiento de armas
+
+    @Override
+    public void equip(AbstractWeapon weapon) {
+        weapon.equipToThief(this);
     }
 }

@@ -4,15 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.alanacevedo.finalreality.model.character.Enemy;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
-import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
-import com.github.alanacevedo.finalreality.model.character.player.charClasses.Knight;
-import com.github.alanacevedo.finalreality.model.weapon.Weapon;
-import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
-import org.junit.jupiter.api.Assertions;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

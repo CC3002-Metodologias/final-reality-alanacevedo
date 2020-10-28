@@ -3,7 +3,9 @@ package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
-import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
+import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
+import com.github.alanacevedo.finalreality.model.weapon.Knife;
+import com.github.alanacevedo.finalreality.model.weapon.Staff;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -32,7 +34,6 @@ public class BlackMage extends AbsMageCharacter {
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                      int HP, int DEF, int MP){
         super(name, turnsQueue, CharacterClass.BLACK_MAGE, HP, DEF, MP);
-        allowedWeapons = new WeaponType[] {WeaponType.STAFF, WeaponType.KNIFE};
     }
 
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue){
@@ -70,5 +71,12 @@ public class BlackMage extends AbsMageCharacter {
                 && getCharacterHP() == that.getCharacterHP()
                 && getCharacterDEF() == that.getCharacterDEF()
                 && getCharacterMP() == that.getCharacterMP();
+    }
+
+    // Equipamiento de armas
+
+    @Override
+    public void equip(AbstractWeapon weapon) {
+        weapon.equipToBlackMage(this);
     }
 }

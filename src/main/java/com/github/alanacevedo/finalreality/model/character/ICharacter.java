@@ -1,6 +1,7 @@
 package com.github.alanacevedo.finalreality.model.character;
 
 
+import com.github.alanacevedo.finalreality.model.weapon.*;
 
 /**
  * This represents a character from the game.
@@ -31,4 +32,6 @@ public interface ICharacter {
    * Returns character's defense points
    */
   int getCharacterDEF();
+
+
 }

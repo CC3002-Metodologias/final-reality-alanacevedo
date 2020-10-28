@@ -3,7 +3,10 @@ package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
-import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
+import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
+import com.github.alanacevedo.finalreality.model.weapon.Axe;
+import com.github.alanacevedo.finalreality.model.weapon.Knife;
+import com.github.alanacevedo.finalreality.model.weapon.Sword;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -15,20 +18,18 @@ import java.util.concurrent.BlockingQueue;
 public class Knight extends AbsPlayerCharacter {
     /**
      * Initializes a Knight character
-     * @param name
-     *      name of the character
-     * @param turnsQueue
-     *      the queue with the characters waiting for their turn
-     * @param HP default: 200
-     *     this character's hit points (health points)
-     * @param DEF default: 20
-     *     this character's defense points
+     *
+     * @param name       name of the character
+     * @param turnsQueue the queue with the characters waiting for their turn
+     * @param HP         default: 200
+     *                   this character's hit points (health points)
+     * @param DEF        default: 20
+     *                   this character's defense points
      */
 
     public Knight(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                   int HP, int DEF) {
-        super(name, turnsQueue,CharacterClass.KNIGHT, HP, DEF);
-        allowedWeapons = new WeaponType[]{WeaponType.SWORD, WeaponType.AXE, WeaponType.KNIFE};
+        super(name, turnsQueue, CharacterClass.KNIGHT, HP, DEF);
 
     }
 
@@ -39,6 +40,7 @@ public class Knight extends AbsPlayerCharacter {
 
     /**
      * Función utilizada junto a equals.
+     *
      * @return Hashcode
      */
     @Override
@@ -47,10 +49,8 @@ public class Knight extends AbsPlayerCharacter {
     }
 
     /**
-     *
      * @param o Other Object (Character ideally)
-     *  @return
-     *     true if 'o' has the same characteristics as this character.
+     * @return true if 'o' has the same characteristics as this character.
      */
     @Override
     public boolean equals(final Object o) {
@@ -65,5 +65,10 @@ public class Knight extends AbsPlayerCharacter {
                 && getName().equals(that.getName())
                 && getCharacterHP() == that.getCharacterHP()
                 && getCharacterDEF() == that.getCharacterDEF();
+    }
+
+    @Override
+    public void equip(AbstractWeapon weapon) {
+        weapon.equipToKnight(this);
     }
 }

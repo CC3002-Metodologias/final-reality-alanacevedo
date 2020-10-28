@@ -7,5 +7,5 @@ package com.github.alanacevedo.finalreality.model.character.player;
  * @author M. Alan Acevedo Salazar
  */
 public enum CharacterClass {
-  KNIGHT, ENGINEER, THIEF, BLACK_MAGE, WHITE_MAGE, ENEMY
+  KNIGHT, ENGINEER, THIEF, BLACK_MAGE, WHITE_MAGE
 }

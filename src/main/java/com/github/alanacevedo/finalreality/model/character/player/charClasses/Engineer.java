@@ -1,10 +1,11 @@
 package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
-import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
 import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
-import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
+import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
+import com.github.alanacevedo.finalreality.model.weapon.Axe;
+import com.github.alanacevedo.finalreality.model.weapon.Bow;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -30,7 +31,6 @@ public class Engineer extends AbsPlayerCharacter {
     public Engineer(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                   int HP, int DEF) {
         super(name, turnsQueue,CharacterClass.ENGINEER, HP, DEF);
-        allowedWeapons = new WeaponType[]{WeaponType.BOW, WeaponType.AXE};
     }
 
     public Engineer(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue) {
@@ -66,5 +66,13 @@ public class Engineer extends AbsPlayerCharacter {
                 && getName().equals(that.getName())
                 && getCharacterHP() == that.getCharacterHP()
                 && getCharacterDEF() == that.getCharacterDEF();
+    }
+
+    // Equipamiento de armas
+
+
+    @Override
+    public void equip(AbstractWeapon weapon) {
+        weapon.equipToEngineer(this);
     }
 }

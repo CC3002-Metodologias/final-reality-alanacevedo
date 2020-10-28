@@ -3,12 +3,12 @@ package com.github.alanacevedo.finalreality.model.character.player;
 import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
-import java.util.Objects;
+
+import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
-import com.github.alanacevedo.finalreality.model.weapon.Weapon;
-import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
+import com.github.alanacevedo.finalreality.model.weapon.*;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -19,9 +19,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class AbsPlayerCharacter extends AbstractCharacter implements IPlayableCharacter {
 
-  protected Weapon equippedWeapon = null;
+  protected AbstractWeapon equippedWeapon = null;
   protected final CharacterClass characterClass;
-  protected WeaponType[] allowedWeapons;
 
   /**
    * Creates a new abstract party character.
@@ -47,21 +46,13 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
   }
 
 
-  /**
-   * Equips this character with a weapon.
-   * @param weapon
-   *      The weapon that is equipped.
-   */
-  public void equip(Weapon weapon) {
-    this.equippedWeapon = weapon;
-  }
 
   /**
    * Gets this character equipped weapon.
    * @return
    *      Returns this character's equipped Weapon object.
    */
-  public Weapon getEquippedWeapon() {
+  public AbstractWeapon getEquippedWeapon() {
     return equippedWeapon;
   }
 
@@ -81,4 +72,11 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
             .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
   }
 
+  public void setEquippedWeapon(AbstractWeapon weapon) {
+    this.equippedWeapon = weapon;
+  }
+
+  /* Por defecto los personajes no podrán equipar ningún tipo de arma.
+  Si puede equipar un tipo de arma se hará override al método correspondiente.
+   */
 }
