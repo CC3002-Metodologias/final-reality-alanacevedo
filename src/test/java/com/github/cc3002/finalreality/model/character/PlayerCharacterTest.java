@@ -27,17 +27,7 @@ import org.junit.jupiter.api.Test;
  * @see AbsPlayerCharacter
  */
 class PlayerCharacterTest extends AbsCharacterTest {
-  private static final String BLACK_MAGE_NAME = "Vivi";
-  private static final String KNIGHT_NAME = "Adelbert";
-  private static final String WHITE_MAGE_NAME = "Eiko";
-  private static final String ENGINEER_NAME = "Cid";
-  private static final String THIEF_NAME = "Zidane";
 
-  int testHP = 100;
-  int testDEF = 50;
-  int testMP = 80;
-  int testWeight = 5;
-  int testATK = 20;
 
   private Map <CharacterClass, AbstractCharacter> characters;
   private Map <CharacterClass, AbstractCharacter> charactersCopy;

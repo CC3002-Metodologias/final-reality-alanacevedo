@@ -99,5 +99,9 @@ public class Enemy extends AbstractCharacter {
             .schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
   }
 
+  @Override
+  public void attack(AbstractCharacter character) {
+    character.attackedByEnemy(this);
+  }
 
 }

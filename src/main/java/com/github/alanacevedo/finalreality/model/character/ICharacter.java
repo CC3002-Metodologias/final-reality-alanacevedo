@@ -1,6 +1,7 @@
 package com.github.alanacevedo.finalreality.model.character;
 
 
+import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
 import com.github.alanacevedo.finalreality.model.weapon.*;
 
 /**
@@ -32,6 +33,31 @@ public interface ICharacter {
    * Returns character's defense points
    */
   int getCharacterDEF();
+
+
+  /**
+   * Intenta atacar a un enemigo (no tiene efecto si el objetivo está muerto).
+   * @param character personaje a atacar.
+   */
+  void attack(AbstractCharacter character);
+
+  /**
+   * Actualiza los valores de vida de este personaje al ser atacado por un PC.
+   * @param playerCharacter quien atacó a este personaje.
+   */
+  void attackedByPlayableCharacter(AbsPlayerCharacter playerCharacter);
+
+  /**
+   * Actualiza los valores de vida de este personaje al ser atacado por un Enemy
+   * @param enemy quien atacó a este personaje.
+   */
+  void attackedByEnemy(Enemy enemy);
+
+  /**
+   * Retorna un bool que representa si este personaje está vivo o muerto.
+   * @return true si el personaje esta vivo.
+   */
+  boolean isAlive();
 
 
 }

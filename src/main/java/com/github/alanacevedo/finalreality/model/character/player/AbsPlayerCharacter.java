@@ -76,7 +76,9 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
     this.equippedWeapon = weapon;
   }
 
-  /* Por defecto los personajes no podrán equipar ningún tipo de arma.
-  Si puede equipar un tipo de arma se hará override al método correspondiente.
-   */
+  @Override
+  public void attack(AbstractCharacter character) {
+    character.attackedByPlayableCharacter(this);
+  }
+
 }
