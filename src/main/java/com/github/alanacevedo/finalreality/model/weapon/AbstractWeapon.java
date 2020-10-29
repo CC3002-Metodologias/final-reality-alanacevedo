@@ -1,5 +1,9 @@
 package com.github.alanacevedo.finalreality.model.weapon;
 
+import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
+import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
+import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
+
 import java.util.Objects;
 
 /**
@@ -8,32 +12,25 @@ import java.util.Objects;
  * @author Ignacio Slater Muñoz.
  * @author <M. Alan Acevedo Salazar>
  */
-public class Weapon {
+public abstract class AbstractWeapon implements IWeapon {
 
   private final String name;
   private final int ATK;
   private final int weight;
-  private final WeaponType type;
 
   /**
    * Creates a weapon with a name, a base damage, speed and it's type.
-   *
-   * @see WeaponType
    * @param name
    *    name of the weapon
    * @param damage
    *    damage this weapon deals
    * @param weight
    *    weight of the weapon
-   * @param  type
-   *    type of the weapon.
-   */
-  public Weapon(final String name, final int damage, final int weight,
-      final WeaponType type) {
+   **/
+  public AbstractWeapon(final String name, final int damage, final int weight) {
     this.name = name;
     this.ATK = damage;
     this.weight = weight;
-    this.type = type;
   }
 
   /**
@@ -61,14 +58,6 @@ public class Weapon {
   }
 
   /**
-   * @return
-   *    weapon type
-   */
-  public WeaponType getType() {
-    return type;
-  }
-
-  /**
    *
    * @param o Other Object
    *  @return
@@ -79,14 +68,13 @@ public class Weapon {
     if (this == o) {
       return true;
     }
-    if (!(o instanceof Weapon)) {
+    if (!(o instanceof AbstractWeapon)) {
       return false;
     }
-    final Weapon weapon = (Weapon) o;
+    final AbstractWeapon weapon = (AbstractWeapon) o;
     return getDamage() == weapon.getDamage() &&
         getWeight() == weapon.getWeight() &&
-        getName().equals(weapon.getName()) &&
-        getType() == weapon.getType();
+        getName().equals(weapon.getName());
   }
 
   /**
@@ -95,6 +83,38 @@ public class Weapon {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(getName(), getDamage(), getWeight(), getType());
+    return Objects.hash(getName(), getDamage(), getWeight());
+  }
+
+  // Por defecto las armas no se puede equipar para ninguna clase.
+  // En caso de que si se pueda, se hará override al método correspondiente.
+
+  @Override
+  public void equipToBlackMage(BlackMage blackMage) {
+    ;
+  }
+
+  @Override
+  public void equipToEngineer(Engineer engineer) {
+    ;
+  }
+
+  @Override
+  public void equipToKnight(Knight knight) {
+    ;
+  }
+
+  @Override
+  public void equipToThief(Thief thief) {
+    ;
+  }
+
+  @Override
+  public void equipToWhiteMage(WhiteMage whiteMage) {
+    ;
+  }
+  @Override
+  public int getMagicDamage(){
+    return 0;
   }
 }

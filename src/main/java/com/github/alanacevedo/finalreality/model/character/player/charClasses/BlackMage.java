@@ -1,9 +1,9 @@
 package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 
+import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
-import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
-import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
+import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -31,44 +31,68 @@ public class BlackMage extends AbsMageCharacter {
 
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                      int HP, int DEF, int MP){
-        super(name, turnsQueue, CharacterClass.BLACK_MAGE, HP, DEF, MP);
-        allowedWeapons = new WeaponType[] {WeaponType.STAFF, WeaponType.KNIFE};
+        super(name, turnsQueue, HP, DEF, MP);
     }
 
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue){
         this(name, turnsQueue, 80, 10, 100);
     }
 
-    /**
-     * Función utilizada junto a equals.
-     * @return
-     *      Hashcode
-     */
+
     @Override
     public int hashCode() {
-        return Objects.hash(getCharacterClass(), getCharacterHP(), getCharacterDEF(),
-                getCharacterMP(), getName());
+        return Objects.hash(getHP(), getDEF(),
+                getMP(), getName());
     }
 
-    /**
-     *
-     * @param o Other Object (Character ideally)
-     *  @return
-     *     true if 'o' has the same characteristics as this character.
-     */
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbsMageCharacter)) {
+        if (!(o instanceof BlackMage)) {
             return false;
         }
         final AbsMageCharacter that = (AbsMageCharacter) o;
-        return getCharacterClass() == that.getCharacterClass()
-                && getName().equals(that.getName())
-                && getCharacterHP() == that.getCharacterHP()
-                && getCharacterDEF() == that.getCharacterDEF()
-                && getCharacterMP() == that.getCharacterMP();
+        return getName().equals(that.getName())
+                && getHP() == that.getHP()
+                && getDEF() == that.getDEF()
+                && getMP() == that.getMP();
+    }
+
+    // Equipamiento de armas
+
+    @Override
+    public void equip(AbstractWeapon weapon) {
+        weapon.equipToBlackMage(this);
+    }
+
+    /**
+     * Casts Thunder into a character
+     * @param character character affected by the spell
+     */
+    public void castThunder(AbstractCharacter character) {
+        int mpCost = 15;
+        if (aliveStatus && character.isAlive() && this.equippedWeapon != null && this.getMP() >= mpCost){
+            int magicDamage = this.equippedWeapon.getMagicDamage();
+            character.receiveDamage(magicDamage);
+            this.spendMP(mpCost);
+            //30% chance thunder
+        }
+    }
+
+    /**
+     * Casts Fire into a character
+     * @param character character affected by the spell
+     */
+    public void castFire(AbstractCharacter character) {
+        int mpCost = 15;
+        if (aliveStatus && character.isAlive() && this.equippedWeapon != null && this.getMP() >= mpCost){
+            int magicDamage = this.equippedWeapon.getMagicDamage();
+            character.receiveDamage(magicDamage);
+            this.spendMP(mpCost);
+            //20% chance burn
+        }
     }
 }

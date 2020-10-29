@@ -1,9 +1,9 @@
 package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 
+import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
-import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
-import com.github.alanacevedo.finalreality.model.weapon.WeaponType;
+import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -31,41 +31,55 @@ public class WhiteMage extends AbsMageCharacter {
 
     public WhiteMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                      int HP, int DEF, int MP) {
-        super(name, turnsQueue, CharacterClass.WHITE_MAGE, HP, DEF, MP);
-        allowedWeapons = new WeaponType[]{WeaponType.STAFF};
+        super(name, turnsQueue, HP, DEF, MP);
     }
 
     public WhiteMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue) {
         this(name, turnsQueue, 80, 10, 100);
     }
 
-    /**
-     * Función utilizada junto a equals.
-     * @return Hashcode
-     */
+
     @Override
     public int hashCode() {
-        return Objects.hash(getCharacterClass(), getCharacterHP(), getCharacterDEF(),
-                getCharacterMP(), getName());
+        return Objects.hash(getHP(), getDEF(),
+                getMP(), getName());
     }
 
-    /**
-     * @param o Other Object (Character ideally)
-     * @return true if 'o' has the same characteristics as this character.
-     */
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbsMageCharacter)) {
+        if (!(o instanceof WhiteMage)) {
             return false;
         }
         final AbsMageCharacter that = (AbsMageCharacter) o;
-        return getCharacterClass() == that.getCharacterClass()
-                && getName().equals(that.getName())
-                && getCharacterHP() == that.getCharacterHP()
-                && getCharacterDEF() == that.getCharacterDEF()
-                && getCharacterMP() == that.getCharacterMP();
+        return  getName().equals(that.getName())
+                && getHP() == that.getHP()
+                && getDEF() == that.getDEF()
+                && getMP() == that.getMP();
     }
+
+    // Equipamiento de armas
+
+
+    @Override
+    public void equip(AbstractWeapon weapon) {
+        weapon.equipToWhiteMage(this);
+    }
+
+    public void castCure(AbstractCharacter character) {
+        int mpCost = 15;
+
+        if (character.isAlive() && this.isAlive() && this.getMP() >= mpCost) {
+            int healAmmount = (int) (character.getMaxHP() * 0.3);
+            character.heal(healAmmount);
+            this.spendMP(mpCost);
+        }
+    }
+
+    // public void castPoison(AbstractCharacter character) { }
+
+    // public void castParalisis(AbstractCharacter character= { }
 }

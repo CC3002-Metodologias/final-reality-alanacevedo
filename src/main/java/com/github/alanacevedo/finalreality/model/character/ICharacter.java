@@ -1,6 +1,8 @@
 package com.github.alanacevedo.finalreality.model.character;
 
 
+import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
+import com.github.alanacevedo.finalreality.model.weapon.*;
 
 /**
  * This represents a character from the game.
@@ -23,12 +25,68 @@ public interface ICharacter {
   String getName();
 
   /**
-   * Returns character's health points
+   * Returns character's health points.
    */
-  int getCharacterHP();
+  int getHP();
 
   /**
-   * Returns character's defense points
+   *
+   * Returns character's max health points.
    */
-  int getCharacterDEF();
+  int getMaxHP();
+
+  /**
+   * Returns character's defense points.
+   */
+  int getDEF();
+
+
+  /**
+   * Intenta atacar a un enemigo (no tiene efecto si el objetivo está muerto).
+   * @param character personaje a atacar.
+   */
+  void attack(AbstractCharacter character);
+
+  /**
+   * Actualiza los valores de vida de este personaje al ser atacado por un PC.
+   * @param playerCharacter quien atacó a este personaje.
+   */
+  void attackedByPlayableCharacter(AbsPlayerCharacter playerCharacter);
+
+  /**
+   * Actualiza los valores de vida de este personaje al ser atacado por un Enemy
+   * @param enemy quien atacó a este personaje.
+   */
+  void attackedByEnemy(Enemy enemy);
+
+  /**
+   * Retorna un bool que representa si este personaje está vivo o muerto.
+   * @return true si el personaje esta vivo.
+   */
+  boolean isAlive();
+
+  /**
+   * @param o Other Object (Character ideally)
+   * @return true if 'o' has the same characteristics as this character.
+   */
+  boolean equals(Object o);
+
+  /**
+   * Función utilizada junto a equals.
+   * @return Hashcode
+   */
+  int hashCode();
+
+  /**
+   * Substracts health points to this character.
+   * @param ammount health substracted
+   */
+  void receiveDamage(int ammount);
+
+  /**
+   * Adds health points to this character.
+   * @param ammount health added
+   */
+  void heal(int ammount);
+
 }
