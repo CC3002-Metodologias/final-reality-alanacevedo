@@ -1,7 +1,5 @@
 package com.github.alanacevedo.finalreality.model.character;
 
-import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
-
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -41,6 +39,7 @@ public class Enemy extends AbstractCharacter {
     super(turnsQueue, name);
     this.weight = weight;
     this.HP = HP;
+    this.maxHP = HP;
     this.DEF = DEF;
     this.ATK = ATK;
   }
@@ -65,7 +64,7 @@ public class Enemy extends AbstractCharacter {
    */
   @Override
   public int hashCode() {
-    return Objects.hash(getWeight(),getName(), getCharacterDEF(), getCharacterHP(),
+    return Objects.hash(getWeight(),getName(), getDEF(), getHP(),
             getATK());
   }
 
@@ -86,9 +85,9 @@ public class Enemy extends AbstractCharacter {
     final Enemy enemy = (Enemy) o;
     return getWeight() == enemy.getWeight()
             && getATK() == enemy.getATK()
-            && getCharacterHP() == enemy.getCharacterHP()
+            && getHP() == enemy.getHP()
             && getName().equals(enemy.getName())
-            && getCharacterDEF() == enemy.getCharacterDEF();
+            && getDEF() == enemy.getDEF();
   }
 
   @Override
@@ -101,7 +100,10 @@ public class Enemy extends AbstractCharacter {
 
   @Override
   public void attack(AbstractCharacter character) {
-    character.attackedByEnemy(this);
+    if (this.isAlive()) {
+      character.attackedByEnemy(this);
+    }
+
   }
 
 }

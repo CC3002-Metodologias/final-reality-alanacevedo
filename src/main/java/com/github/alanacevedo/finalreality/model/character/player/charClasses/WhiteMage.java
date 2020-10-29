@@ -1,10 +1,10 @@
 package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 
+import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
 import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
-import com.github.alanacevedo.finalreality.model.weapon.Staff;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -45,8 +45,8 @@ public class WhiteMage extends AbsMageCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(getCharacterClass(), getCharacterHP(), getCharacterDEF(),
-                getCharacterMP(), getName());
+        return Objects.hash(getCharacterClass(), getHP(), getDEF(),
+                getMP(), getName());
     }
 
     /**
@@ -64,9 +64,9 @@ public class WhiteMage extends AbsMageCharacter {
         final AbsMageCharacter that = (AbsMageCharacter) o;
         return getCharacterClass() == that.getCharacterClass()
                 && getName().equals(that.getName())
-                && getCharacterHP() == that.getCharacterHP()
-                && getCharacterDEF() == that.getCharacterDEF()
-                && getCharacterMP() == that.getCharacterMP();
+                && getHP() == that.getHP()
+                && getDEF() == that.getDEF()
+                && getMP() == that.getMP();
     }
 
     // Equipamiento de armas
@@ -76,4 +76,18 @@ public class WhiteMage extends AbsMageCharacter {
     public void equip(AbstractWeapon weapon) {
         weapon.equipToWhiteMage(this);
     }
+
+    public void castCure(AbstractCharacter character) {
+        int mpCost = 15;
+
+        if (character.isAlive() && this.isAlive() && this.getMP() >= mpCost) {
+            int healAmmount = (int) (character.getMaxHP() * 0.3);
+            character.heal(healAmmount);
+            this.spendMP(mpCost);
+        }
+    }
+
+    // public void castPoison(AbstractCharacter character) { }
+
+    // public void castParalisis(AbstractCharacter character= { }
 }

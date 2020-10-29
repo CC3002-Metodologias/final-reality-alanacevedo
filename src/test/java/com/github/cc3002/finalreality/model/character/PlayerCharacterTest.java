@@ -32,12 +32,6 @@ class PlayerCharacterTest extends AbsCharacterTest {
   private Map <CharacterClass, AbstractCharacter> characters;
   private Map <CharacterClass, AbstractCharacter> charactersCopy;
   private Map <CharacterClass, AbstractCharacter> charactersDiff;
-  BlackMage testBlackMage;
-  Knight testKnight;
-  Thief testThief;
-  Engineer testEngineer;
-  WhiteMage testWhiteMage;
-
 
   /**
    * Setup method.
@@ -165,17 +159,7 @@ class PlayerCharacterTest extends AbsCharacterTest {
   // Test equipar armas
   @Test
   void equipWeaponTest() {
-    BlackMage testBlackMage = new BlackMage(BLACK_MAGE_NAME, turns, testHP, testDEF, testMP);
-    Knight testKnight = new Knight(KNIGHT_NAME, turns, testHP, testDEF);
-    Thief testThief = new Thief(THIEF_NAME, turns, testHP, testDEF);
-    Engineer testEngineer = new Engineer(ENGINEER_NAME, turns, testHP, testDEF);
-    WhiteMage testWhiteMage = new WhiteMage(WHITE_MAGE_NAME, turns, testHP, testDEF, testMP);
-
-    Axe testAxe = new Axe("Hacha", testATK, testWeight);
-    Sword testSword = new Sword("Espada", testATK, testWeight);
-    Knife testKnife = new Knife("Cuchillo", testATK, testWeight);
-    Bow testBow = new Bow("Arco", testATK, testWeight);
-    Staff testStaff = new Staff("Bastón", testATK, testWeight, 10);
+    generateCharactersAndWeapons();
 
     // Test equipar armas a Knight. Debería sólo poder equipar Sword, Axe, Knife.
 
@@ -260,5 +244,6 @@ class PlayerCharacterTest extends AbsCharacterTest {
     assertEquals(testWhiteMage.getEquippedWeapon(), testStaff);
 
   }
+
 
 }

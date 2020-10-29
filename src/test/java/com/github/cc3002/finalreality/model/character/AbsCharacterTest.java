@@ -36,7 +36,7 @@ public abstract class AbsCharacterTest {
 
   int testHP = 100;
   int testDEF = 10;
-  int testMP = 80;
+  int testMP = 50;
   int testWeight = 5;
   int testATK = 20;
 
@@ -115,9 +115,11 @@ public abstract class AbsCharacterTest {
     testBow = new Bow("Arco", testATK, testWeight);
     testStaff = new Staff("Bastón", testATK, testWeight, 10);
   }
+
   // Test de ataque básico
   @Test
   void characterAttackTest() {
+    generateCharactersAndWeapons();
     Sword testSword = new Sword("Espada", 20, testWeight);
     Axe testAxe = new Axe("Hachita", 110, testWeight);
     Knight testKnight = new Knight(KNIGHT_NAME, turns, testHP, testDEF);
@@ -125,39 +127,45 @@ public abstract class AbsCharacterTest {
 
     // Si un personaje no tiene un arma equipada, no debería hacer daño al intentar atacar.
     assertNull(testKnight.getEquippedWeapon());
-    assertEquals(testBlackMage.getCharacterHP(), 100); // BlackMage HP = 100, DEF= 10
+    assertEquals(testBlackMage.getHP(), 100); // BlackMage HP = 100, DEF= 10
     testKnight.attack(testBlackMage);
-    assertEquals(testBlackMage.getCharacterHP(), 100); // Como no tenía arma, no debería hacer daño.
+    assertEquals(testBlackMage.getHP(), 100); // Como no tenía arma, no debería hacer daño.
     testKnight.equip(testSword); // Sword damage = 20
     testKnight.attack(testBlackMage);
-    assertEquals(testBlackMage.getCharacterHP(), 90); // Debería ser 100 - max(0, 20-10) = 90
+    assertEquals(testBlackMage.getHP(), 90); // Debería ser 100 - max(0, 20-10) = 90
     testKnight.equip(testAxe); // Axe damage = 110
     testKnight.attack(testBlackMage);
     // El daño recibido es max(0, 110-10) = 100. Al recibir el ataque su vida efectiva es 90-100 = 10, pero debería
-    // quedar en 0 y actualizar su estado a muerto.
-    assertEquals(testBlackMage.getCharacterHP(), 0);
+    // quedar en 0 y actualizar su estado a muerto. (Overkill).
+    assertEquals(testBlackMage.getHP(), 0);
     assertFalse(testBlackMage.isAlive());
     testKnight.attack(testBlackMage);
-    assertEquals(testBlackMage.getCharacterHP(), 0); // Atacar un personaje muerto no debería hacer nada.
+    assertEquals(testBlackMage.getHP(), 0); // Atacar un personaje muerto no debería hacer nada.
     assertFalse(testBlackMage.isAlive());
+
+    testKnight.receiveDamage(200); //killed
+    assertEquals(testEngineer.getHP(), 100);
+    testKnight.attack(testEngineer); // Is dead, shouldn't be able to attack.
+    assertEquals(testEngineer.getHP(), 100);
 
     testBlackMage = new BlackMage(BLACK_MAGE_NAME, turns, 100, 10, testMP);
     Enemy testWeakEnemy = new Enemy("skeletSMOL", 20, turns, 40, 10, 20);
     Enemy testStrongEnemy = new Enemy("skeletBEEG", 20, turns, 40, 10, 110);
 
     // Los siguientes test siguen la misma lógica pero con enemigos atacando.
-    assertEquals(testBlackMage.getCharacterHP(), 100);
+    assertEquals(testBlackMage.getHP(), 100);
     testWeakEnemy.attack(testBlackMage);
-    assertEquals(testBlackMage.getCharacterHP(), 90);
-
+    assertEquals(testBlackMage.getHP(), 90);
     testStrongEnemy.attack(testBlackMage);
-    assertEquals(testBlackMage.getCharacterHP(), 0);
+    assertEquals(testBlackMage.getHP(), 0);
     assertFalse(testBlackMage.isAlive());
     testStrongEnemy.attack(testBlackMage);
-    assertEquals(testBlackMage.getCharacterHP(), 0);
+    assertEquals(testBlackMage.getHP(), 0);
     assertFalse(testBlackMage.isAlive());
 
-
+    testWeakEnemy.receiveDamage(100); // killed
+    testWeakEnemy.attack(testEngineer); // Is dead, shouldn't be able to attack.
+    assertEquals(testEngineer.getHP(), 100);
 
   }
 }

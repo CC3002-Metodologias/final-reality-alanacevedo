@@ -4,7 +4,6 @@ import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 
-import java.util.Arrays;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +41,7 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
     super(turnsQueue, name);
     this.characterClass = characterClass;
     this.HP = HP;
+    this.maxHP = HP;
     this.DEF = DEF;
   }
 
@@ -72,13 +72,19 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
             .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
   }
 
+  /**
+   * changes value of equippedWeapon attribute
+   * @param weapon new value
+   */
   public void setEquippedWeapon(AbstractWeapon weapon) {
     this.equippedWeapon = weapon;
   }
 
   @Override
   public void attack(AbstractCharacter character) {
-    character.attackedByPlayableCharacter(this);
+    if (this.isAlive()) {
+      character.attackedByPlayableCharacter(this);
+    }
   }
 
 }

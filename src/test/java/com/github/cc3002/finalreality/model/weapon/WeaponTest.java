@@ -58,6 +58,7 @@ class WeaponTest {
     assertNotEquals(expectedAxe, diffDamage);
     assertNotEquals(expectedStaff, diffMagicDamage);
     assertNotEquals(diffWeight, expectedAxe);
+    assertEquals(testKnife.getMagicDamage(), 0);
   }
 
    

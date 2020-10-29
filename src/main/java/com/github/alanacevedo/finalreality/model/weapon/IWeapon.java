@@ -9,6 +9,12 @@ public interface IWeapon {
     int getWeight();
     int getDamage();
 
+    /**
+     * Returns this weapon's Magic Damage. By default returns 0.
+     * @return Weapon's magic damage.
+     */
+    int getMagicDamage();
+
 
     // Los métodos equipToClass equipan esta arma al personaje de clase Class.
 
@@ -41,4 +47,6 @@ public interface IWeapon {
      * @param whiteMage personaje al que se intentará equipar esta arma.
      */
     void equipToWhiteMage(WhiteMage whiteMage);
+
+
 }

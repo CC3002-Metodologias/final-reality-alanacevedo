@@ -4,9 +4,6 @@ import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
 import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
-import com.github.alanacevedo.finalreality.model.weapon.Bow;
-import com.github.alanacevedo.finalreality.model.weapon.Knife;
-import com.github.alanacevedo.finalreality.model.weapon.Sword;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -47,7 +44,7 @@ public class Thief extends AbsPlayerCharacter {
      */
     @Override
     public int hashCode() {
-        return Objects.hash(getCharacterClass(), getCharacterHP(), getCharacterDEF(), getName());
+        return Objects.hash(getCharacterClass(), getHP(), getDEF(), getName());
     }
 
     /**
@@ -67,8 +64,8 @@ public class Thief extends AbsPlayerCharacter {
         final AbsPlayerCharacter that = (AbsPlayerCharacter) o;
         return getCharacterClass() == that.getCharacterClass()
                 && getName().equals(that.getName())
-                && getCharacterHP() == that.getCharacterHP()
-                && getCharacterDEF() == that.getCharacterDEF();
+                && getHP() == that.getHP()
+                && getDEF() == that.getDEF();
     }
 
     // Equipamiento de armas

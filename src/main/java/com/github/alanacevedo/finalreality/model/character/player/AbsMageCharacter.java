@@ -37,7 +37,11 @@ public abstract class AbsMageCharacter extends AbsPlayerCharacter {
      * @return
      *     this characters Mana Points (Magic points)
      */
-    public int getCharacterMP(){
+    public int getMP(){
         return this.MP;
+    }
+
+    public void spendMP(int ammount) {
+        this.MP -= ammount;
     }
 }

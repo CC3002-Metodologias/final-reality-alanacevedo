@@ -23,6 +23,7 @@ public abstract class AbstractCharacter implements ICharacter {
   protected ScheduledExecutorService scheduledExecutor;
   protected final String name;
   protected int HP;
+  protected int maxHP;
   protected int DEF;
   protected boolean aliveStatus;
 
@@ -69,12 +70,12 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   @Override
-  public int getCharacterHP(){
+  public int getHP(){
     return HP;
   }
 
   @Override
-  public int getCharacterDEF(){
+  public int getDEF(){
     return DEF;
   }
 
@@ -83,13 +84,40 @@ public abstract class AbstractCharacter implements ICharacter {
     return this.aliveStatus;
   }
 
+  public int getMaxHP() {
+    return this.maxHP;
+  }
+
+  /**
+   * Substracts health points to this character.
+   * @param ammount health substracted
+   */
+  public void receiveDamage(int ammount) {
+    this.HP -= ammount;
+    if (this.HP <= 0) {
+      this.HP = 0;
+      this.aliveStatus = false;
+    }
+  }
+
+  /**
+   * Adds health points to this character.
+   * @param ammount health added
+   */
+  public void heal(int ammount) {
+    this.HP += ammount;
+    if (this.HP > this.maxHP) {
+      this.HP = this.maxHP;
+    }
+  }
+
   @Override
   public void attackedByPlayableCharacter(AbsPlayerCharacter character) {
     AbstractWeapon characterWeapon = character.getEquippedWeapon();
     if (this.aliveStatus && characterWeapon != null) {
       int weaponDamage = characterWeapon.getDamage();
       int damageDone = max(0, weaponDamage - this.DEF);
-      this.HP -= damageDone;
+      this.receiveDamage(damageDone);
 
       if (this.HP <= 0) {
         this.aliveStatus = false;
@@ -103,7 +131,7 @@ public abstract class AbstractCharacter implements ICharacter {
     if (this.aliveStatus) {
       int enemyDamage = enemy.getATK();
       int damageDone = max(0, enemyDamage - this.DEF);
-      this.HP -= damageDone;
+      this.receiveDamage(damageDone);
 
       if (this.HP <= 0) {
         this.aliveStatus = false;

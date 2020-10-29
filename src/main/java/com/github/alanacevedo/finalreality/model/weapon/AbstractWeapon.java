@@ -113,4 +113,8 @@ public abstract class AbstractWeapon implements IWeapon {
   public void equipToWhiteMage(WhiteMage whiteMage) {
     ;
   }
+  @Override
+  public int getMagicDamage(){
+    return 0;
+  }
 }

@@ -27,12 +27,12 @@ public interface ICharacter {
   /**
    * Returns character's health points
    */
-  int getCharacterHP();
+  int getHP();
 
   /**
    * Returns character's defense points
    */
-  int getCharacterDEF();
+  int getDEF();
 
 
   /**

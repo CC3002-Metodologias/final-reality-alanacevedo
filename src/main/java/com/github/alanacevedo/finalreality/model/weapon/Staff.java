@@ -20,9 +20,9 @@ public class Staff extends AbstractWeapon {
         super(name, damage, weight);
         this.magicDamage = magicDamage;
     }
-
+    @Override
     public int getMagicDamage() {
-        return magicDamage;
+        return this.magicDamage;
     }
 
     @Override
