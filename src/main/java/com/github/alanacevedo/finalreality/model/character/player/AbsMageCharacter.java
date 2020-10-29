@@ -7,7 +7,7 @@ import java.util.concurrent.BlockingQueue;
 /**
  * A class that represents a mage character.
  */
-public abstract class AbsMageCharacter extends AbsPlayerCharacter {
+public abstract class AbsMageCharacter extends AbsPlayerCharacter implements IMageCharacter {
 
     protected int MP;
 
@@ -17,8 +17,6 @@ public abstract class AbsMageCharacter extends AbsPlayerCharacter {
      *      name of the character
      * @param turnsQueue
      *      the queue with the characters waiting for their turn
-     * @param characterClass
-     *      class of this character
      * @param HP
      *     this character's hit points (health points)
      * @param DEF
@@ -27,20 +25,18 @@ public abstract class AbsMageCharacter extends AbsPlayerCharacter {
      *     this characters' magic points (mana points)
      */
     public AbsMageCharacter(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
-                            final CharacterClass characterClass, int HP, int DEF, int MP) {
-        super(name, turnsQueue, characterClass, HP, DEF);
+                             int HP, int DEF, int MP) {
+        super(name, turnsQueue, HP, DEF);
         this.MP = MP;
     }
 
 
-    /**
-     * @return
-     *     this characters Mana Points (Magic points)
-     */
+    @Override
     public int getMP(){
         return this.MP;
     }
 
+    @Override
     public void spendMP(int ammount) {
         this.MP -= ammount;
     }

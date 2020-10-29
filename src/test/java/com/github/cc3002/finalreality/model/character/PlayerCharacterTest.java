@@ -6,16 +6,13 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.Enemy;
-import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.Map;
 
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
-import com.github.alanacevedo.finalreality.model.weapon.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -29,9 +26,9 @@ import org.junit.jupiter.api.Test;
 class PlayerCharacterTest extends AbsCharacterTest {
 
 
-  private Map <CharacterClass, AbstractCharacter> characters;
-  private Map <CharacterClass, AbstractCharacter> charactersCopy;
-  private Map <CharacterClass, AbstractCharacter> charactersDiff;
+  private ArrayList<AbstractCharacter> characters;
+  private ArrayList<AbstractCharacter> charactersCopy;
+  private ArrayList<AbstractCharacter> charactersDiff;
 
   /**
    * Setup method.
@@ -46,27 +43,27 @@ class PlayerCharacterTest extends AbsCharacterTest {
     Engineer testEngineer = new Engineer(ENGINEER_NAME, turns, testHP, testDEF);
     WhiteMage testWhiteMage = new WhiteMage(WHITE_MAGE_NAME, turns, testHP, testDEF, testMP);
 
-    characters = new EnumMap<>(CharacterClass.class);
-    characters.put(CharacterClass.BLACK_MAGE, testBlackMage);
-    characters.put(CharacterClass.KNIGHT, testKnight);
-    characters.put(CharacterClass.THIEF, testThief);
-    characters.put(CharacterClass.ENGINEER, testEngineer);
-    characters.put(CharacterClass.WHITE_MAGE, testWhiteMage);
+    characters = new ArrayList<>();
+    characters.add(testBlackMage); // Index 0
+    characters.add(testKnight); // Index 1
+    characters.add(testThief); // Index 2
+    characters.add(testEngineer); // Index 3
+    characters.add(testWhiteMage); // Index 4
 
-    charactersCopy = new EnumMap<>(CharacterClass.class);
-    charactersCopy.put(CharacterClass.BLACK_MAGE, new BlackMage(BLACK_MAGE_NAME, turns, testHP, testDEF, testMP));
-    charactersCopy.put(CharacterClass.KNIGHT, new Knight(KNIGHT_NAME, turns, testHP, testDEF));
-    charactersCopy.put(CharacterClass.THIEF, new Thief(THIEF_NAME, turns, testHP, testDEF));
-    charactersCopy.put(CharacterClass.ENGINEER, new Engineer(ENGINEER_NAME, turns, testHP, testDEF));
-    charactersCopy.put(CharacterClass.WHITE_MAGE,new WhiteMage(WHITE_MAGE_NAME, turns, testHP, testDEF, testMP));
+    charactersCopy = new ArrayList<>();
+    charactersCopy.add(new BlackMage(BLACK_MAGE_NAME, turns, testHP, testDEF, testMP));
+    charactersCopy.add(new Knight(KNIGHT_NAME, turns, testHP, testDEF));
+    charactersCopy.add(new Thief(THIEF_NAME, turns, testHP, testDEF));
+    charactersCopy.add(new Engineer(ENGINEER_NAME, turns, testHP, testDEF));
+    charactersCopy.add(new WhiteMage(WHITE_MAGE_NAME, turns, testHP, testDEF, testMP));
 
 
-    charactersDiff = new EnumMap<>(CharacterClass.class);
-    charactersDiff.put(CharacterClass.BLACK_MAGE, new BlackMage("Charlie", turns));
-    charactersDiff.put(CharacterClass.KNIGHT, new Knight("Charlie", turns));
-    charactersDiff.put(CharacterClass.THIEF, new Thief("Charlie", turns));
-    charactersDiff.put(CharacterClass.ENGINEER, new Engineer("Charlie", turns));
-    charactersDiff.put(CharacterClass.WHITE_MAGE,new WhiteMage("Charlie", turns));
+    charactersDiff = new ArrayList<>();
+    charactersDiff.add(new BlackMage("Charlie", turns));
+    charactersDiff.add(new Knight("Charlie", turns));
+    charactersDiff.add(new Thief("Charlie", turns));
+    charactersDiff.add(new Engineer("Charlie", turns));
+    charactersDiff.add(new WhiteMage("Charlie", turns));
 
   }
 
@@ -74,6 +71,22 @@ class PlayerCharacterTest extends AbsCharacterTest {
    * Checks that the class' constructor and equals method works properly.
    */
 
+  @Test
+  void constructorTest() {
+    for (int i=0; i<=4; i++) {
+      var expected = characters.get(i);
+      var equal = charactersCopy.get(i);
+      var diff = charactersDiff.get(i);
+      var other = i == 4 ? characters.get(1) : characters.get(4);
+
+      checkConstruction(expected, equal, diff, other);
+
+      //checkeando unos casos que se escapan
+      assertNotEquals(expected, new Enemy("esqueletito", 2, turns, 3, 3, 3));
+    }
+  }
+
+  /*
   @Test
   void constructorTest(){
     for (var charClass : CharacterClass.values()){
@@ -89,7 +102,7 @@ class PlayerCharacterTest extends AbsCharacterTest {
       assertNotEquals(expected, new Enemy("esqueletito", 2, turns, 3, 3, 3));
     }
   }
-
+*/
 
   @Test
   void whiteMageTest(){

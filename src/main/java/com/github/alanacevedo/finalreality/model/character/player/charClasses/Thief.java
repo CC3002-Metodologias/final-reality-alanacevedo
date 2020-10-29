@@ -1,7 +1,6 @@
 package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
-import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
 import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
 import org.jetbrains.annotations.NotNull;
@@ -29,7 +28,7 @@ public class Thief extends AbsPlayerCharacter {
 
     public Thief(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                   int HP, int DEF) {
-        super(name, turnsQueue,CharacterClass.THIEF, HP, DEF);
+        super(name, turnsQueue, HP, DEF);
 
     }
 
@@ -38,32 +37,22 @@ public class Thief extends AbsPlayerCharacter {
     }
 
 
-    /**
-     * Función utilizada junto a equals.
-     * @return Hashcode
-     */
     @Override
     public int hashCode() {
-        return Objects.hash(getCharacterClass(), getHP(), getDEF(), getName());
+        return Objects.hash(getHP(), getDEF(), getName());
     }
 
-    /**
-     *
-     * @param o Other Object (Character ideally)
-     * @return
-     *     true if 'o' has the same characteristics as this character.
-     */
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbsPlayerCharacter)) {
+        if (!(o instanceof Thief)) {
             return false;
         }
         final AbsPlayerCharacter that = (AbsPlayerCharacter) o;
-        return getCharacterClass() == that.getCharacterClass()
-                && getName().equals(that.getName())
+        return getName().equals(that.getName())
                 && getHP() == that.getHP()
                 && getDEF() == that.getDEF();
     }

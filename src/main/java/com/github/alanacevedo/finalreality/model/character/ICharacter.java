@@ -25,12 +25,18 @@ public interface ICharacter {
   String getName();
 
   /**
-   * Returns character's health points
+   * Returns character's health points.
    */
   int getHP();
 
   /**
-   * Returns character's defense points
+   *
+   * Returns character's max health points.
+   */
+  int getMaxHP();
+
+  /**
+   * Returns character's defense points.
    */
   int getDEF();
 
@@ -59,5 +65,28 @@ public interface ICharacter {
    */
   boolean isAlive();
 
+  /**
+   * @param o Other Object (Character ideally)
+   * @return true if 'o' has the same characteristics as this character.
+   */
+  boolean equals(Object o);
+
+  /**
+   * Función utilizada junto a equals.
+   * @return Hashcode
+   */
+  int hashCode();
+
+  /**
+   * Substracts health points to this character.
+   * @param ammount health substracted
+   */
+  void receiveDamage(int ammount);
+
+  /**
+   * Adds health points to this character.
+   * @param ammount health added
+   */
+  void heal(int ammount);
 
 }

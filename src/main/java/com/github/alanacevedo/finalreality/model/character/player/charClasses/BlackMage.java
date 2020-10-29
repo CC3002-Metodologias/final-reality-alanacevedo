@@ -2,7 +2,6 @@ package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 
 import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
-import com.github.alanacevedo.finalreality.model.character.player.CharacterClass;
 import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
 import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
 import org.jetbrains.annotations.NotNull;
@@ -32,41 +31,31 @@ public class BlackMage extends AbsMageCharacter {
 
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                      int HP, int DEF, int MP){
-        super(name, turnsQueue, CharacterClass.BLACK_MAGE, HP, DEF, MP);
+        super(name, turnsQueue, HP, DEF, MP);
     }
 
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue){
         this(name, turnsQueue, 80, 10, 100);
     }
 
-    /**
-     * Función utilizada junto a equals.
-     * @return
-     *      Hashcode
-     */
+
     @Override
     public int hashCode() {
-        return Objects.hash(getCharacterClass(), getHP(), getDEF(),
+        return Objects.hash(getHP(), getDEF(),
                 getMP(), getName());
     }
 
-    /**
-     *
-     * @param o Other Object (Character ideally)
-     *  @return
-     *     true if 'o' has the same characteristics as this character.
-     */
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof AbsMageCharacter)) {
+        if (!(o instanceof BlackMage)) {
             return false;
         }
         final AbsMageCharacter that = (AbsMageCharacter) o;
-        return getCharacterClass() == that.getCharacterClass()
-                && getName().equals(that.getName())
+        return getName().equals(that.getName())
                 && getHP() == that.getHP()
                 && getDEF() == that.getDEF()
                 && getMP() == that.getMP();

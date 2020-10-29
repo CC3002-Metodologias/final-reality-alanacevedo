@@ -45,13 +45,6 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   /**
-   * @param o other Object
-   * @return
-   *    true if this object is equal to 'o'
-   */
-  public abstract boolean equals(Object o);
-
-  /**
    * Adds this character to the turns queue.
    */
   protected void addToQueue() {
@@ -88,10 +81,7 @@ public abstract class AbstractCharacter implements ICharacter {
     return this.maxHP;
   }
 
-  /**
-   * Substracts health points to this character.
-   * @param ammount health substracted
-   */
+  @Override
   public void receiveDamage(int ammount) {
     this.HP -= ammount;
     if (this.HP <= 0) {
@@ -100,10 +90,7 @@ public abstract class AbstractCharacter implements ICharacter {
     }
   }
 
-  /**
-   * Adds health points to this character.
-   * @param ammount health added
-   */
+  @Override
   public void heal(int ammount) {
     this.HP += ammount;
     if (this.HP > this.maxHP) {

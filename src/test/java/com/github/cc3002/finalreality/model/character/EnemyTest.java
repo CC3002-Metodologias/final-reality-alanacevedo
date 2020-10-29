@@ -11,18 +11,13 @@ import java.util.concurrent.LinkedBlockingQueue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class EnemyTest {
+public class EnemyTest extends AbsCharacterTest{
     protected BlockingQueue<ICharacter> turns;
-    Enemy expectedEnemy;
     private static final String ENEMY_NAME = "Skeleton";
-    int testHP = 100;
-    int testDEF = 50;
-    int testWeight = 5;
-    int testATK = 20;
 
     @BeforeEach
     void setUp(){
-        var expectedEnemy = new Enemy(ENEMY_NAME, testWeight, turns, testHP, testDEF, testATK);
+        generateCharactersAndWeapons();
 
     }
 
@@ -41,6 +36,10 @@ public class EnemyTest {
         assertNotEquals(expectedEnemy, difHP);
         assertNotEquals(expectedEnemy, difDEF);
         assertNotEquals(expectedEnemy, difName);
+
+        assertNotEquals(expectedEnemy, testKnight);
+        assertEquals(expectedEnemy, expectedEnemy);
+        assertEquals(expectedEnemy.hashCode(), sameEnemy.hashCode());
 
     }
 

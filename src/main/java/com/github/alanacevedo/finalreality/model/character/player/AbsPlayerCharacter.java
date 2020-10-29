@@ -19,7 +19,6 @@ import org.jetbrains.annotations.NotNull;
 public abstract class AbsPlayerCharacter extends AbstractCharacter implements IPlayableCharacter {
 
   protected AbstractWeapon equippedWeapon = null;
-  protected final CharacterClass characterClass;
 
   /**
    * Creates a new abstract party character.
@@ -28,18 +27,15 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
    *     the character's name
    * @param turnsQueue
    *     the queue with the characters waiting for their turn
-   * @param characterClass
-   *     the class of this character
    * @param HP
    *     this character's hit points (health points)
    * @param DEF
    *     this character's defense points
    */
 
-  public AbsPlayerCharacter(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
-                            final CharacterClass characterClass, int HP, int DEF) {
+  protected AbsPlayerCharacter(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
+                            int HP, int DEF) {
     super(turnsQueue, name);
-    this.characterClass = characterClass;
     this.HP = HP;
     this.maxHP = HP;
     this.DEF = DEF;
@@ -47,23 +43,12 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
 
 
 
-  /**
-   * Gets this character equipped weapon.
-   * @return
-   *      Returns this character's equipped Weapon object.
-   */
+  @Override
   public AbstractWeapon getEquippedWeapon() {
     return equippedWeapon;
   }
 
-  /**
-   * Gets this character class
-   * @return
-   *      Returns object from CharacterClass enum.
-   */
-  public CharacterClass getCharacterClass() {
-    return characterClass;
-  }
+
 
   @Override
   public void waitTurn(){

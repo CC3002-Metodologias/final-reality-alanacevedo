@@ -60,6 +60,7 @@ public abstract class AbsCharacterTest {
 
   @Test
   void waitTurnTest() {
+    turns = new LinkedBlockingQueue<>();
     testCharacters = new ArrayList<>();
     Knight character = new Knight("Juan", turns, 3, 2);
     AbstractWeapon wpn = new Sword("espadita", 15, 10);
