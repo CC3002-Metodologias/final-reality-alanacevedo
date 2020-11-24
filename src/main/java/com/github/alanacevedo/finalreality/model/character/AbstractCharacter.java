@@ -99,7 +99,7 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   @Override
-  public void attackedByPlayableCharacter(AbsPlayerCharacter character) {
+  public void attackedByPlayableCharacter(IPlayableCharacter character) {
     AbstractWeapon characterWeapon = character.getEquippedWeapon();
     if (this.aliveStatus && characterWeapon != null) {
       int weaponDamage = characterWeapon.getDamage();

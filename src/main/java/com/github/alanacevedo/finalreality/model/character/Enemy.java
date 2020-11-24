@@ -99,7 +99,7 @@ public class Enemy extends AbstractCharacter {
   }
 
   @Override
-  public void attack(AbstractCharacter character) {
+  public void attack(ICharacter character) {
     if (this.isAlive()) {
       character.attackedByEnemy(this);
     }

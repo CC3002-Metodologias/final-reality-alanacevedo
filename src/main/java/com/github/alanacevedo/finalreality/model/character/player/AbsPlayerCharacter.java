@@ -66,7 +66,7 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
   }
 
   @Override
-  public void attack(AbstractCharacter character) {
+  public void attack(ICharacter character) {
     if (this.isAlive()) {
       character.attackedByPlayableCharacter(this);
     }

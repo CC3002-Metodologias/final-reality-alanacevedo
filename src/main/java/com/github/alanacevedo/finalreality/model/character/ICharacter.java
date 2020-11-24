@@ -45,13 +45,13 @@ public interface ICharacter {
    * Intenta atacar a un enemigo (no tiene efecto si el objetivo está muerto).
    * @param character personaje a atacar.
    */
-  void attack(AbstractCharacter character);
+  void attack(ICharacter character);
 
   /**
    * Actualiza los valores de vida de este personaje al ser atacado por un PC.
    * @param playerCharacter quien atacó a este personaje.
    */
-  void attackedByPlayableCharacter(AbsPlayerCharacter playerCharacter);
+  void attackedByPlayableCharacter(IPlayableCharacter playerCharacter);
 
   /**
    * Actualiza los valores de vida de este personaje al ser atacado por un Enemy
