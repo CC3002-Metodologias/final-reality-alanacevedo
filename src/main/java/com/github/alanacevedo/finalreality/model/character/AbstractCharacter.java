@@ -48,13 +48,14 @@ public abstract class AbstractCharacter implements ICharacter {
    * Adds this character to the turns queue.
    */
   protected void addToQueue() {
-    turnsQueue.add(this);
+    turnsQueue.add(this); // debería ser notifyController
     scheduledExecutor.shutdown();
 
   }
   @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+    //clases hijas llaman a schedule
   }
 
   @Override

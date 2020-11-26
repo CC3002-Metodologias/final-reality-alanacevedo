@@ -95,7 +95,7 @@ public class GameController {
             int hp = randInt1 * lvl;
             int weight = randInt1;
             int atk = randInt2 * lvl;
-            int def = randInt2 * lvl / 2;
+            int def = randInt2 * lvl / 5;
 
             Enemy enemy = new Enemy(names[i], weight, turnsQueue, hp, def, atk);
             enemyGroup.addEnemy(enemy);
@@ -112,4 +112,15 @@ public class GameController {
         enemy.attack(player.getCharacterFromParty(partySlot));
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public EnemyGroup getEnemyGroup() {
+        return enemyGroup;
+    }
+
+    public BlockingQueue<ICharacter> getTurnsQueue() {
+        return turnsQueue;
+    }
 }
