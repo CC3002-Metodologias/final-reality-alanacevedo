@@ -3,6 +3,7 @@ package com.github.alanacevedo.finalreality.model.player;
 import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 import com.github.alanacevedo.finalreality.controller.Settings;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -10,15 +11,18 @@ import java.util.Objects;
  * @author <M. Alan Acevedo Salazar>
  */
 public class Inventory {
-    private ArrayList<IWeapon> weaponList;
     private final int maxSize = Settings.inventorySize;
+    private IWeapon[] weaponList;
+    private int currentSize;
 
     /**
      * Creates an inventory containing the weapons given in args;
      * @param args array of weapons.
      */
     public Inventory(IWeapon... args) {
-        weaponList = new ArrayList<>(); // empty
+        weaponList = new IWeapon[maxSize]; // empty
+        Arrays.fill(weaponList, null);
+        currentSize = 0;
         for (IWeapon weapon : args) {
             this.addWeapon(weapon);
         }
@@ -29,8 +33,14 @@ public class Inventory {
      * @param weapon weapon to be added
      */
     public void addWeapon(IWeapon weapon) {
-        if (weaponList.size() < maxSize) {
-            this.weaponList.add(weapon);
+        if (currentSize < maxSize) {
+            for (int i=0; i<maxSize; i++) {
+                if (weaponList[i] == null) {
+                    weaponList[i] = weapon;
+                    currentSize++;
+                    break;
+                }
+            }
         }
     }
 
@@ -39,27 +49,33 @@ public class Inventory {
      * @param weapon weapon to be removed
      */
     public void removeWeapon(IWeapon weapon) {
-        weaponList.remove(weapon);
+        for (int i=0; i<maxSize; i++) {
+            if (weaponList[i] == weapon) {
+                weaponList[i] = null;
+                currentSize--;
+                break;
+            }
+        }
     }
 
     /**
      * Returns the current amount of weapons in the inventory.
      */
     public int getCurrentSize() {
-        return weaponList.size();
+        return currentSize;
     }
 
     /**
      * Returns the weapon stored in a given slot from the inventory.
      */
     public IWeapon getWeapon(int slot) {
-        return weaponList.get(slot);
+        return weaponList[slot];
     }
 
     public void swapItems(int slot1, int slot2) {
-        IWeapon temp = weaponList.get(slot1);
-        weaponList.set(slot1, weaponList.get(slot2));
-        weaponList.set(slot2, temp);
+        IWeapon temp = weaponList[slot1];
+        weaponList[slot1] = weaponList[slot2];
+        weaponList[slot2] = temp;
     }
 
     @Override
@@ -76,15 +92,20 @@ public class Inventory {
             return false;
         }
         for (int i=0; i<this.getCurrentSize(); i++) {
-            if (!(inventory.getWeapon(i).equals(this.getWeapon(i)))){
-                return false;
+
+            // null.equals() throws exception, so we handle it manually
+            if (inventory.getWeapon(i) == null) {
+                if (this.getWeapon(i) != null){
+                    return false;
+                }
+
+            } else {
+                if  (!(inventory.getWeapon(i).equals(this.getWeapon(i)))) {
+                    return false;
+                }
             }
         }
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(weaponList.toArray());
-    }
 }

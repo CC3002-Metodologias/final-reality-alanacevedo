@@ -5,19 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
-import com.github.alanacevedo.finalreality.model.character.Enemy;
+import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
 
 import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.Map;
 
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 /**
- * Set of tests for the {@code AbsPlayerCharacter} class.
+ * Set of tests for the {@code PlayerCharacter} class.
  *
  * @author Ignacio Slater Muñoz.
  * @author <M. Alan Acevedo Salazar>
@@ -85,24 +83,6 @@ class PlayerCharacterTest extends AbsCharacterTest {
       assertNotEquals(expected, new Enemy("esqueletito", 2, turns, 3, 3, 3));
     }
   }
-
-  /*
-  @Test
-  void constructorTest(){
-    for (var charClass : CharacterClass.values()){
-      var expected = characters.get(charClass);
-      var equal = charactersCopy.get(charClass);
-      var diff = charactersDiff.get(charClass);
-      var other = charClass == CharacterClass.THIEF ?
-              characters.get(CharacterClass.KNIGHT) : characters.get(CharacterClass.THIEF);
-
-      checkConstruction(expected, equal, diff, other);
-
-      //checkeando unos casos que se escapan
-      assertNotEquals(expected, new Enemy("esqueletito", 2, turns, 3, 3, 3));
-    }
-  }
-*/
 
   @Test
   void whiteMageTest(){

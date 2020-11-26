@@ -1,15 +1,16 @@
 package com.github.cc3002.finalreality.model.character;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
-import com.github.alanacevedo.finalreality.model.character.Enemy;
+import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+import com.github.alanacevedo.finalreality.model.character.enemy.EnemyGroup;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class EnemyTest extends AbsCharacterTest{
     protected BlockingQueue<ICharacter> turns;
@@ -40,6 +41,19 @@ public class EnemyTest extends AbsCharacterTest{
         assertNotEquals(expectedEnemy, testKnight);
         assertEquals(expectedEnemy, expectedEnemy);
         assertEquals(expectedEnemy.hashCode(), sameEnemy.hashCode());
+
+    }
+
+    @Test
+    void enemyGroupTest() {
+        EnemyGroup group = new EnemyGroup();
+        assertEquals(0, group.getCurrentEnemies());
+        group.addEnemy(testEnemy);
+        assertEquals(1, group.getCurrentEnemies());
+        assertEquals(testEnemy, group.getEnemy(0));
+        group.wipeGroup();
+        assertEquals(0, group.getCurrentEnemies());
+        assertNull(group.getEnemy(0));
 
     }
 

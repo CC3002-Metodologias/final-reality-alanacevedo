@@ -3,6 +3,7 @@ package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
 import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
+import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -56,7 +57,7 @@ public class Knight extends AbsPlayerCharacter {
     }
 
     @Override
-    public void equip(AbstractWeapon weapon) {
+    public void equip(IWeapon weapon) {
         weapon.equipToKnight(this);
     }
 }

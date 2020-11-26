@@ -1,6 +1,7 @@
 package com.github.cc3002.finalreality.model.player;
 import com.github.alanacevedo.finalreality.model.player.Inventory;
 import com.github.alanacevedo.finalreality.model.weapon.*;
+import com.github.alanacevedo.finalreality.controller.Settings;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,7 +45,8 @@ public class InventoryTest {
 
     @Test
     public void indexFails() {
-        assertThrows(IndexOutOfBoundsException.class, () -> inventory.getWeapon(2));
+        int maxSize = Settings.inventorySize;
+        assertThrows(IndexOutOfBoundsException.class, () -> inventory.getWeapon(maxSize));
     }
 
     @Test
@@ -70,7 +72,7 @@ public class InventoryTest {
         assertNotEquals(thisInventory, inventory);
         thisInventory.removeWeapon(weapon2Copy);
         assertNotEquals(thisInventory, emptyInventory);
-        assertEquals(thisInventory, inventory);
+        assertNotEquals(thisInventory, inventory);
         thisInventory.removeWeapon(weapon2Copy);
         thisInventory.removeWeapon(weapon1Copy);
         assertEquals(thisInventory, emptyInventory);

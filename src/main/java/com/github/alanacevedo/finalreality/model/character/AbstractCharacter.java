@@ -5,7 +5,7 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
+import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
 import org.jetbrains.annotations.NotNull;
 

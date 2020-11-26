@@ -1,9 +1,11 @@
-package com.github.alanacevedo.finalreality.model.character;
+package com.github.alanacevedo.finalreality.model.character.enemy;
 
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
+import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -35,7 +37,7 @@ public class Enemy extends AbstractCharacter {
    *    This enemy's attack or damage stat.
    */
   public Enemy(@NotNull final String name, final int weight,
-      @NotNull final BlockingQueue<ICharacter> turnsQueue, int HP, int DEF, int ATK) {
+               @NotNull final BlockingQueue<ICharacter> turnsQueue, int HP, int DEF, int ATK) {
     super(turnsQueue, name);
     this.weight = weight;
     this.HP = HP;

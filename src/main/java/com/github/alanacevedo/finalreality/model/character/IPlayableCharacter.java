@@ -4,7 +4,7 @@ import com.github.alanacevedo.finalreality.model.weapon.*;
 /**
  * This represents a character from the player's party.
  */
-public interface IPlayableCharacter {
+public interface IPlayableCharacter extends ICharacter {
 
     /**
      * Gets this character equipped weapon.
@@ -18,7 +18,7 @@ public interface IPlayableCharacter {
      * Equipa un arma a este personaje. Considera las restricciones de clases de los personajes.
      * @param weapon el arma a equipar
      */
-    void equip(AbstractWeapon weapon);
+    void equip(IWeapon weapon);
 
     /**
      * changes value of equippedWeapon attribute

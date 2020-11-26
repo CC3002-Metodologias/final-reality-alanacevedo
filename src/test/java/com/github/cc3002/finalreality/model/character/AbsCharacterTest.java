@@ -1,6 +1,6 @@
 package com.github.cc3002.finalreality.model.character;
 
-import com.github.alanacevedo.finalreality.model.character.Enemy;
+import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
 import com.github.alanacevedo.finalreality.model.weapon.*;

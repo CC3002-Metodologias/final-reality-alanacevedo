@@ -4,6 +4,7 @@ import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
 import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
+import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -65,7 +66,7 @@ public class WhiteMage extends AbsMageCharacter {
 
 
     @Override
-    public void equip(AbstractWeapon weapon) {
+    public void equip(IWeapon weapon) {
         weapon.equipToWhiteMage(this);
     }
 
