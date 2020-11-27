@@ -1,11 +1,16 @@
 package com.github.alanacevedo.finalreality.model.character;
 
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
-import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
+import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -26,6 +31,7 @@ public abstract class AbstractCharacter implements ICharacter {
   protected int maxHP;
   protected int DEF;
   protected boolean aliveStatus;
+  protected PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 
   /**
    * Initializes a character.
@@ -47,7 +53,7 @@ public abstract class AbstractCharacter implements ICharacter {
   /**
    * Adds this character to the turns queue.
    */
-  protected void addToQueue() {
+  public void addToQueue() {
     turnsQueue.add(this);
     scheduledExecutor.shutdown();
 
@@ -55,6 +61,11 @@ public abstract class AbstractCharacter implements ICharacter {
   @Override
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+    //clases hijas llaman a schedule
+  }
+
+  protected void notifyAddToQueue() {
+    listeners.firePropertyChange(new PropertyChangeEvent(this, "addToQueue", null, null));
   }
 
   @Override
@@ -81,25 +92,19 @@ public abstract class AbstractCharacter implements ICharacter {
     return this.maxHP;
   }
 
-  @Override
-  public void receiveDamage(int ammount) {
-    this.HP -= ammount;
-    if (this.HP <= 0) {
-      this.HP = 0;
-      this.aliveStatus = false;
-    }
-  }
 
   @Override
   public void heal(int ammount) {
-    this.HP += ammount;
-    if (this.HP > this.maxHP) {
-      this.HP = this.maxHP;
+    if (this.isAlive()) {
+      this.HP += ammount;
+      if (this.HP > this.maxHP) {
+        this.HP = this.maxHP;
+      }
     }
   }
 
   @Override
-  public void attackedByPlayableCharacter(AbsPlayerCharacter character) {
+  public void attackedByPlayableCharacter(IPlayableCharacter character) {
     AbstractWeapon characterWeapon = character.getEquippedWeapon();
     if (this.aliveStatus && characterWeapon != null) {
       int weaponDamage = characterWeapon.getDamage();
@@ -125,5 +130,9 @@ public abstract class AbstractCharacter implements ICharacter {
         this.HP = 0;
       }
     }
+  }
+
+  public void addListener(PropertyChangeListener listener) {
+    listeners.addPropertyChangeListener(listener);
   }
 }

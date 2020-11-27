@@ -1,8 +1,9 @@
 package com.github.alanacevedo.finalreality.model.character;
 
 
-import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
-import com.github.alanacevedo.finalreality.model.weapon.*;
+import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
+
+import java.beans.PropertyChangeListener;
 
 /**
  * This represents a character from the game.
@@ -45,13 +46,13 @@ public interface ICharacter {
    * Intenta atacar a un enemigo (no tiene efecto si el objetivo está muerto).
    * @param character personaje a atacar.
    */
-  void attack(AbstractCharacter character);
+  void attack(ICharacter character);
 
   /**
    * Actualiza los valores de vida de este personaje al ser atacado por un PC.
    * @param playerCharacter quien atacó a este personaje.
    */
-  void attackedByPlayableCharacter(AbsPlayerCharacter playerCharacter);
+  void attackedByPlayableCharacter(IPlayableCharacter playerCharacter);
 
   /**
    * Actualiza los valores de vida de este personaje al ser atacado por un Enemy
@@ -89,4 +90,9 @@ public interface ICharacter {
    */
   void heal(int ammount);
 
+  void addToQueue();
+
+  void takeTurn();
+
+  void addListener(PropertyChangeListener listener);
 }

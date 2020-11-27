@@ -1,9 +1,12 @@
-package com.github.alanacevedo.finalreality.model.character;
+package com.github.alanacevedo.finalreality.model.character.enemy;
 
+import java.beans.PropertyChangeEvent;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
+import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
+import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -35,7 +38,7 @@ public class Enemy extends AbstractCharacter {
    *    This enemy's attack or damage stat.
    */
   public Enemy(@NotNull final String name, final int weight,
-      @NotNull final BlockingQueue<ICharacter> turnsQueue, int HP, int DEF, int ATK) {
+               @NotNull final BlockingQueue<ICharacter> turnsQueue, int HP, int DEF, int ATK) {
     super(turnsQueue, name);
     this.weight = weight;
     this.HP = HP;
@@ -93,17 +96,30 @@ public class Enemy extends AbstractCharacter {
   @Override
   public void waitTurn(){
     super.waitTurn();
-    var enemy = (Enemy) this;
     scheduledExecutor
-            .schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
+            .schedule(this::notifyAddToQueue, this.getWeight() / 10, TimeUnit.SECONDS);
   }
 
   @Override
-  public void attack(AbstractCharacter character) {
+  public void attack(ICharacter character) {
     if (this.isAlive()) {
       character.attackedByEnemy(this);
     }
+  }
 
+  @Override
+  public void receiveDamage(int ammount) {
+    this.HP -= ammount;
+    if (this.HP <= 0) {
+      this.HP = 0;
+      this.aliveStatus = false;
+      listeners.firePropertyChange(new PropertyChangeEvent(this, "enemyDeath", null, null));
+    }
+  }
+
+  @Override
+  public void takeTurn() {
+    listeners.firePropertyChange(new PropertyChangeEvent(this, "enemyTurnStart", null, null));
   }
 
 }
