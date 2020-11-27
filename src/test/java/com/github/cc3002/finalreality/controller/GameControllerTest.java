@@ -95,14 +95,7 @@ public class GameControllerTest {
         Enemy enemy2 = controller.getEnemyGroup().getEnemy(1);
         Enemy enemy3 = controller.getEnemyGroup().getEnemy(2);
 
-
-        char1.waitTurn();
-        char2.waitTurn();
-        char3.waitTurn();
-        enemy1.waitTurn();
-        enemy2.waitTurn();
-        enemy3.waitTurn();
-
+        controller.startBattle();
 
         try {
             Thread.sleep(5000);
@@ -116,6 +109,51 @@ public class GameControllerTest {
         boolean cond2 = enemy1.getHP()!=enemy1.getMaxHP() || enemy2.getHP()!=enemy2.getMaxHP() || enemy3.getHP()!=enemy3.getMaxHP();
 
         assertTrue(cond1 && cond2);
+
+    }
+
+    @Test
+    void deathHandlerTest() {
+        controller.spawnEnemyGroup(30, 3, "uno", "dos", "tres");
+        controller.addSwordToPlayerInventory("espada1", 50, 14);
+        controller.addSwordToPlayerInventory("espada2", 70, 15);
+        controller.addSwordToPlayerInventory("espada3", 80, 30);
+        controller.addKnightToPlayerParty("caballero1");
+        controller.addKnightToPlayerParty("caballero2");
+        controller.addKnightToPlayerParty("caballero3");
+        controller.equipWeaponToCharacter(0,0);
+        controller.equipWeaponToCharacter(1,1);
+        controller.equipWeaponToCharacter(2,2);
+
+        IPlayableCharacter char1 = controller.getPlayer().getCharacterFromParty(0);
+        IPlayableCharacter char2 = controller.getPlayer().getCharacterFromParty(1);
+        IPlayableCharacter char3 = controller.getPlayer().getCharacterFromParty(2);
+
+        Enemy enemy1 = controller.getEnemyGroup().getEnemy(0);
+        Enemy enemy2 = controller.getEnemyGroup().getEnemy(1);
+        Enemy enemy3 = controller.getEnemyGroup().getEnemy(2);
+
+        assertFalse(controller.isBattleActive());
+        controller.startBattle();
+        assertTrue(controller.isBattleActive());
+
+        try {
+            // Characters attack each other until either group dies
+            while(controller.isBattleActive()) {
+                Thread.sleep(5000);
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // We check if either the party or the enemyGroup are dead.
+
+        boolean cond1 = !char1.isAlive() && !char2.isAlive() && !char3.isAlive();
+        boolean cond2 = !enemy1.isAlive() && !enemy2.isAlive() && !enemy3.isAlive();
+
+        assertTrue(cond1 || cond2);
+        assertFalse(controller.isBattleActive());
+        assertTrue(controller.getTurnsQueue().isEmpty());
 
     }
 }

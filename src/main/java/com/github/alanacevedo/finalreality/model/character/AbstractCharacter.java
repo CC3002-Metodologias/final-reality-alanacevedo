@@ -92,20 +92,14 @@ public abstract class AbstractCharacter implements ICharacter {
     return this.maxHP;
   }
 
-  @Override
-  public void receiveDamage(int ammount) {
-    this.HP -= ammount;
-    if (this.HP <= 0) {
-      this.HP = 0;
-      this.aliveStatus = false;
-    }
-  }
 
   @Override
   public void heal(int ammount) {
-    this.HP += ammount;
-    if (this.HP > this.maxHP) {
-      this.HP = this.maxHP;
+    if (this.isAlive()) {
+      this.HP += ammount;
+      if (this.HP > this.maxHP) {
+        this.HP = this.maxHP;
+      }
     }
   }
 

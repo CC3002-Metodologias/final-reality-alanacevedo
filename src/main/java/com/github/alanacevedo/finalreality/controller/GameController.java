@@ -6,23 +6,20 @@ import com.github.alanacevedo.finalreality.model.character.enemy.EnemyGroup;
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
 import com.github.alanacevedo.finalreality.model.player.Player;
 import com.github.alanacevedo.finalreality.model.weapon.*;
-import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 
-import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class GameController {
-    private final int partySize = Settings.partySize;
-    private final int maxEnemies = Settings.maxEnemies;
     private BlockingQueue<ICharacter> turnsQueue = new LinkedBlockingQueue<>();
     private Player player;
     private EnemyGroup enemyGroup;
     private boolean attending = false;
-    private addQueueHandler queueHandler = new addQueueHandler(this);
-    private turnStartHandler turnStartHandler = new turnStartHandler(this);
-
+    private boolean battleActive = false;
+    private final addToQueueHandler queueHandler = new addToQueueHandler(this);
+    private final turnStartHandler turnStartHandler = new turnStartHandler(this);
+    private final DeathHandler deathHandler = new DeathHandler(this);
     public GameController() {
         player = new Player(); // Can receive a name
         enemyGroup = new EnemyGroup();
@@ -31,6 +28,7 @@ public class GameController {
     public void addListeners(ICharacter character) {
         character.addListener(queueHandler);
         character.addListener(turnStartHandler);
+        character.addListener(deathHandler);
     }
 
     public void addBlackMageToPlayerParty(String name) {
@@ -100,7 +98,6 @@ public class GameController {
             int randInt2 = ThreadLocalRandom.current().nextInt(3, 8);
 
             int hp = randInt1 * lvl;
-            int weight = randInt1;
             int atk = randInt2 * lvl;
             int def = randInt2 * lvl / 5;
 
@@ -108,6 +105,7 @@ public class GameController {
             addListeners(enemy);
             enemyGroup.addEnemy(enemy);
         }
+        deathHandler.updateEnemyGroupSize();
     }
 
     public void PCharAttackEnemy(int partySlot, int mobSlot) {
@@ -133,10 +131,12 @@ public class GameController {
     }
 
     public void addToQueue(ICharacter character) {
-        character.addToQueue();
-        if (!attending) {
-            attending = true;
-            attendQueue();
+        if (battleActive) {
+            character.addToQueue();
+            if (!attending) {
+                attending = true;
+                attendQueue();
+            }
         }
     }
 
@@ -157,8 +157,12 @@ public class GameController {
     public void enemyTurn(Enemy enemy) {
         int partySize = Settings.partySize;
         int randSlot = ThreadLocalRandom.current().nextInt(0, partySize);
-        //int enemySlot = enemyGroup.getEnemyIndex(enemy);
-        //EnemyAttackPChar(enemySlot , randSlot);
+
+        // To avoid attacking dead characters
+        while(! player.getCharacterFromParty(randSlot).isAlive()){
+            randSlot = ThreadLocalRandom.current().nextInt(0, partySize);
+        }
+
         enemy.attack(player.getCharacterFromParty(randSlot));
         enemy.waitTurn();
         endTurn();
@@ -167,11 +171,37 @@ public class GameController {
     public void playerCharacterTurn(IPlayableCharacter character) {
         // For the time being, will function similar to enemyTurn
         // User interaction will be implemented later.
+        // later this method will be renamed randomPCTurn.
         int groupSize = enemyGroup.getCurrentEnemies();
         int randSlot = ThreadLocalRandom.current().nextInt(0, groupSize);
+
+        // to avoid attacking dead players
+        while(!enemyGroup.getEnemy(randSlot).isAlive()) {
+            randSlot = ThreadLocalRandom.current().nextInt(0, groupSize);
+        }
+
         character.attack(enemyGroup.getEnemy(randSlot));
         character.waitTurn();
         endTurn();
+    }
 
+    public void startBattle() {
+        battleActive = true;
+        for (int i=0; i<Settings.partySize; i++) {
+            player.getCharacterFromParty(i).waitTurn();
+        }
+
+        for (int i=0; i<enemyGroup.getCurrentEnemies(); i++) {
+            enemyGroup.getEnemy(i).waitTurn();
+        }
+    }
+
+    public void endBattle() {
+        battleActive = false;
+        turnsQueue.clear();
+    }
+
+    public boolean isBattleActive() {
+        return battleActive;
     }
 }

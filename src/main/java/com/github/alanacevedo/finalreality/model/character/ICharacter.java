@@ -1,7 +1,6 @@
 package com.github.alanacevedo.finalreality.model.character;
 
 
-import com.github.alanacevedo.finalreality.controller.addQueueHandler;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 
 import java.beans.PropertyChangeListener;

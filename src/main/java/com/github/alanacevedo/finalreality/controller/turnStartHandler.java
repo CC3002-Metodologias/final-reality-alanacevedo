@@ -7,7 +7,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 public class turnStartHandler implements PropertyChangeListener {
-    private GameController controller;
+    private final GameController controller;
 
     public turnStartHandler(GameController controller) {
         this.controller = controller;

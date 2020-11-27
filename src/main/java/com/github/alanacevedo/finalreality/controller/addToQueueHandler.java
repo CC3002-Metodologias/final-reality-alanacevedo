@@ -3,10 +3,10 @@ import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class addQueueHandler implements PropertyChangeListener{
-    private GameController controller;
+public class addToQueueHandler implements PropertyChangeListener{
+    private final GameController controller;
 
-    public addQueueHandler(GameController controller) {
+    public addToQueueHandler(GameController controller) {
         this.controller = controller;
     }
 

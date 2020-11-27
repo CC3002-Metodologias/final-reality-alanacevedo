@@ -108,6 +108,16 @@ public class Enemy extends AbstractCharacter {
   }
 
   @Override
+  public void receiveDamage(int ammount) {
+    this.HP -= ammount;
+    if (this.HP <= 0) {
+      this.HP = 0;
+      this.aliveStatus = false;
+      listeners.firePropertyChange(new PropertyChangeEvent(this, "enemyDeath", null, null));
+    }
+  }
+
+  @Override
   public void takeTurn() {
     listeners.firePropertyChange(new PropertyChangeEvent(this, "enemyTurnStart", null, null));
   }
