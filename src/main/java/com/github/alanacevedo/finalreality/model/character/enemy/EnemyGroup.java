@@ -31,4 +31,14 @@ public class EnemyGroup {
     public int getCurrentEnemies() {
         return currentEnemies;
     }
+
+    public int getEnemyIndex(Enemy enemy) {
+        for (int i=0; i<maxSize; i++) {
+            if (group[i] == enemy) {
+                return i;
+            }
+        }
+
+        return -1; // Shouldn't get here
+    }
 }

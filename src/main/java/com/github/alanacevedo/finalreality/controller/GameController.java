@@ -19,36 +19,43 @@ public class GameController {
     private BlockingQueue<ICharacter> turnsQueue = new LinkedBlockingQueue<>();
     private Player player;
     private EnemyGroup enemyGroup;
+    private boolean attending = false;
+    private addQueueHandler queueHandler = new addQueueHandler(this);
+    private turnStartHandler turnStartHandler = new turnStartHandler(this);
 
     public GameController() {
         player = new Player(); // Can receive a name
         enemyGroup = new EnemyGroup();
     }
 
+    public void addListeners(ICharacter character) {
+        character.addListener(queueHandler);
+        character.addListener(turnStartHandler);
+    }
 
     public void addBlackMageToPlayerParty(String name) {
         BlackMage character = new BlackMage(name, turnsQueue);
-        //listener
+        addListeners(character);
         player.addCharacterToParty(character);
     }
     public void addWhiteMageToPlayerParty(String name) {
         WhiteMage character = new WhiteMage(name, turnsQueue);
-        //listener
+        addListeners(character);
         player.addCharacterToParty(character);
     }
     public void addKnightToPlayerParty(String name) {
         Knight character = new Knight(name, turnsQueue);
-        //listener
+        addListeners(character);
         player.addCharacterToParty(character);
     }
     public void addThiefToPlayerParty(String name) {
         Thief character = new Thief(name, turnsQueue);
-        //listener
+        addListeners(character);
         player.addCharacterToParty(character);
     }
     public void addEngineerToPlayerParty(String name) {
         Engineer character = new Engineer(name, turnsQueue);
-        //listener
+        addListeners(character);
         player.addCharacterToParty(character);
     }
 
@@ -97,7 +104,8 @@ public class GameController {
             int atk = randInt2 * lvl;
             int def = randInt2 * lvl / 5;
 
-            Enemy enemy = new Enemy(names[i], weight, turnsQueue, hp, def, atk);
+            Enemy enemy = new Enemy(names[i], 10+i, turnsQueue, hp, 20, 70); // balance later
+            addListeners(enemy);
             enemyGroup.addEnemy(enemy);
         }
     }
@@ -122,5 +130,48 @@ public class GameController {
 
     public BlockingQueue<ICharacter> getTurnsQueue() {
         return turnsQueue;
+    }
+
+    public void addToQueue(ICharacter character) {
+        character.addToQueue();
+        if (!attending) {
+            attending = true;
+            attendQueue();
+        }
+    }
+
+    void attendQueue() {
+        ICharacter character = turnsQueue.poll();
+        assert character != null;
+        character.takeTurn();
+    }
+
+    public void endTurn() {
+        if (turnsQueue.isEmpty()) {
+            attending = false;
+        } else {
+            attendQueue();
+        }
+    }
+
+    public void enemyTurn(Enemy enemy) {
+        int partySize = Settings.partySize;
+        int randSlot = ThreadLocalRandom.current().nextInt(0, partySize);
+        //int enemySlot = enemyGroup.getEnemyIndex(enemy);
+        //EnemyAttackPChar(enemySlot , randSlot);
+        enemy.attack(player.getCharacterFromParty(randSlot));
+        enemy.waitTurn();
+        endTurn();
+    }
+
+    public void playerCharacterTurn(IPlayableCharacter character) {
+        // For the time being, will function similar to enemyTurn
+        // User interaction will be implemented later.
+        int groupSize = enemyGroup.getCurrentEnemies();
+        int randSlot = ThreadLocalRandom.current().nextInt(0, groupSize);
+        character.attack(enemyGroup.getEnemy(randSlot));
+        character.waitTurn();
+        endTurn();
+
     }
 }

@@ -1,6 +1,11 @@
 package com.github.alanacevedo.finalreality.model.character;
 
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,6 +31,7 @@ public abstract class AbstractCharacter implements ICharacter {
   protected int maxHP;
   protected int DEF;
   protected boolean aliveStatus;
+  protected PropertyChangeSupport listeners = new PropertyChangeSupport(this);
 
   /**
    * Initializes a character.
@@ -47,8 +53,8 @@ public abstract class AbstractCharacter implements ICharacter {
   /**
    * Adds this character to the turns queue.
    */
-  protected void addToQueue() {
-    turnsQueue.add(this); // debería ser notifyController
+  public void addToQueue() {
+    turnsQueue.add(this);
     scheduledExecutor.shutdown();
 
   }
@@ -56,6 +62,10 @@ public abstract class AbstractCharacter implements ICharacter {
   public void waitTurn() {
     scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
     //clases hijas llaman a schedule
+  }
+
+  protected void notifyAddToQueue() {
+    listeners.firePropertyChange(new PropertyChangeEvent(this, "addToQueue", null, null));
   }
 
   @Override
@@ -126,5 +136,9 @@ public abstract class AbstractCharacter implements ICharacter {
         this.HP = 0;
       }
     }
+  }
+
+  public void addListener(PropertyChangeListener listener) {
+    listeners.addPropertyChangeListener(listener);
   }
 }

@@ -1,5 +1,6 @@
 package com.github.alanacevedo.finalreality.model.character.enemy;
 
+import java.beans.PropertyChangeEvent;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
@@ -95,9 +96,8 @@ public class Enemy extends AbstractCharacter {
   @Override
   public void waitTurn(){
     super.waitTurn();
-    var enemy = (Enemy) this;
     scheduledExecutor
-            .schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
+            .schedule(this::notifyAddToQueue, this.getWeight() / 10, TimeUnit.SECONDS);
   }
 
   @Override
@@ -105,7 +105,11 @@ public class Enemy extends AbstractCharacter {
     if (this.isAlive()) {
       character.attackedByEnemy(this);
     }
+  }
 
+  @Override
+  public void takeTurn() {
+    listeners.firePropertyChange(new PropertyChangeEvent(this, "enemyTurnStart", null, null));
   }
 
 }

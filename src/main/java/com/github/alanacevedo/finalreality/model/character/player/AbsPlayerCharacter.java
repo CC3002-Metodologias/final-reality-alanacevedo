@@ -4,6 +4,7 @@ import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 
+import java.beans.PropertyChangeEvent;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.TimeUnit;
 
@@ -48,13 +49,12 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
     return equippedWeapon;
   }
 
-
-
+  
   @Override
   public void waitTurn(){
     super.waitTurn();
     scheduledExecutor
-            .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+            .schedule(this::notifyAddToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
   }
 
   /**
@@ -70,6 +70,11 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
     if (this.isAlive()) {
       character.attackedByPlayableCharacter(this);
     }
+  }
+
+  public void takeTurn() {
+    listeners.firePropertyChange(new PropertyChangeEvent(this, "playerCharTurnStart", null, null));
+
   }
 
 }

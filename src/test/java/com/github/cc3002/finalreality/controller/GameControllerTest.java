@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
+import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
 import com.github.alanacevedo.finalreality.model.player.Inventory;
 import com.github.alanacevedo.finalreality.model.player.Party;
@@ -70,6 +71,51 @@ public class GameControllerTest {
         int enemyCurrentHp = controller.getEnemyGroup().getEnemy(0).getHP();
         int enemyMaxHp = controller.getEnemyGroup().getEnemy(0).getMaxHP();
         assertNotEquals(enemyCurrentHp, enemyMaxHp);
+
+    }
+
+    @Test
+    void addToQueueHandlerTest() {
+        controller.spawnEnemyGroup(30, 3, "uno", "dos", "tres");
+        controller.addSwordToPlayerInventory("espada1", 50, 14);
+        controller.addSwordToPlayerInventory("espada2", 70, 15);
+        controller.addSwordToPlayerInventory("espada3", 80, 30);
+        controller.addKnightToPlayerParty("caballero1");
+        controller.addKnightToPlayerParty("caballero2");
+        controller.addKnightToPlayerParty("caballero3");
+        controller.equipWeaponToCharacter(0,0);
+        controller.equipWeaponToCharacter(1,1);
+        controller.equipWeaponToCharacter(2,2);
+
+        IPlayableCharacter char1 = controller.getPlayer().getCharacterFromParty(0);
+        IPlayableCharacter char2 = controller.getPlayer().getCharacterFromParty(1);
+        IPlayableCharacter char3 = controller.getPlayer().getCharacterFromParty(2);
+
+        Enemy enemy1 = controller.getEnemyGroup().getEnemy(0);
+        Enemy enemy2 = controller.getEnemyGroup().getEnemy(1);
+        Enemy enemy3 = controller.getEnemyGroup().getEnemy(2);
+
+
+        char1.waitTurn();
+        char2.waitTurn();
+        char3.waitTurn();
+        enemy1.waitTurn();
+        enemy2.waitTurn();
+        enemy3.waitTurn();
+
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        // Because attack targets are random, we just make sure that at least one PC and one enemy are attacked.
+
+        boolean cond1 = char1.getHP()!=char1.getMaxHP() || char2.getHP()!=char2.getMaxHP() || char3.getHP()!=char3.getMaxHP();
+        boolean cond2 = enemy1.getHP()!=enemy1.getMaxHP() || enemy2.getHP()!=enemy2.getMaxHP() || enemy3.getHP()!=enemy3.getMaxHP();
+
+        assertTrue(cond1 && cond2);
 
     }
 }

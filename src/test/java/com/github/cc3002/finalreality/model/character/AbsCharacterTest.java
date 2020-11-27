@@ -53,38 +53,6 @@ public abstract class AbsCharacterTest {
   Staff testStaff;
   Knife testKnife;
 
-
-  /**
-   * Checks that the character waits the appropriate amount of time for it's turn.
-   */
-
-  @Test
-  void waitTurnTest() {
-    turns = new LinkedBlockingQueue<>();
-    testCharacters = new ArrayList<>();
-    Knight character = new Knight("Juan", turns, 3, 2);
-    AbstractWeapon wpn = new Sword("espadita", 15, 10);
-    character.equip(wpn);
-
-    testCharacters.add(character);
-    Assertions.assertTrue(turns.isEmpty());
-    testCharacters.get(0).waitTurn();
-    try {
-      // Thread.sleep is not accurate so this values may be changed to adjust the
-      // acceptable error margin.
-      // We're testing that the character waits approximately 1 second.
-      Thread.sleep(800);
-      Assertions.assertEquals(0, turns.size());
-      Thread.sleep(500);
-      Assertions.assertEquals(1, turns.size());
-      Assertions.assertEquals(testCharacters.get(0), turns.peek());
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-  }
-  
-
-
   protected void checkConstruction(final ICharacter expectedCharacter,
       final ICharacter testEqualCharacter,
       final ICharacter sameClassDifferentCharacter,

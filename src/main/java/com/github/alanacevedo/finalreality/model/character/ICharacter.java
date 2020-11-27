@@ -1,7 +1,10 @@
 package com.github.alanacevedo.finalreality.model.character;
 
 
+import com.github.alanacevedo.finalreality.controller.addQueueHandler;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
+
+import java.beans.PropertyChangeListener;
 
 /**
  * This represents a character from the game.
@@ -88,4 +91,9 @@ public interface ICharacter {
    */
   void heal(int ammount);
 
+  void addToQueue();
+
+  void takeTurn();
+
+  void addListener(PropertyChangeListener listener);
 }
