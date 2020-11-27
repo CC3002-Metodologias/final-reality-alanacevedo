@@ -153,6 +153,7 @@ public class GameControllerTest {
 
         assertTrue(cond1 || cond2);
         assertFalse(controller.isBattleActive());
+        assertTrue(controller.getAliveEnemies() == 0 || controller.getAlivePlayerCharacters()==0);
         assertTrue(controller.getTurnsQueue().isEmpty());
 
     }

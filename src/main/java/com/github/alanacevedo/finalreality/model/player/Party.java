@@ -5,24 +5,33 @@ import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 
 import java.util.Arrays;
 
-public class Party {
+/**
+ * Class that represents a party of player characters.
+ */
+public class Party implements IParty {
     private final int maxPartySize = Settings.partySize;
     private int currentPartySize = 0;
     private IPlayableCharacter[] party = new IPlayableCharacter[maxPartySize];
 
+    /**
+     * Initializes the party array with null elements.
+     */
     public Party() {
         Arrays.fill(party, null);
     }
 
+    @Override
     public void addCharacter(IPlayableCharacter character) {
         party[currentPartySize] = character;
         currentPartySize++;
     }
 
+    @Override
     public IPlayableCharacter getCharacter(int slot) {
         return party[slot];
     }
 
+    @Override
     public int getCurrentSize() {
         return currentPartySize;
     }

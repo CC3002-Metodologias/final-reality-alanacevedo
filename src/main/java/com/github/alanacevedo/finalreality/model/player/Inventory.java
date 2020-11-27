@@ -10,7 +10,7 @@ import java.util.Objects;
  * A class that represents the player's inventory
  * @author <M. Alan Acevedo Salazar>
  */
-public class Inventory {
+public class Inventory implements IInventory {
     private final int maxSize = Settings.inventorySize;
     private IWeapon[] weaponList;
     private int currentSize;
@@ -28,10 +28,7 @@ public class Inventory {
         }
     }
 
-    /**
-     * Adds a weapon to the inventory. If the inventory is full, doesn't add it.
-     * @param weapon weapon to be added
-     */
+    @Override
     public void addWeapon(IWeapon weapon) {
         if (currentSize < maxSize) {
             for (int i=0; i<maxSize; i++) {
@@ -44,10 +41,7 @@ public class Inventory {
         }
     }
 
-    /**
-     * Removes from the inventory the first appearance of the given weapon.
-     * @param weapon weapon to be removed
-     */
+    @Override
     public void removeWeapon(IWeapon weapon) {
         for (int i=0; i<maxSize; i++) {
             if (weaponList[i] == weapon) {
@@ -58,20 +52,17 @@ public class Inventory {
         }
     }
 
-    /**
-     * Returns the current amount of weapons in the inventory.
-     */
+    @Override
     public int getCurrentSize() {
         return currentSize;
     }
 
-    /**
-     * Returns the weapon stored in a given slot from the inventory.
-     */
+    @Override
     public IWeapon getWeapon(int slot) {
         return weaponList[slot];
     }
 
+    @Override
     public void swapItems(int slot1, int slot2) {
         IWeapon temp = weaponList[slot1];
         weaponList[slot1] = weaponList[slot2];

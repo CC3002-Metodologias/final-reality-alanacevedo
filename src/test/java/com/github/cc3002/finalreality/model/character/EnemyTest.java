@@ -47,12 +47,12 @@ public class EnemyTest extends AbsCharacterTest{
     @Test
     void enemyGroupTest() {
         EnemyGroup group = new EnemyGroup();
-        assertEquals(0, group.getCurrentEnemies());
+        assertEquals(0, group.getCurrentGroupSize());
         group.addEnemy(testEnemy);
-        assertEquals(1, group.getCurrentEnemies());
+        assertEquals(1, group.getCurrentGroupSize());
         assertEquals(testEnemy, group.getEnemy(0));
         group.wipeGroup();
-        assertEquals(0, group.getCurrentEnemies());
+        assertEquals(0, group.getCurrentGroupSize());
         assertNull(group.getEnemy(0));
 
     }

@@ -6,11 +6,17 @@ import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 
 import java.util.Arrays;
 
-public class Player {
-    private Inventory inventory = new Inventory();
-    private Party party = new Party();
+/**
+ * Class that represents a Final Reality player. Controls a party of characters and manages an inventory.
+ */
+public class Player implements IPlayer {
+    private IInventory inventory = new Inventory();
+    private IParty party = new Party();
     String name;
 
+    /**
+     * Initializes a player with the given name
+     */
     public Player(String name) {
         this.name = name;
     }
@@ -19,18 +25,22 @@ public class Player {
         this("Strategist");
     }
 
+    @Override
     public void addCharacterToParty(IPlayableCharacter character) {
         party.addCharacter(character);
     }
 
+    @Override
     public void addWeaponToInventory(IWeapon weapon) {
         inventory.addWeapon(weapon);
     }
 
+    @Override
     public IWeapon getWeaponFromInventory(int inventorySlot) {
         return inventory.getWeapon(inventorySlot);
     }
 
+    @Override
     public void equipWeaponToCharacter(int inventorySlot, int partySlot) {
         IWeapon weapon = inventory.getWeapon(inventorySlot);
         IWeapon prevWeapon = party.getCharacter(partySlot).getEquippedWeapon();
@@ -42,14 +52,17 @@ public class Player {
 
     }
 
+    @Override
     public void swapInventorySlots(int slot1, int slot2) {
         inventory.swapItems(slot1, slot2);
     }
 
+    @Override
     public void charAttack(int partySlot, ICharacter character) {
         party.getCharacter(partySlot).attack(character);
     }
 
+    @Override
     public IPlayableCharacter getCharacterFromParty(int partySlot) {
         return party.getCharacter(partySlot);
     }
