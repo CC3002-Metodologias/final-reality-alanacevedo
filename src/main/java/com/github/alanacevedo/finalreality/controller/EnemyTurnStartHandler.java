@@ -6,19 +6,22 @@ import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-public class turnStartHandler implements PropertyChangeListener {
+/**
+ * This class is in charge of managing notifications of the start of a PC's turn.
+ */
+public class EnemyTurnStartHandler implements PropertyChangeListener {
     private final GameController controller;
 
-    public turnStartHandler(GameController controller) {
+    /**
+     * Initializes an instance of this handler
+     * @param controller GameController that will make use of this handler.
+     */
+    public EnemyTurnStartHandler(GameController controller) {
         this.controller = controller;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent event) {
-        if (event.getPropertyName().equals("enemyTurnStart")) {
             controller.enemyTurn((Enemy) event.getSource());
-        } else if (event.getPropertyName().equals("playerCharTurnStart")) {
-            controller.playerCharacterTurn((IPlayableCharacter) event.getSource());
-        }
     }
 }

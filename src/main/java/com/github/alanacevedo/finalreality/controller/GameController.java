@@ -24,9 +24,12 @@ public class GameController {
     private int alivePlayerCharacters = Settings.partySize;
     private boolean attending = false;
     private boolean battleActive = false;
-    private final addToQueueHandler queueHandler = new addToQueueHandler(this);
-    private final turnStartHandler turnStartHandler = new turnStartHandler(this);
-    private final DeathHandler deathHandler = new DeathHandler(this);
+    private final AddToQueueHandler queueHandler = new AddToQueueHandler(this);
+    private final PlayerCharTurnStartHandler playerCharTurnStartHandler = new PlayerCharTurnStartHandler(this);
+    private final PlayerCharDeathHandler playerCharDeathHandler = new PlayerCharDeathHandler(this);
+    private final EnemyTurnStartHandler enemyTurnStartHandler = new EnemyTurnStartHandler(this);
+    private final EnemyDeathHandler enemyDeathHandler = new EnemyDeathHandler(this);
+
 
     /**
      * Initializes a new game controller
@@ -39,10 +42,16 @@ public class GameController {
     /**
      * Adds this controller's handlers to a character listener list.
      */
-    public void addListeners(ICharacter character) {
-        character.addListener(queueHandler);
-        character.addListener(turnStartHandler);
-        character.addListener(deathHandler);
+    public void addListenersToPlayerChar(IPlayableCharacter character) {
+        character.setAddToQueueHandler(queueHandler);
+        character.setTurnStartHandler(playerCharTurnStartHandler);
+        character.setDeathHandler(playerCharDeathHandler);
+    }
+
+    public void addListenersToEnemy(Enemy enemy) {
+        enemy.setAddToQueueHandler(queueHandler);
+        enemy.setTurnStartHandler(enemyTurnStartHandler);
+        enemy.setDeathHandler(enemyDeathHandler);
     }
 
     /**
@@ -50,7 +59,7 @@ public class GameController {
      */
     public void addBlackMageToPlayerParty(String name) {
         BlackMage character = new BlackMage(name, turnsQueue);
-        addListeners(character);
+        addListenersToPlayerChar(character);
         player.addCharacterToParty(character);
     }
 
@@ -59,7 +68,7 @@ public class GameController {
      */
     public void addWhiteMageToPlayerParty(String name) {
         WhiteMage character = new WhiteMage(name, turnsQueue);
-        addListeners(character);
+        addListenersToPlayerChar(character);
         player.addCharacterToParty(character);
     }
 
@@ -68,7 +77,7 @@ public class GameController {
      */
     public void addKnightToPlayerParty(String name) {
         Knight character = new Knight(name, turnsQueue);
-        addListeners(character);
+        addListenersToPlayerChar(character);
         player.addCharacterToParty(character);
     }
 
@@ -77,7 +86,7 @@ public class GameController {
      */
     public void addThiefToPlayerParty(String name) {
         Thief character = new Thief(name, turnsQueue);
-        addListeners(character);
+        addListenersToPlayerChar(character);
         player.addCharacterToParty(character);
     }
 
@@ -86,7 +95,7 @@ public class GameController {
      */
     public void addEngineerToPlayerParty(String name) {
         Engineer character = new Engineer(name, turnsQueue);
-        addListeners(character);
+        addListenersToPlayerChar(character);
         player.addCharacterToParty(character);
     }
 
@@ -173,7 +182,7 @@ public class GameController {
             int def = randInt2 * lvl / 5;
 
             Enemy enemy = new Enemy(names[i], 10+i, turnsQueue, hp, 20, 70); // balance later
-            addListeners(enemy);
+            addListenersToEnemy(enemy);
             enemyGroup.addEnemy(enemy);
         }
         updateEnemyGroupSize();
@@ -188,24 +197,13 @@ public class GameController {
     }
 
     /**
-     * Returns the ammount of enemies still alive
-     */
-    public int getAliveEnemies() {
-        return aliveEnemies;
-    }
-
-    /**
-     * Returns the ammount of player characters still alive
-     */
-    public int getAlivePlayerCharacters() {
-        return alivePlayerCharacters;
-    }
-
-    /**
      * Reduces the aliveEnemies parameter by one.
      */
     public void enemyDeath() {
         aliveEnemies--;
+        if (aliveEnemies== 0) {
+            endBattle();
+        }
     }
 
     /**
@@ -213,6 +211,9 @@ public class GameController {
      */
     public void playerCharacterDeath() {
         alivePlayerCharacters--;
+        if (alivePlayerCharacters == 0) {
+            endBattle();
+        }
     }
 
     /**
@@ -262,7 +263,7 @@ public class GameController {
      * @param character character to be added.
      */
     public void addToQueue(ICharacter character) {
-        if (battleActive) {
+        if (battleActive && character.isAlive()) {
             character.addToQueue();
             if (!attending) {
                 attending = true;
