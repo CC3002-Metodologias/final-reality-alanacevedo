@@ -90,9 +90,31 @@ public interface ICharacter {
    */
   void heal(int ammount);
 
+  /**
+   * Notifies the game controller that this character is ready to be added to the turns queue.
+   */
   void addToQueue();
 
+  /**
+   * Notifies the game controller that this character is ready to take its turn.
+   */
   void takeTurn();
 
-  void addListener(PropertyChangeListener listener);
+  /**
+   * Sets this character's AddToQueueHandler
+   * @param listener handler to be set
+   */
+  void setAddToQueueHandler(PropertyChangeListener listener);
+
+  /**
+   * Sets this character's DeathHandler
+   * @param listener handler to be set
+   */
+  void setDeathHandler(PropertyChangeListener listener);
+
+  /**
+   * Sets this character's TurnStartHandler
+   * @param listener handler to be set
+   */
+  void setTurnStartHandler(PropertyChangeListener listener);
 }

@@ -1,6 +1,8 @@
 package com.github.alanacevedo.finalreality.model.character.player;
 
-public interface IMageCharacter {
+import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
+
+public interface IMageCharacter extends IPlayableCharacter {
 
     /**
      * @return

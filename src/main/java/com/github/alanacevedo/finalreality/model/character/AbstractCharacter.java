@@ -14,6 +14,8 @@ import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
+
 import static java.lang.Integer.max;
 
 /**
@@ -31,7 +33,9 @@ public abstract class AbstractCharacter implements ICharacter {
   protected int maxHP;
   protected int DEF;
   protected boolean aliveStatus;
-  protected PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+  protected PropertyChangeListener addToQueueHandler;
+  protected PropertyChangeListener deathHandler;
+  protected PropertyChangeListener turnStartHandler;
 
   /**
    * Initializes a character.
@@ -65,7 +69,7 @@ public abstract class AbstractCharacter implements ICharacter {
   }
 
   protected void notifyAddToQueue() {
-    listeners.firePropertyChange(new PropertyChangeEvent(this, "addToQueue", null, null));
+    addToQueueHandler.propertyChange(new PropertyChangeEvent(this, "addToQueue", null, null));
   }
 
   @Override
@@ -132,7 +136,15 @@ public abstract class AbstractCharacter implements ICharacter {
     }
   }
 
-  public void addListener(PropertyChangeListener listener) {
-    listeners.addPropertyChangeListener(listener);
+  public void setDeathHandler(PropertyChangeListener listener) {
+    deathHandler = listener;
+  }
+
+  public void setAddToQueueHandler(PropertyChangeListener listener) {
+    addToQueueHandler = listener;
+  }
+
+  public void setTurnStartHandler(PropertyChangeListener listener) {
+    turnStartHandler = listener;
   }
 }

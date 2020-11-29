@@ -78,12 +78,14 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
     if (this.HP <= 0) {
       this.HP = 0;
       this.aliveStatus = false;
-      listeners.firePropertyChange(new PropertyChangeEvent(this, "playerCharacterDeath", null, null));
+      if (deathHandler!=null) {
+        deathHandler.propertyChange(new PropertyChangeEvent(this, "playerCharacterDeath", null, null));
+      }
     }
   }
 
   public void takeTurn() {
-    listeners.firePropertyChange(new PropertyChangeEvent(this, "playerCharTurnStart", null, null));
+    turnStartHandler.propertyChange(new PropertyChangeEvent(this, "playerCharTurnStart", null, null));
 
   }
 
