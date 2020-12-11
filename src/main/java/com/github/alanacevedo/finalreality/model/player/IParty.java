@@ -22,4 +22,6 @@ public interface IParty {
      * Useful when adding characters to the party.
      */
     int getCurrentSize();
+
+    int getCharacterSlot(IPlayableCharacter character);
 }

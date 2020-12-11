@@ -1,8 +1,6 @@
 package com.github.alanacevedo.finalreality.controller.phase.command.actionSelectPhase;
 
-import com.github.alanacevedo.finalreality.controller.phase.AbstractPhase;
-import com.github.alanacevedo.finalreality.controller.phase.ActionSelectionPhase;
-import com.github.alanacevedo.finalreality.controller.phase.IPhase;
+import com.github.alanacevedo.finalreality.controller.phase.*;
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
@@ -18,6 +16,6 @@ public class InventoryCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
-
+        parentPhase.changePhase(new InventoryPhase(parentPhase.getController()));
     }
 }

@@ -11,9 +11,10 @@ public class ActionSelectionPhase extends AbstractPhase implements IPhase{
     //Select between Attack, Skill, Inventory
     //Skill solo tiene efecto si es un personaje mago
 
-    ICommand attackCommand;
-    ICommand magicCommand;
-    ICommand inventoryCommand;
+    protected AttackCommand attackCommand;
+    protected ICommand magicCommand;
+
+    protected InventoryCommand inventoryCommand;
 
 
     public ActionSelectionPhase(@NotNull GameController controller) {
@@ -23,4 +24,15 @@ public class ActionSelectionPhase extends AbstractPhase implements IPhase{
         inventoryCommand = new InventoryCommand(this);
     }
 
+    public AttackCommand getAttackCommand() {
+        return attackCommand;
+    }
+
+    public ICommand getMagicCommand() {
+        return magicCommand;
+    }
+
+    public InventoryCommand getInventoryCommand() {
+        return inventoryCommand;
+    }
 }

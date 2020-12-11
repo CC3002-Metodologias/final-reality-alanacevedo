@@ -80,4 +80,8 @@ public class Player implements IPlayer {
 
         return (name.equals(player.name)) && (inventory.equals(player.inventory)) && (party.equals(player.party));
     }
+
+    public int getCharacterSlot(IPlayableCharacter character) {
+       return party.getCharacterSlot(character);
+    }
 }

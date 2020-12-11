@@ -158,6 +158,11 @@ public class GameController {
         }
     }
 
+    public void equipWeaponToCurrentCharacter(int inventorySlot) {
+        int currentCharSlot = player.getCharacterSlot(currentChar);
+        player.equipWeaponToCharacter(inventorySlot, currentCharSlot);
+    }
+
     /**
      * Swaps weapons from the player's inventory. Can be used to move a weapon from a slot to
      * an empty one.
@@ -338,6 +343,32 @@ public class GameController {
     }
 
     /**
+     *
+     * public void playerCharacterTurn(IPlayableCharacter character) {
+     *         currentChar = character;
+     *         currentPhase.changePhase(new ActionSelectionPhase(this));
+     *     }
+     *
+     */
+
+    public void setCurrentChar(IPlayableCharacter character) {
+        currentChar = character;
+    }
+
+    public void attackEnemySlot(int enemySlot) {
+              Enemy enemy = enemyGroup.getEnemy(enemySlot);
+              if (enemy != null) {
+                  if (enemy.isAlive()) {
+                      currentChar.attack(enemy);
+                      //currentChar.waitTurn();    for the time being this will not be tested
+                      //endTurn();
+                  }
+              }
+          }
+
+
+
+    /**
      * Starts the battle. Makes all player characters and enemies start their turn timer.
      */
     public void startBattle() {
@@ -368,5 +399,8 @@ public class GameController {
 
     public void setPhase(IPhase phase) {
         currentPhase = phase;
+    }
+    public IPhase getPhase() {
+        return currentPhase;
     }
 }

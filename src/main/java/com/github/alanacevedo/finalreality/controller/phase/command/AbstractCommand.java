@@ -2,7 +2,7 @@ package com.github.alanacevedo.finalreality.controller.phase.command;
 
 import com.github.alanacevedo.finalreality.controller.phase.IPhase;
 
-public class AbstractCommand {
+public abstract class AbstractCommand {
     protected IPhase parentPhase;
 
     public AbstractCommand(IPhase phase) {
