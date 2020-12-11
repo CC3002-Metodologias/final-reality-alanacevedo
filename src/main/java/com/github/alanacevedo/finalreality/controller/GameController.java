@@ -1,4 +1,7 @@
 package com.github.alanacevedo.finalreality.controller;
+import com.github.alanacevedo.finalreality.controller.handler.*;
+import com.github.alanacevedo.finalreality.controller.phase.IPhase;
+import com.github.alanacevedo.finalreality.controller.phase.WaitingPhase;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
@@ -29,6 +32,8 @@ public class GameController {
     private final PlayerCharDeathHandler playerCharDeathHandler = new PlayerCharDeathHandler(this);
     private final EnemyTurnStartHandler enemyTurnStartHandler = new EnemyTurnStartHandler(this);
     private final EnemyDeathHandler enemyDeathHandler = new EnemyDeathHandler(this);
+    private IPhase currentPhase;
+    private IPlayableCharacter currentChar;
 
 
     /**
@@ -37,6 +42,7 @@ public class GameController {
     public GameController() {
         player = new Player(); // Can receive a name
         enemyGroup = new EnemyGroup();
+        currentPhase = new WaitingPhase(this);
     }
 
     /**
@@ -358,5 +364,9 @@ public class GameController {
      */
     public boolean isBattleActive() {
         return battleActive;
+    }
+
+    public void setPhase(IPhase phase) {
+        currentPhase = phase;
     }
 }
