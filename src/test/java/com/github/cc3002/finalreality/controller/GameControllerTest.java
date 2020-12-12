@@ -30,25 +30,25 @@ public class GameControllerTest {
     void addCharacterToPartyTest() {
         var turnsQueue = controller.getTurnsQueue();
         BlackMage blackMage = new BlackMage("maguito", turnsQueue);
-        controller.addBlackMageToPlayerParty("maguito");
+        controller.getCharacterFactory().addBlackMageToPlayerParty("maguito");
         assertEquals(controller.getPlayer().getCharacterFromParty(0), blackMage);
 
-        controller.addEngineerToPlayerParty("engi");
-        controller.addKnightToPlayerParty("caballero");
+        controller.getCharacterFactory().addEngineerToPlayerParty("engi");
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero");
         controller = new GameController();
-        controller.addWhiteMageToPlayerParty("maguito2");
-        controller.addThiefToPlayerParty("ladroncito");
+        controller.getCharacterFactory().addWhiteMageToPlayerParty("maguito2");
+        controller.getCharacterFactory().addThiefToPlayerParty("ladroncito");
     }
 
     @Test
     void addWeaponToInventoryTest() {
         Axe axe = new Axe("hacha", 30, 12);
-        controller.addAxeToPlayerInventory("hacha", 30, 12);
+        controller.getWeaponFactory().addAxeToPlayerInventory("hacha", 30, 12);
         assertEquals(controller.getPlayer().getWeaponFromInventory(0), axe);
-        controller.addBowToPlayerInventory("bow", 1, 1);
-        controller.addStaffToPlayerInventory("palo", 3, 2, 1);
-        controller.addSwordToPlayerInventory("palito", 12, 1);
-        controller.addKnifeToPlayerInventory("cuchillo", 12, 11);
+        controller.getWeaponFactory().addBowToPlayerInventory("bow", 1, 1);
+        controller.getWeaponFactory().addStaffToPlayerInventory("palo", 3, 2, 1);
+        controller.getWeaponFactory().addSwordToPlayerInventory("palito", 12, 1);
+        controller.getWeaponFactory().addKnifeToPlayerInventory("cuchillo", 12, 11);
         Knife knife = new Knife("cuchillo", 12, 11);
         assertEquals(controller.getPlayer().getWeaponFromInventory(4), knife);
         controller.swapInventorySlots(0, 4);
@@ -57,9 +57,9 @@ public class GameControllerTest {
 
     @Test
     void attackTest() {
-        controller.spawnEnemyGroup(40, 3, "uno", "dos", "tres");
-        controller.addSwordToPlayerInventory("espada", 200, 10);
-        controller.addKnightToPlayerParty("caballero");
+        controller.getCharacterFactory().spawnEnemyGroup(40, 3, "uno", "dos", "tres");
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada", 200, 10);
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero");
         controller.equipWeaponToCharacter(0,0);
 
         controller.EnemyAttackPChar(0, 0);
@@ -76,13 +76,13 @@ public class GameControllerTest {
 
     @Test
     void addToQueueHandlerTest() {
-        controller.spawnEnemyGroup(30, 3, "uno", "dos", "tres");
-        controller.addSwordToPlayerInventory("espada1", 50, 14);
-        controller.addSwordToPlayerInventory("espada2", 70, 15);
-        controller.addSwordToPlayerInventory("espada3", 80, 30);
-        controller.addKnightToPlayerParty("caballero1");
-        controller.addKnightToPlayerParty("caballero2");
-        controller.addKnightToPlayerParty("caballero3");
+        controller.getCharacterFactory().spawnEnemyGroup(30, 3, "uno", "dos", "tres");
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada1", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada2", 70, 15);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada3", 80, 30);
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero1");
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero2");
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero3");
         controller.equipWeaponToCharacter(0,0);
         controller.equipWeaponToCharacter(1,1);
         controller.equipWeaponToCharacter(2,2);
@@ -114,13 +114,13 @@ public class GameControllerTest {
 
     @Test
     void deathHandlerTest() {
-        controller.spawnEnemyGroup(30, 3, "uno", "dos", "tres");
-        controller.addSwordToPlayerInventory("espada1", 50, 14);
-        controller.addSwordToPlayerInventory("espada2", 70, 15);
-        controller.addSwordToPlayerInventory("espada3", 80, 30);
-        controller.addKnightToPlayerParty("caballero1");
-        controller.addKnightToPlayerParty("caballero2");
-        controller.addKnightToPlayerParty("caballero3");
+        controller.getCharacterFactory().spawnEnemyGroup(30, 3, "uno", "dos", "tres");
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada1", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada2", 70, 15);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada3", 80, 30);
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero1");
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero2");
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero3");
         controller.equipWeaponToCharacter(0,0);
         controller.equipWeaponToCharacter(1,1);
         controller.equipWeaponToCharacter(2,2);

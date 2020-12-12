@@ -14,6 +14,6 @@ public class NullCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
-        
+
     }
 }

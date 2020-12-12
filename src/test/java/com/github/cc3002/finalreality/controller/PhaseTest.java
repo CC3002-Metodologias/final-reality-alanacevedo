@@ -29,7 +29,7 @@ public class PhaseTest {
     @Test
     void ActionSelectPhaseTest() {
         controller.setPhase(new ActionSelectionPhase(controller));
-        controller.addKnightToPlayerParty("a");
+        controller.getCharacterFactory().addKnightToPlayerParty("a");
         controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(0));
         assertTrue(controller.getPhase() instanceof ActionSelectionPhase);
         var phase0 = (ActionSelectionPhase) controller.getPhase();
@@ -51,9 +51,9 @@ public class PhaseTest {
 
     @Test
     void attackTargetSelectionPhaseTest() {
-        controller.spawnEnemyGroup(30, 3, "uno", "dos", "tres");
-        controller.addSwordToPlayerInventory("espada1", 50, 14);
-        controller.addKnightToPlayerParty("caballero1");
+        controller.getCharacterFactory().spawnEnemyGroup(30, 3, "uno", "dos", "tres");
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada1", 50, 14);
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero1");
         controller.equipWeaponToCharacter(0,0);
 
         controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(0));
@@ -89,12 +89,12 @@ public class PhaseTest {
 
     @Test
     void InventoryEquipTest () {
-        controller.addSwordToPlayerInventory("espada0", 50, 14);
-        controller.addSwordToPlayerInventory("espada1", 50, 14);
-        controller.addSwordToPlayerInventory("espada2", 50, 14);
-        controller.addSwordToPlayerInventory("espada3", 50, 14);
-        controller.addSwordToPlayerInventory("espada4", 50, 14);
-        controller.addKnightToPlayerParty("caballero1");
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada0", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada1", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada2", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada3", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada4", 50, 14);
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero1");
 
         controller.setPhase(new InventoryPhase(controller));
         controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(0));
@@ -143,12 +143,12 @@ public class PhaseTest {
 
     @Test
     void InventorySwapPhaseTest () {
-        controller.addSwordToPlayerInventory("espada0", 50, 14);
-        controller.addSwordToPlayerInventory("espada1", 50, 14);
-        controller.addSwordToPlayerInventory("espada2", 50, 14);
-        controller.addSwordToPlayerInventory("espada3", 50, 14);
-        controller.addSwordToPlayerInventory("espada4", 50, 14);
-        controller.addKnightToPlayerParty("caballero1");
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada0", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada1", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada2", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada3", 50, 14);
+        controller.getWeaponFactory().addSwordToPlayerInventory("espada4", 50, 14);
+        controller.getCharacterFactory().addKnightToPlayerParty("caballero1");
         controller.setPhase(new InventoryPhase(controller));
         controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(0));
         Sword sword1 = new Sword("espada1", 50, 14);
@@ -195,8 +195,8 @@ public class PhaseTest {
     @Test
     void MagicPhaseTest() {
         controller.setPhase(new ActionSelectionPhase(controller));
-        controller.addKnightToPlayerParty("hola");
-        controller.addWhiteMageToPlayerParty("chao");
+        controller.getCharacterFactory().addKnightToPlayerParty("hola");
+        controller.getCharacterFactory().addWhiteMageToPlayerParty("chao");
         controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(0));
         assertTrue(controller.getCurrentChar() instanceof Knight);
         ((ActionSelectionPhase) controller.getPhase()).getMagicCommand().doAction();
@@ -213,11 +213,11 @@ public class PhaseTest {
 
     @Test
     void MagicTargetSelectionPhaseTest() {
-        controller.spawnEnemyGroup(30, 3, "uno", "dos", "tres");
-        controller.addBlackMageToPlayerParty("magonegro");
-        controller.addWhiteMageToPlayerParty("magoblanco");
-        controller.addStaffToPlayerInventory("staff0", 1, 1, 40);
-        controller.addStaffToPlayerInventory("staff1", 1, 1, 40);
+        controller.getCharacterFactory().spawnEnemyGroup(30, 3, "uno", "dos", "tres");
+        controller.getCharacterFactory().addBlackMageToPlayerParty("magonegro");
+        controller.getCharacterFactory().addWhiteMageToPlayerParty("magoblanco");
+        controller.getWeaponFactory().addStaffToPlayerInventory("staff0", 1, 1, 40);
+        controller.getWeaponFactory().addStaffToPlayerInventory("staff1", 1, 1, 40);
         controller.equipWeaponToCharacter(0, 0);
         controller.equipWeaponToCharacter(1, 1);
         assertNotNull(controller.getPlayer().getCharacterFromParty(0).getEquippedWeapon());
