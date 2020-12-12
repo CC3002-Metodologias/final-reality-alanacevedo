@@ -92,4 +92,8 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
 
   }
 
+  @Override
+  public boolean isMage() {
+    return false;
+  }
 }

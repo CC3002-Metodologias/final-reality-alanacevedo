@@ -2,39 +2,34 @@ package com.github.alanacevedo.finalreality.controller.phase;
 
 import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.controller.Settings;
-import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
-import com.github.alanacevedo.finalreality.controller.phase.command.inventoryPhase.*;
+import com.github.alanacevedo.finalreality.controller.phase.command.inventorySwapPhase.*;
 import org.jetbrains.annotations.NotNull;
 
-// Equip or swap inventory items
-
-public class InventoryPhase extends AbstractPhase implements IPhase{
-
-
-    protected ICommand goBackCommand;
-
-    protected HighlightSlotCommand highlightCommand0;
-    protected HighlightSlotCommand highlightCommand1;
-    protected HighlightSlotCommand highlightCommand2;
-    protected EquipCommand equipCommand;
-    protected ScrollDownCommand scrollDownCommand;
-    protected ScrollUpCommand scrollUpCommand;
-    protected SwapCommand swapCommand;
+public class InventorySwapPhase extends AbstractPhase implements IPhase {
+    private int firstSlot;
     private int currentTopSlot;
-    private final int maxSlot = Settings.inventorySize - 3; // 3 because there will be 3 buttons
-    int highLightedSlot = -1;
+    private int highlightedSlot;
+    private final int maxSlot = Settings.inventorySize - 3;
+    HighlightSlotCommand highlightCommand0;
+    HighlightSlotCommand highlightCommand1;
+    HighlightSlotCommand highlightCommand2;
+    ScrollDownCommand scrollDownCommand;
+    ScrollUpCommand scrollUpCommand;
+    GoBackCommand goBackCommand;
+    ConfirmSwapCommand confirmSwapCommand;
 
-    public InventoryPhase(@NotNull GameController controller) {
+    public InventorySwapPhase(@NotNull GameController controller, int firstSlot) {
         super(controller);
-        goBackCommand = new GoBackCommand(this);
+        this.firstSlot = firstSlot;
+        highlightedSlot = -1;
+        currentTopSlot = 0;
         highlightCommand0 = new HighlightSlotCommand(this, 0);
         highlightCommand1 = new HighlightSlotCommand(this, 1);
         highlightCommand2 = new HighlightSlotCommand(this, 2);
-        equipCommand = new EquipCommand(this);
         scrollDownCommand = new ScrollDownCommand(this);
         scrollUpCommand = new ScrollUpCommand(this);
-        swapCommand = new SwapCommand(this);
-        currentTopSlot = 0;
+        goBackCommand = new GoBackCommand(this);
+        confirmSwapCommand = new ConfirmSwapCommand(this);
     }
 
     public void scrollUp() {
@@ -54,16 +49,21 @@ public class InventoryPhase extends AbstractPhase implements IPhase{
             currentTopSlot++;
         }
     }
-    public ICommand getGoBackCommand() {
-        return goBackCommand;
-    }
 
-    public void setHighLightedSlot(int slot) {
-        highLightedSlot = slot;
+    public int getFirstSlot() {
+        return firstSlot;
     }
 
     public int getHighlightedSlot() {
-        return highLightedSlot;
+        return highlightedSlot;
+    }
+
+    public ConfirmSwapCommand getConfirmSwapCommand() {
+        return confirmSwapCommand;
+    }
+
+    public GoBackCommand getGoBackCommand() {
+        return goBackCommand;
     }
 
     public HighlightSlotCommand getHighlightCommand0() {
@@ -78,10 +78,6 @@ public class InventoryPhase extends AbstractPhase implements IPhase{
         return highlightCommand2;
     }
 
-    public EquipCommand getEquipCommand() {
-        return equipCommand;
-    }
-
     public ScrollDownCommand getScrollDownCommand() {
         return scrollDownCommand;
     }
@@ -90,9 +86,7 @@ public class InventoryPhase extends AbstractPhase implements IPhase{
         return scrollUpCommand;
     }
 
-    public SwapCommand getSwapCommand() {
-        return swapCommand;
+    public void setHighlightedSlot(int highlightedSlot) {
+        this.highlightedSlot = highlightedSlot;
     }
-
-
 }

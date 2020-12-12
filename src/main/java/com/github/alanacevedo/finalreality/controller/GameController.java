@@ -355,6 +355,10 @@ public class GameController {
         currentChar = character;
     }
 
+    public IPlayableCharacter getCurrentChar() {
+        return currentChar;
+    }
+
     public void attackEnemySlot(int enemySlot) {
               Enemy enemy = enemyGroup.getEnemy(enemySlot);
               if (enemy != null) {

@@ -19,7 +19,10 @@ public class EquipCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
-        parentPhase.getController().equipWeaponToCurrentCharacter(((InventoryPhase) parentPhase).getHighLightedSlot());
+        int slot = ((InventoryPhase) parentPhase).getHighlightedSlot();
+        if (slot != -1) {
+            parentPhase.getController().equipWeaponToCurrentCharacter(slot);
+        }
     }
 
 }

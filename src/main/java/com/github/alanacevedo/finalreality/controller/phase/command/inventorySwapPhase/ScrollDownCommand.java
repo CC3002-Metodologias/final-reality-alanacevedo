@@ -1,7 +1,8 @@
-package com.github.alanacevedo.finalreality.controller.phase.command.inventoryPhase;
+package com.github.alanacevedo.finalreality.controller.phase.command.inventorySwapPhase;
 
 import com.github.alanacevedo.finalreality.controller.phase.IPhase;
-import com.github.alanacevedo.finalreality.controller.phase.InventoryPhase;
+
+import com.github.alanacevedo.finalreality.controller.phase.InventorySwapPhase;
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
@@ -18,6 +19,6 @@ public class ScrollDownCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
-        ((InventoryPhase) parentPhase).scrollDown();
+        ((InventorySwapPhase) parentPhase).scrollDown();
     }
 }

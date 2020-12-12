@@ -1,7 +1,7 @@
 package com.github.alanacevedo.finalreality.controller.phase.command.magicSelectionPhase;
 
+import com.github.alanacevedo.finalreality.controller.phase.ActionSelectionPhase;
 import com.github.alanacevedo.finalreality.controller.phase.IPhase;
-import com.github.alanacevedo.finalreality.controller.phase.mageVariants.MageActionSelectionPhase;
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
@@ -17,6 +17,6 @@ public class GoBackCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
-        parentPhase.changePhase(new MageActionSelectionPhase(parentPhase.getController()));
+        parentPhase.changePhase(new ActionSelectionPhase(parentPhase.getController()));
     }
 }

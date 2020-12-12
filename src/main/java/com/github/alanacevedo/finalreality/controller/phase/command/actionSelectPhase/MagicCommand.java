@@ -18,6 +18,8 @@ public class MagicCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
-        parentPhase.changePhase(new MagicSelectionPhase(parentPhase.getController()));
+        if (parentPhase.getController().getCurrentChar().isMage()) {
+            parentPhase.changePhase(new MagicSelectionPhase(parentPhase.getController()));
+        }
     }
 }

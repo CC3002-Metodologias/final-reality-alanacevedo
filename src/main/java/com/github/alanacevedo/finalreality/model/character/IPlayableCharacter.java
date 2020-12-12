@@ -25,4 +25,6 @@ public interface IPlayableCharacter extends ICharacter {
      * @param weapon new value
      */
     void setEquippedWeapon(AbstractWeapon weapon);
+
+    boolean isMage();
 }

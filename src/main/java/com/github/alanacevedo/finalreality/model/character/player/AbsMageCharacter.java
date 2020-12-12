@@ -40,4 +40,9 @@ public abstract class AbsMageCharacter extends AbsPlayerCharacter implements IMa
     public void spendMP(int ammount) {
         this.MP -= ammount;
     }
+
+    @Override
+    public boolean isMage() {
+        return true;
+    }
 }
