@@ -15,10 +15,6 @@ import java.util.concurrent.BlockingQueue;
  */
 public class WhiteMage extends AbsMageCharacter {
 
-    private Cure cureSpell;
-    private Poison poisonSpell;
-    private Paralisis paralisisSpell;
-
     /**
      * Initializes a White Mage character
      *
@@ -37,9 +33,9 @@ public class WhiteMage extends AbsMageCharacter {
     public WhiteMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                      int HP, int DEF, int MP) {
         super(name, turnsQueue, HP, DEF, MP);
-        cureSpell = new Cure(this);
-        poisonSpell = new Poison(this);
-        paralisisSpell = new Paralisis(this);
+        spellBook.addSpell(new Cure(this));
+        spellBook.addSpell(new Poison(this));
+        spellBook.addSpell(new Paralisis(this));
     }
 
     public WhiteMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue) {
@@ -54,6 +50,7 @@ public class WhiteMage extends AbsMageCharacter {
     }
 
 
+    //falta incluir spellbook
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -74,15 +71,4 @@ public class WhiteMage extends AbsMageCharacter {
         weapon.equipToWhiteMage(this);
     }
 
-    public Cure getCureSpell() {
-        return cureSpell;
-    }
-
-    public Poison getPoisonSpell() {
-        return poisonSpell;
-    }
-
-    public Paralisis getParalisisSpell() {
-        return paralisisSpell;
-    }
 }

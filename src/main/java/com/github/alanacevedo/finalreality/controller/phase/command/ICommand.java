@@ -1,6 +1,6 @@
 package com.github.alanacevedo.finalreality.controller.phase.command;
 
-import com.github.alanacevedo.finalreality.controller.phase.IPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
 
 public interface ICommand {
     // the display will have different buttons, with each having a command

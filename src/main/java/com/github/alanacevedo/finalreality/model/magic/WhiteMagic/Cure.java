@@ -7,6 +7,7 @@ import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 public class Cure implements IMagicSpell {
     IMageCharacter mage;
     int mpCost = 15;
+    final String name = "Cure";
     public Cure(IMageCharacter character) {
         mage = character;
     }
@@ -18,5 +19,10 @@ public class Cure implements IMagicSpell {
             character.heal(healAmmount);
             mage.spendMP(mpCost);
         }
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

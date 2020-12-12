@@ -4,8 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.controller.Settings;
-import com.github.alanacevedo.finalreality.controller.phase.*;
+import com.github.alanacevedo.finalreality.controller.phase.phase.*;
+import com.github.alanacevedo.finalreality.controller.phase.phase.attack.AttackTargetSelectionPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventoryPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventorySwapPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.magic.MagicSelectionPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.magic.MagicTargetSelectionPhase;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
+import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.Knight;
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.WhiteMage;
 import com.github.alanacevedo.finalreality.model.weapon.Sword;
@@ -23,6 +29,8 @@ public class PhaseTest {
     @Test
     void ActionSelectPhaseTest() {
         controller.setPhase(new ActionSelectionPhase(controller));
+        controller.addKnightToPlayerParty("a");
+        controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(0));
         assertTrue(controller.getPhase() instanceof ActionSelectionPhase);
         var phase0 = (ActionSelectionPhase) controller.getPhase();
         phase0.getAttackCommand().doAction();
@@ -64,18 +72,18 @@ public class PhaseTest {
         phase0 = (ActionSelectionPhase) controller.getPhase();
         phase0.getAttackCommand().doAction();
         phase1 = (AttackTargetSelectionPhase) controller.getPhase();
-        assertEquals(controller.getEnemyGroup().getEnemy(1).getHP(), controller.getEnemyGroup().getEnemy(0).getMaxHP());
+        assertEquals(controller.getEnemyGroup().getEnemy(1).getHP(), controller.getEnemyGroup().getEnemy(1).getMaxHP());
         phase1.getAttackCommand1().doAction();
-        assertNotEquals(controller.getEnemyGroup().getEnemy(1).getHP(), controller.getEnemyGroup().getEnemy(0).getMaxHP());
+        assertNotEquals(controller.getEnemyGroup().getEnemy(1).getHP(), controller.getEnemyGroup().getEnemy(1).getMaxHP());
 
         controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(0));
         controller.setPhase(new ActionSelectionPhase(controller));
         phase0 = (ActionSelectionPhase) controller.getPhase();
         phase0.getAttackCommand().doAction();
         phase1 = (AttackTargetSelectionPhase) controller.getPhase();
-        assertEquals(controller.getEnemyGroup().getEnemy(2).getHP(), controller.getEnemyGroup().getEnemy(0).getMaxHP());
+        assertEquals(controller.getEnemyGroup().getEnemy(2).getHP(), controller.getEnemyGroup().getEnemy(2).getMaxHP());
         phase1.getAttackCommand2().doAction();
-        assertNotEquals(controller.getEnemyGroup().getEnemy(2).getHP(), controller.getEnemyGroup().getEnemy(0).getMaxHP());
+        assertNotEquals(controller.getEnemyGroup().getEnemy(2).getHP(), controller.getEnemyGroup().getEnemy(2).getMaxHP());
 
     }
 
@@ -201,5 +209,38 @@ public class PhaseTest {
         assertTrue(controller.getCurrentChar().isMage());
         ((ActionSelectionPhase) controller.getPhase()).getMagicCommand().doAction();
         assertTrue(controller.getPhase() instanceof MagicSelectionPhase);
+    }
+
+    @Test
+    void MagicTargetSelectionPhaseTest() {
+        controller.spawnEnemyGroup(30, 3, "uno", "dos", "tres");
+        controller.addBlackMageToPlayerParty("magonegro");
+        controller.addWhiteMageToPlayerParty("magoblanco");
+        controller.addStaffToPlayerInventory("staff0", 1, 1, 40);
+        controller.addStaffToPlayerInventory("staff1", 1, 1, 40);
+        controller.equipWeaponToCharacter(0, 0);
+        controller.equipWeaponToCharacter(1, 1);
+        assertNotNull(controller.getPlayer().getCharacterFromParty(0).getEquippedWeapon());
+        assertNotNull(controller.getPlayer().getCharacterFromParty(1).getEquippedWeapon());
+
+        controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(0)); //BlackMage
+        controller.setPhase(new MagicSelectionPhase(controller));
+        ((MagicSelectionPhase) controller.getPhase()).getSpellCommand0().doAction(); // Select fire
+        assertTrue(controller.getPhase() instanceof MagicTargetSelectionPhase);
+
+        ((MagicTargetSelectionPhase) controller.getPhase()).getCastCommand0().doAction(); // cast on enemy 0
+        Enemy enemy0 = controller.getEnemyGroup().getEnemy(0);
+        assertNotEquals(enemy0.getHP(), enemy0.getMaxHP());
+
+        // Now we test for healing
+        assertTrue(enemy0.isAlive());
+        int oldHp = enemy0.getHP();
+        controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(1));
+        controller.setPhase(new MagicSelectionPhase(controller));
+        ((MagicSelectionPhase) controller.getPhase()).getSpellCommand0().doAction(); // select Cure
+        assertTrue(controller.getPhase() instanceof MagicTargetSelectionPhase);
+
+        ((MagicTargetSelectionPhase) controller.getPhase()).getCastCommand0().doAction(); // cast on enemy 0
+        assertTrue(enemy0.getHP() > oldHp);
     }
 }

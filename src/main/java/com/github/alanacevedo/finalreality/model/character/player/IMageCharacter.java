@@ -1,6 +1,7 @@
 package com.github.alanacevedo.finalreality.model.character.player;
 
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
+import com.github.alanacevedo.finalreality.model.magic.SpellBook;
 
 public interface IMageCharacter extends IPlayableCharacter {
 
@@ -14,4 +15,7 @@ public interface IMageCharacter extends IPlayableCharacter {
      * Spends this character's MP.
      */
     void spendMP(int ammount);
+
+    SpellBook getSpellBook();
+
 }

@@ -14,8 +14,6 @@ import java.util.concurrent.BlockingQueue;
  */
 
 public class BlackMage extends AbsMageCharacter {
-    Fire fireSpell;
-    Thunder thunderSpell;
 
     /**
      * Initializes a Black Mage character
@@ -33,8 +31,8 @@ public class BlackMage extends AbsMageCharacter {
 
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue, int HP, int DEF, int MP){
         super(name, turnsQueue, HP, DEF, MP);
-        fireSpell = new Fire(this);
-        thunderSpell = new Thunder(this);
+        spellBook.addSpell(new Fire(this));
+        spellBook.addSpell(new Thunder(this));
     }
 
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue){
@@ -67,11 +65,4 @@ public class BlackMage extends AbsMageCharacter {
         weapon.equipToBlackMage(this);
     }
 
-    public Fire getFireSpell() {
-        return fireSpell;
-    }
-
-    public Thunder getThunderSpell() {
-        return thunderSpell;
-    }
 }

@@ -7,6 +7,7 @@ import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 public class Poison implements IMagicSpell {
     IMageCharacter mage;
     int mpCost = 40;
+    final String name = "Poison";
 
     public Poison(IMageCharacter character) {
         mage = character;
@@ -15,5 +16,10 @@ public class Poison implements IMagicSpell {
     @Override
     public void cast(ICharacter character) {
 
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

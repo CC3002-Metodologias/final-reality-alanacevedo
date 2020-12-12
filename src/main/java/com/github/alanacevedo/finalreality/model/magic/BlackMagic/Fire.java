@@ -7,6 +7,7 @@ import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 public class Fire implements IMagicSpell {
     IMageCharacter mage;
     int mpCost = 15;
+    final String name = "Fire";
 
     public Fire(IMageCharacter mageCharacter) {
         mage = mageCharacter;
@@ -20,5 +21,10 @@ public class Fire implements IMagicSpell {
             mage.spendMP(mpCost);
             //20% chance burn
         }
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

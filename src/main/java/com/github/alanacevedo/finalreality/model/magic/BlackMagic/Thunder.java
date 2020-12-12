@@ -7,7 +7,7 @@ import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 public class Thunder implements IMagicSpell {
     IMageCharacter mage;
     int mpCost = 15;
-
+    final String name = "Thunder";
     public Thunder(IMageCharacter mageCharacter) {
         mage = mageCharacter;
     }
@@ -20,5 +20,10 @@ public class Thunder implements IMagicSpell {
             mage.spendMP(mpCost);
             //30% chance thunder
         }
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

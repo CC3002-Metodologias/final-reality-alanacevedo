@@ -1,13 +1,14 @@
 package com.github.alanacevedo.finalreality.controller;
 import com.github.alanacevedo.finalreality.controller.handler.*;
-import com.github.alanacevedo.finalreality.controller.phase.IPhase;
-import com.github.alanacevedo.finalreality.controller.phase.WaitingPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.WaitingPhase;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.enemy.EnemyGroup;
 import com.github.alanacevedo.finalreality.model.character.enemy.IEnemyGroup;
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
+import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 import com.github.alanacevedo.finalreality.model.player.IPlayer;
 import com.github.alanacevedo.finalreality.model.player.Player;
 import com.github.alanacevedo.finalreality.model.weapon.*;
@@ -370,6 +371,16 @@ public class GameController {
               }
           }
 
+    public void castSpellOnEnemySlot(IMagicSpell spell, int enemySlot) {
+        Enemy enemy = enemyGroup.getEnemy(enemySlot);
+        if (enemy != null) {
+            if (enemy.isAlive()) {
+                spell.cast(enemy);
+                //currentChar.waitTurn();    for the time being this will not be tested
+                //endTurn();
+            }
+        }
+    }
 
 
     /**

@@ -1,6 +1,6 @@
 package com.github.alanacevedo.finalreality.controller.phase.command;
 
-import com.github.alanacevedo.finalreality.controller.phase.IPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
 
 public class NullCommand extends AbstractCommand implements ICommand {
     public NullCommand(IPhase phase) {
@@ -14,6 +14,6 @@ public class NullCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
-        ;
+        
     }
 }

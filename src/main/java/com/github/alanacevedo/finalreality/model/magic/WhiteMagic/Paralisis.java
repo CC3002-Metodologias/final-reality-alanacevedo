@@ -7,6 +7,7 @@ import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 public class Paralisis implements IMagicSpell {
     IMageCharacter mage;
     int mpCost = 25;
+    final String name = "Paralisis";
 
     public Paralisis(IMageCharacter character) {
         mage = character;
@@ -14,6 +15,11 @@ public class Paralisis implements IMagicSpell {
 
     @Override
     public void cast(ICharacter character) {
-        
+
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

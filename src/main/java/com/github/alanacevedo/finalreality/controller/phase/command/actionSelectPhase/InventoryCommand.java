@@ -1,8 +1,9 @@
 package com.github.alanacevedo.finalreality.controller.phase.command.actionSelectPhase;
 
-import com.github.alanacevedo.finalreality.controller.phase.*;
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
+import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventoryPhase;
 
 public class InventoryCommand extends AbstractCommand implements ICommand {
     public InventoryCommand(IPhase phase) {
