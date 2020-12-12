@@ -1,5 +1,6 @@
 package com.github.alanacevedo.finalreality.model.character.player;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
+import com.github.alanacevedo.finalreality.model.magic.SpellBook;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.BlockingQueue;
@@ -10,6 +11,7 @@ import java.util.concurrent.BlockingQueue;
 public abstract class AbsMageCharacter extends AbsPlayerCharacter implements IMageCharacter {
 
     protected int MP;
+    protected SpellBook spellBook;
 
     /**
      * Initializes a mage character
@@ -28,6 +30,7 @@ public abstract class AbsMageCharacter extends AbsPlayerCharacter implements IMa
                              int HP, int DEF, int MP) {
         super(name, turnsQueue, HP, DEF);
         this.MP = MP;
+        spellBook = new SpellBook();
     }
 
 
@@ -39,5 +42,15 @@ public abstract class AbsMageCharacter extends AbsPlayerCharacter implements IMa
     @Override
     public void spendMP(int ammount) {
         this.MP -= ammount;
+    }
+
+    @Override
+    public boolean isMage() {
+        return true;
+    }
+
+    @Override
+    public SpellBook getSpellBook() {
+        return spellBook;
     }
 }

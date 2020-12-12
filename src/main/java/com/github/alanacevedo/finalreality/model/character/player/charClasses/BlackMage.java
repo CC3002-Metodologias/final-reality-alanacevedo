@@ -1,9 +1,8 @@
 package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 
-import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
-import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
+import com.github.alanacevedo.finalreality.model.magic.BlackMagic.*;
 import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,22 +29,21 @@ public class BlackMage extends AbsMageCharacter {
      *      this characters' magic points (mana points)
      */
 
-    public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
-                     int HP, int DEF, int MP){
+    public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue, int HP, int DEF, int MP){
         super(name, turnsQueue, HP, DEF, MP);
+        spellBook.addSpell(new Fire(this));
+        spellBook.addSpell(new Thunder(this));
     }
 
     public BlackMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue){
         this(name, turnsQueue, 80, 10, 100);
     }
 
-
     @Override
     public int hashCode() {
         return Objects.hash(getHP(), getDEF(),
                 getMP(), getName());
     }
-
 
     @Override
     public boolean equals(final Object o) {
@@ -62,38 +60,9 @@ public class BlackMage extends AbsMageCharacter {
                 && getMP() == that.getMP();
     }
 
-    // Equipamiento de armas
-
     @Override
     public void equip(IWeapon weapon) {
         weapon.equipToBlackMage(this);
     }
 
-    /**
-     * Casts Thunder into a character
-     * @param character character affected by the spell
-     */
-    public void castThunder(AbstractCharacter character) {
-        int mpCost = 15;
-        if (aliveStatus && character.isAlive() && this.equippedWeapon != null && this.getMP() >= mpCost){
-            int magicDamage = this.equippedWeapon.getMagicDamage();
-            character.receiveDamage(magicDamage);
-            this.spendMP(mpCost);
-            //30% chance thunder
-        }
-    }
-
-    /**
-     * Casts Fire into a character
-     * @param character character affected by the spell
-     */
-    public void castFire(AbstractCharacter character) {
-        int mpCost = 15;
-        if (aliveStatus && character.isAlive() && this.equippedWeapon != null && this.getMP() >= mpCost){
-            int magicDamage = this.equippedWeapon.getMagicDamage();
-            character.receiveDamage(magicDamage);
-            this.spendMP(mpCost);
-            //20% chance burn
-        }
-    }
 }

@@ -53,8 +53,11 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
   @Override
   public void waitTurn(){
     super.waitTurn();
-    scheduledExecutor
-            .schedule(this::notifyAddToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+    if (this.getEquippedWeapon() == null) {
+      scheduledExecutor.schedule(this::notifyAddToQueue, 1/10, TimeUnit.SECONDS);
+    } else {
+      scheduledExecutor.schedule(this::notifyAddToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+    }
   }
 
   /**
@@ -89,4 +92,8 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
 
   }
 
+  @Override
+  public boolean isMage() {
+    return false;
+  }
 }

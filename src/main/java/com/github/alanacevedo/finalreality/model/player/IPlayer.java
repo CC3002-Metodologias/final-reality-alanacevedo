@@ -55,4 +55,5 @@ public interface IPlayer {
      */
     void charAttack(int partySlot, ICharacter character);
 
+    int getCharacterSlot(IPlayableCharacter currentChar);
 }

@@ -1,4 +1,5 @@
-package com.github.alanacevedo.finalreality.controller;
+package com.github.alanacevedo.finalreality.controller.handler;
+import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -1,10 +1,16 @@
 package com.github.alanacevedo.finalreality.controller;
+import com.github.alanacevedo.finalreality.controller.factory.CharacterFactory;
+import com.github.alanacevedo.finalreality.controller.factory.WeaponFactory;
+import com.github.alanacevedo.finalreality.controller.handler.*;
+import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.WaitingPhase;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.enemy.EnemyGroup;
 import com.github.alanacevedo.finalreality.model.character.enemy.IEnemyGroup;
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
+import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 import com.github.alanacevedo.finalreality.model.player.IPlayer;
 import com.github.alanacevedo.finalreality.model.player.Player;
 import com.github.alanacevedo.finalreality.model.weapon.*;
@@ -29,6 +35,10 @@ public class GameController {
     private final PlayerCharDeathHandler playerCharDeathHandler = new PlayerCharDeathHandler(this);
     private final EnemyTurnStartHandler enemyTurnStartHandler = new EnemyTurnStartHandler(this);
     private final EnemyDeathHandler enemyDeathHandler = new EnemyDeathHandler(this);
+    private final CharacterFactory characterFactory = new CharacterFactory(this);
+    private final WeaponFactory weaponFactory = new WeaponFactory(this);
+    private IPhase currentPhase;
+    private IPlayableCharacter currentChar;
 
 
     /**
@@ -37,6 +47,7 @@ public class GameController {
     public GameController() {
         player = new Player(); // Can receive a name
         enemyGroup = new EnemyGroup();
+        currentPhase = new WaitingPhase(this);
     }
 
     /**
@@ -54,92 +65,13 @@ public class GameController {
         enemy.setDeathHandler(enemyDeathHandler);
     }
 
-    /**
-     * Creates a Black Mage with the given name and adds it to the player's party.
-     */
-    public void addBlackMageToPlayerParty(String name) {
-        BlackMage character = new BlackMage(name, turnsQueue);
-        addListenersToPlayerChar(character);
-        player.addCharacterToParty(character);
+    public CharacterFactory getCharacterFactory() {
+        return characterFactory;
     }
 
-    /**
-     * Creates a White Mage with the given name and adds it to the player's party.
-     */
-    public void addWhiteMageToPlayerParty(String name) {
-        WhiteMage character = new WhiteMage(name, turnsQueue);
-        addListenersToPlayerChar(character);
-        player.addCharacterToParty(character);
+    public WeaponFactory getWeaponFactory() {
+        return weaponFactory;
     }
-
-    /**
-     * Creates a Knight with the given name and adds it to the player's party.
-     */
-    public void addKnightToPlayerParty(String name) {
-        Knight character = new Knight(name, turnsQueue);
-        addListenersToPlayerChar(character);
-        player.addCharacterToParty(character);
-    }
-
-    /**
-     * Creates a Thief with the given name and adds it to the player's party.
-     */
-    public void addThiefToPlayerParty(String name) {
-        Thief character = new Thief(name, turnsQueue);
-        addListenersToPlayerChar(character);
-        player.addCharacterToParty(character);
-    }
-
-    /**
-     * Creates an Engineer with the given name and adds it to the player's party.
-     */
-    public void addEngineerToPlayerParty(String name) {
-        Engineer character = new Engineer(name, turnsQueue);
-        addListenersToPlayerChar(character);
-        player.addCharacterToParty(character);
-    }
-
-
-    /**
-     * Creates an Axe with the given name and adds it to the player's inventory.
-     */
-    public void addAxeToPlayerInventory(String name, int damage, int weight) {
-        Axe weapon = new Axe(name, damage, weight);
-        player.addWeaponToInventory(weapon);
-    }
-
-    /**
-     * Creates a Knife with the given name and adds it to the player's inventory.
-     */
-    public void addKnifeToPlayerInventory(String name, int damage, int weight) {
-        Knife weapon = new Knife(name, damage, weight);
-        player.addWeaponToInventory(weapon);
-    }
-
-    /**
-     * Creates a Sword with the given name and adds it to the player's inventory.
-     */
-    public void addSwordToPlayerInventory(String name, int damage, int weight) {
-        Sword weapon = new Sword(name, damage, weight);
-        player.addWeaponToInventory(weapon);
-    }
-
-    /**
-     * Creates a bow with the given name and adds it to the player's inventory.
-     */
-    public void addBowToPlayerInventory(String name, int damage, int weight) {
-        Bow weapon = new Bow(name, damage, weight);
-        player.addWeaponToInventory(weapon);
-    }
-
-    /**
-     * Creates a staff with the given name and adds it to the player's inventory.
-     */
-    public void addStaffToPlayerInventory(String name, int damage, int weight, int magicDamage) {
-        Staff weapon = new Staff(name, damage, weight, magicDamage);
-        player.addWeaponToInventory(weapon);
-    }
-
 
     /**
      * Equips a weapon from the player's inventory to a character from the player's party.
@@ -152,6 +84,11 @@ public class GameController {
         }
     }
 
+    public void equipWeaponToCurrentCharacter(int inventorySlot) {
+        int currentCharSlot = player.getCharacterSlot(currentChar);
+        player.equipWeaponToCharacter(inventorySlot, currentCharSlot);
+    }
+
     /**
      * Swaps weapons from the player's inventory. Can be used to move a weapon from a slot to
      * an empty one.
@@ -160,32 +97,6 @@ public class GameController {
      */
     public void swapInventorySlots(int slot1, int slot2) {
         player.swapInventorySlots(slot1, slot2);
-    }
-
-
-    /**
-     *  *NEEDS BALANCING*
-     *  Cretes a new enemy group, with strenght depending of the level given.
-     *
-     * @param lvl level of the enemy group. Affects HP, ATK, DEF.
-     * @param size size of the group.
-     * @param names names of the enemies.
-     */
-    public void spawnEnemyGroup(int lvl, int size, String... names) {
-        enemyGroup.wipeGroup();
-        for (int i=0; i<size; i++) {
-            int randInt1 = ThreadLocalRandom.current().nextInt(10, 15); // generates random number
-            int randInt2 = ThreadLocalRandom.current().nextInt(3, 8);
-
-            int hp = randInt1 * lvl;
-            int atk = randInt2 * lvl;
-            int def = randInt2 * lvl / 5;
-
-            Enemy enemy = new Enemy(names[i], 10+i, turnsQueue, hp, 20, 70); // balance later
-            addListenersToEnemy(enemy);
-            enemyGroup.addEnemy(enemy);
-        }
-        updateEnemyGroupSize();
     }
 
     /**
@@ -332,6 +243,46 @@ public class GameController {
     }
 
     /**
+     *
+     * public void playerCharacterTurn(IPlayableCharacter character) {
+     *         currentChar = character;
+     *         currentPhase.changePhase(new ActionSelectionPhase(this));
+     *     }
+     *
+     */
+
+    public void setCurrentChar(IPlayableCharacter character) {
+        currentChar = character;
+    }
+
+    public IPlayableCharacter getCurrentChar() {
+        return currentChar;
+    }
+
+    public void attackEnemySlot(int enemySlot) {
+              Enemy enemy = enemyGroup.getEnemy(enemySlot);
+              if (enemy != null) {
+                  if (enemy.isAlive()) {
+                      currentChar.attack(enemy);
+                      //currentChar.waitTurn();    for the time being this will not be tested
+                      //endTurn();
+                  }
+              }
+          }
+
+    public void castSpellOnEnemySlot(IMagicSpell spell, int enemySlot) {
+        Enemy enemy = enemyGroup.getEnemy(enemySlot);
+        if (enemy != null) {
+            if (enemy.isAlive()) {
+                spell.cast(enemy);
+                //currentChar.waitTurn();    for the time being this will not be tested
+                //endTurn();
+            }
+        }
+    }
+
+
+    /**
      * Starts the battle. Makes all player characters and enemies start their turn timer.
      */
     public void startBattle() {
@@ -359,4 +310,14 @@ public class GameController {
     public boolean isBattleActive() {
         return battleActive;
     }
+
+    public void setPhase(IPhase phase) {
+        currentPhase = phase;
+    }
+    public IPhase getPhase() {
+        return currentPhase;
+    }
+
+
+
 }

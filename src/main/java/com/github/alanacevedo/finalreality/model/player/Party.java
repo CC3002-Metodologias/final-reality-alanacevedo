@@ -56,4 +56,14 @@ public class Party implements IParty {
         }
         return true;
     }
+
+    public int getCharacterSlot(IPlayableCharacter character) {
+        for (int i=0; i<maxPartySize; i++) {
+            if (getCharacter(i) == character) {
+                return i;
+            }
+        }
+
+        return 99; //error
+    }
 }
