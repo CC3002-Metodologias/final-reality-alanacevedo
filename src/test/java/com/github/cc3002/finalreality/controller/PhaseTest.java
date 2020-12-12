@@ -41,31 +41,6 @@ public class PhaseTest {
         assertTrue(controller.getPhase() instanceof ActionSelectionPhase);
     }
 
-    /*
-    @Test
-    void MageActionSelectPhaseTest() {
-        controller.setPhase(new MageActionSelectionPhase(controller));
-        assertTrue(controller.getPhase() instanceof MageActionSelectionPhase);
-        var phase0 = (MageActionSelectionPhase) controller.getPhase();
-        phase0.getAttackCommand().doAction();
-        assertTrue(controller.getPhase() instanceof MageAttackTargetSelectionPhase);
-        var phase1 = (MageAttackTargetSelectionPhase) controller.getPhase();
-        phase1.getGoBackCommand().doAction();
-        assertTrue(controller.getPhase() instanceof MageActionSelectionPhase);
-        phase0 = (MageActionSelectionPhase) controller.getPhase();
-        phase0.getInventoryCommand().doAction();
-        assertTrue(controller.getPhase() instanceof MageInventoryPhase);
-        var phase2 = (MageInventoryPhase) controller.getPhase();
-        phase2.getGoBackCommand().doAction();
-        assertTrue(controller.getPhase() instanceof MageActionSelectionPhase);
-        phase0 = (MageActionSelectionPhase) controller.getPhase();
-        phase0.getMagicCommand().doAction(); // Should be able to select this option
-        assertTrue(controller.getPhase() instanceof MagicSelectionPhase);
-        var phase3 = (MagicSelectionPhase) controller.getPhase();
-        phase3.getGoBackCommand().doAction();
-        assertTrue(controller.getPhase() instanceof MageActionSelectionPhase);
-    }
-    */
     @Test
     void attackTargetSelectionPhaseTest() {
         controller.spawnEnemyGroup(30, 3, "uno", "dos", "tres");

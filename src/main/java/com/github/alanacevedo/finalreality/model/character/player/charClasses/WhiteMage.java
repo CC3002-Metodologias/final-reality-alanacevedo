@@ -1,9 +1,9 @@
 package com.github.alanacevedo.finalreality.model.character.player.charClasses;
 
-import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.player.AbsMageCharacter;
-import com.github.alanacevedo.finalreality.model.weapon.AbstractWeapon;
+import com.github.alanacevedo.finalreality.model.magic.BlackMagic.Fire;
+import com.github.alanacevedo.finalreality.model.magic.WhiteMagic.*;
 import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -14,6 +14,10 @@ import java.util.concurrent.BlockingQueue;
  * a class that represents a White Mage character
  */
 public class WhiteMage extends AbsMageCharacter {
+
+    private Cure cureSpell;
+    private Poison poisonSpell;
+    private Paralisis paralisisSpell;
 
     /**
      * Initializes a White Mage character
@@ -33,6 +37,9 @@ public class WhiteMage extends AbsMageCharacter {
     public WhiteMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue,
                      int HP, int DEF, int MP) {
         super(name, turnsQueue, HP, DEF, MP);
+        cureSpell = new Cure(this);
+        poisonSpell = new Poison(this);
+        paralisisSpell = new Paralisis(this);
     }
 
     public WhiteMage(@NotNull String name, @NotNull BlockingQueue<ICharacter> turnsQueue) {
@@ -62,25 +69,20 @@ public class WhiteMage extends AbsMageCharacter {
                 && getMP() == that.getMP();
     }
 
-    // Equipamiento de armas
-
-
     @Override
     public void equip(IWeapon weapon) {
         weapon.equipToWhiteMage(this);
     }
 
-    public void castCure(AbstractCharacter character) {
-        int mpCost = 15;
-
-        if (character.isAlive() && this.isAlive() && this.getMP() >= mpCost) {
-            int healAmmount = (int) (character.getMaxHP() * 0.3);
-            character.heal(healAmmount);
-            this.spendMP(mpCost);
-        }
+    public Cure getCureSpell() {
+        return cureSpell;
     }
 
-    // public void castPoison(AbstractCharacter character) { }
+    public Poison getPoisonSpell() {
+        return poisonSpell;
+    }
 
-    // public void castParalisis(AbstractCharacter character= { }
+    public Paralisis getParalisisSpell() {
+        return paralisisSpell;
+    }
 }

@@ -1,6 +1,5 @@
 package com.github.alanacevedo.finalreality.controller.phase.command.actionSelectPhase;
 
-import com.github.alanacevedo.finalreality.controller.phase.AttackTargetSelectionPhase;
 import com.github.alanacevedo.finalreality.controller.phase.IPhase;
 import com.github.alanacevedo.finalreality.controller.phase.MagicSelectionPhase;
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
