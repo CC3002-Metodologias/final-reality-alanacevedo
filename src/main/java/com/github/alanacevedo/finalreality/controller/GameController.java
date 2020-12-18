@@ -2,18 +2,15 @@ package com.github.alanacevedo.finalreality.controller;
 import com.github.alanacevedo.finalreality.controller.factory.CharacterFactory;
 import com.github.alanacevedo.finalreality.controller.factory.WeaponFactory;
 import com.github.alanacevedo.finalreality.controller.handler.*;
-import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
-import com.github.alanacevedo.finalreality.controller.phase.phase.WaitingPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.*;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.enemy.EnemyGroup;
 import com.github.alanacevedo.finalreality.model.character.enemy.IEnemyGroup;
-import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
 import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 import com.github.alanacevedo.finalreality.model.player.IPlayer;
 import com.github.alanacevedo.finalreality.model.player.Player;
-import com.github.alanacevedo.finalreality.model.weapon.*;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -198,6 +195,7 @@ public class GameController {
     public void endTurn() {
         if (turnsQueue.isEmpty()) {
             attending = false;
+            setPhase(new WaitingPhase(this));
         } else {
             attendQueue();
         }
@@ -225,7 +223,7 @@ public class GameController {
      * Makes a player character Turn take place.
      * @param character player character that takes the turn.
      */
-    public void playerCharacterTurn(IPlayableCharacter character) {
+    public void randomPCTurn(IPlayableCharacter character) {
         // For the time being, will function similar to enemyTurn
         // User interaction will be implemented later.
         // later this method will be renamed randomPCTurn.
@@ -242,14 +240,14 @@ public class GameController {
         endTurn();
     }
 
-    /**
-     *
-     * public void playerCharacterTurn(IPlayableCharacter character) {
-     *         currentChar = character;
-     *         currentPhase.changePhase(new ActionSelectionPhase(this));
-     *     }
-     *
-     */
+
+
+      public void playerCharacterTurn(IPlayableCharacter character) {
+              currentChar = character;
+              currentPhase.changePhase(new ActionSelectionPhase(this));
+          }
+
+
 
     public void setCurrentChar(IPlayableCharacter character) {
         currentChar = character;
@@ -264,8 +262,9 @@ public class GameController {
               if (enemy != null) {
                   if (enemy.isAlive()) {
                       currentChar.attack(enemy);
-                      //currentChar.waitTurn();    for the time being this will not be tested
-                      //endTurn();
+                      currentChar.waitTurn();
+                      setPhase(new WaitingPhase(this));
+                      endTurn();
                   }
               }
           }
@@ -287,6 +286,7 @@ public class GameController {
      */
     public void startBattle() {
         battleActive = true;
+        setPhase(new WaitingPhase(this));
         for (int i=0; i<Settings.partySize; i++) {
             player.getCharacterFromParty(i).waitTurn();
         }
@@ -319,5 +319,11 @@ public class GameController {
     }
 
 
+    public void setupStandardBattle() {
+        characterFactory.setupStandardPlayerParty();
+        characterFactory.spawnEnemyGroup(30, 3, "Enemy1", "Enemy2", "Enemy3");
+        weaponFactory.setupStandardPlayerInventory();
+        startBattle();
+    }
 
 }

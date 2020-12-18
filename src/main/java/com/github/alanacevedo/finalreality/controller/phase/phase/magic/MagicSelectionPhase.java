@@ -16,6 +16,8 @@ public class MagicSelectionPhase extends AbstractPhase implements IPhase {
 
     public MagicSelectionPhase(@NotNull GameController controller) {
         super(controller);
+        name = "Magic Selection";
+
         goBackCommand = new GoBackCommand(this);
         spellCommand0 = new SelectSpellCommand(this, 0);
         spellCommand1 = new SelectSpellCommand(this, 1);
@@ -36,5 +38,8 @@ public class MagicSelectionPhase extends AbstractPhase implements IPhase {
 
     public SelectSpellCommand getSpellCommand2() {
         return spellCommand2;
+    }
+    public String getName() {
+        return this.name;
     }
 }

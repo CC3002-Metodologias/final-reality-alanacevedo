@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 public class InventoryPhase extends AbstractPhase implements IPhase {
 
 
+
     protected ICommand goBackCommand;
 
     protected HighlightSlotCommand highlightCommand0;
@@ -28,6 +29,8 @@ public class InventoryPhase extends AbstractPhase implements IPhase {
 
     public InventoryPhase(@NotNull GameController controller) {
         super(controller);
+        name = "Inventory";
+
         goBackCommand = new GoBackCommand(this);
         highlightCommand0 = new HighlightSlotCommand(this, 0);
         highlightCommand1 = new HighlightSlotCommand(this, 1);
@@ -96,5 +99,8 @@ public class InventoryPhase extends AbstractPhase implements IPhase {
         return swapCommand;
     }
 
+    public String getName() {
+        return this.name;
+    }
 
 }

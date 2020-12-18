@@ -8,6 +8,7 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
 import org.jetbrains.annotations.NotNull;
 
 public class InventorySwapPhase extends AbstractPhase implements IPhase {
+
     private int firstSlot;
     private int currentTopSlot;
     private int highlightedSlot;
@@ -22,6 +23,8 @@ public class InventorySwapPhase extends AbstractPhase implements IPhase {
 
     public InventorySwapPhase(@NotNull GameController controller, int firstSlot) {
         super(controller);
+        name = "Swap";
+
         this.firstSlot = firstSlot;
         highlightedSlot = -1;
         currentTopSlot = 0;
@@ -90,5 +93,9 @@ public class InventorySwapPhase extends AbstractPhase implements IPhase {
 
     public void setHighlightedSlot(int highlightedSlot) {
         this.highlightedSlot = highlightedSlot;
+    }
+
+    public String getName() {
+        return this.name;
     }
 }

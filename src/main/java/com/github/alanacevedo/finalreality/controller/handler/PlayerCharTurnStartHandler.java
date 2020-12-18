@@ -1,8 +1,6 @@
 package com.github.alanacevedo.finalreality.controller.handler;
 import com.github.alanacevedo.finalreality.controller.GameController;
-import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
-import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;

@@ -7,7 +7,10 @@ public class WaitingPhase extends AbstractPhase implements IPhase{
 
     public WaitingPhase(@NotNull GameController controller) {
         super(controller);
+        name = "Waiting";
     }
 
-
+    public String getName() {
+        return this.name;
+    }
 }

@@ -83,5 +83,10 @@ public class CharacterFactory {
         controller.updateEnemyGroupSize();
     }
 
+    public void setupStandardPlayerParty() {
+        addKnightToPlayerParty("Hector");
+        addBlackMageToPlayerParty("Vivi");
+        addEngineerToPlayerParty("Cid");
+    }
 
 }

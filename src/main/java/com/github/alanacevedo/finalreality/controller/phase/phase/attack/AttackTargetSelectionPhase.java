@@ -7,6 +7,7 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
 import org.jetbrains.annotations.NotNull;
 
 public class AttackTargetSelectionPhase extends AbstractPhase implements IPhase {
+
     // There are max 3 enemy slots
     protected AttackEnemySlotCommand attackCommand0;
     protected AttackEnemySlotCommand attackCommand1;
@@ -15,6 +16,8 @@ public class AttackTargetSelectionPhase extends AbstractPhase implements IPhase 
 
     public AttackTargetSelectionPhase(@NotNull GameController controller) {
         super(controller);
+        name = "Target Selection";
+
         goBackCommand = new GoBackCommand(this);
         attackCommand0 = new AttackEnemySlotCommand(this, 0);
         attackCommand1 = new AttackEnemySlotCommand(this, 1);
@@ -34,5 +37,8 @@ public class AttackTargetSelectionPhase extends AbstractPhase implements IPhase 
 
     public AttackEnemySlotCommand getAttackCommand2() {
         return attackCommand2;
+    }
+    public String getName() {
+        return this.name;
     }
 }

@@ -4,6 +4,7 @@ import com.github.alanacevedo.finalreality.controller.GameController;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractPhase {
+    protected String name;
 
     public GameController controller;
 
@@ -18,5 +19,6 @@ public abstract class AbstractPhase {
     public GameController getController() {
         return controller;
     }
+
 
 }

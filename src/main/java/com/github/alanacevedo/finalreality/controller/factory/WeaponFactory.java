@@ -49,4 +49,12 @@ public class WeaponFactory {
         Staff weapon = new Staff(name, damage, weight, magicDamage);
         controller.getPlayer().addWeaponToInventory(weapon);
     }
+
+    public void setupStandardPlayerInventory() {
+        addAxeToPlayerInventory("Bronze Axe", 30, 10);
+        addBowToPlayerInventory("Wooden Bow", 20, 8);
+        addKnifeToPlayerInventory("Rusty Knife", 25, 8);
+        addSwordToPlayerInventory("Rusty Sword", 30, 10);
+        addStaffToPlayerInventory("Wooden Staff", 5, 10, 20);
+    }
 }
