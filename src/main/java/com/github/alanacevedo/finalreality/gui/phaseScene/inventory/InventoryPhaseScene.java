@@ -22,6 +22,8 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
     private Label equippedWeaponLabel = new Label();
     private Button backButton = new Button("Return");
     private Button equipButton = new Button("Equip Selected");
+    private Button scrollUpButton = new Button("Up");
+    private Button scrollDownButton = new Button("Down");
     private ToggleGroup slotButtonsToggle = new ToggleGroup();
     private Group slotButtons = new Group();
     private ToggleButton slot0Button = new ToggleButton();
@@ -78,6 +80,13 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
         equipButton.setLayoutY(330);
         equipButton.setOnAction(event -> ((InventoryPhase) controller.getPhase()).getEquipCommand().doAction());
 
+        root.getChildren().addAll(scrollDownButton, scrollUpButton);
+        scrollUpButton.setLayoutX(300);
+        scrollUpButton.setLayoutY(270);
+        scrollUpButton.setOnAction(event -> ((InventoryPhase) controller.getPhase()).getScrollUpCommand().doAction());
+        scrollDownButton.setLayoutX(300);
+        scrollDownButton.setLayoutY(390);
+        scrollDownButton.setOnAction(event -> ((InventoryPhase) controller.getPhase()).getScrollDownCommand().doAction());
 
 
     }
@@ -93,9 +102,9 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
         characterNameLabel.setText(currentChar.getName());
 
         int topSlot = ((InventoryPhase) controller.getPhase()).getCurrentTopSlot();
-        slot0Button.setText(controller.getPlayer().getWeaponFromInventory(topSlot).getName());
-        slot1Button.setText(controller.getPlayer().getWeaponFromInventory(topSlot+1).getName());
-        slot2Button.setText(controller.getPlayer().getWeaponFromInventory(topSlot+2).getName());
+        slot0Button.setText(topSlot + ". " + controller.getPlayer().getWeaponFromInventory(topSlot).getName());
+        slot1Button.setText((topSlot+1) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+1).getName());
+        slot2Button.setText((topSlot+2) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+2).getName());
         highlightedSlotLabel.setText("Highlighted slot: " + ((InventoryPhase) controller.getPhase()).getHighlightedSlot());
 
         equippedWeaponLabel.setText(controller.getCurrentChar().getEquippedWeapon().getName());
