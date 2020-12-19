@@ -4,6 +4,7 @@ import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.controller.phase.command.attack.attackTargetSelectionPhase.*;
 import com.github.alanacevedo.finalreality.controller.phase.phase.AbstractPhase;
 import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
+import com.github.alanacevedo.finalreality.gui.phaseScene.attack.AttackTargetSelectionPhaseScene;
 import org.jetbrains.annotations.NotNull;
 
 public class AttackTargetSelectionPhase extends AbstractPhase implements IPhase {
@@ -22,6 +23,8 @@ public class AttackTargetSelectionPhase extends AbstractPhase implements IPhase 
         attackCommand0 = new AttackEnemySlotCommand(this, 0);
         attackCommand1 = new AttackEnemySlotCommand(this, 1);
         attackCommand2 = new AttackEnemySlotCommand(this, 2);
+
+        phaseScene = new AttackTargetSelectionPhaseScene(controller);
     }
 
     public GoBackCommand getGoBackCommand() {

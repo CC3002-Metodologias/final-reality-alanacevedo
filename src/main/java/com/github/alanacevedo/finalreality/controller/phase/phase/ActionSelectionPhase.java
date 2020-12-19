@@ -4,6 +4,7 @@ import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.actionSelectPhase.*;
 import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
+import com.github.alanacevedo.finalreality.gui.phaseScene.ActionSelectionPhaseScene;
 import com.github.alanacevedo.finalreality.gui.phaseScene.WaitingPhaseScene;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +23,7 @@ public class ActionSelectionPhase extends AbstractPhase implements IPhase{
         attackCommand = new AttackCommand(this);
         magicCommand = new MagicCommand(this);
         inventoryCommand = new InventoryCommand(this);
-        phaseScene = new WaitingPhaseScene(controller);
+        phaseScene = new ActionSelectionPhaseScene(controller);
     }
 
     @Override

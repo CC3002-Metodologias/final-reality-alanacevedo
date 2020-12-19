@@ -11,8 +11,6 @@ public class WaitingPhaseScene extends AbstractPhaseScene {
     private GameController controller;
 
     private Label phaseLabel = new Label();
-    private Label queueSizeLabel = new Label();
-    private Label characterNameLabel = new Label();
 
     private Group root;
 
@@ -26,28 +24,16 @@ public class WaitingPhaseScene extends AbstractPhaseScene {
         phaseLabel.setLayoutX(10);
         phaseLabel.setLayoutY(10);
 
-        root.getChildren().add(queueSizeLabel);
-        queueSizeLabel.setLayoutX(10);
-        queueSizeLabel.setLayoutY(30);
-
-        root.getChildren().add(characterNameLabel);
-        characterNameLabel.setLayoutX(10);
-        characterNameLabel.setLayoutY(50);
-
 
     }
 
     public void handleTimer() {
 
-        controller.getUiScene().setRoot(root);
-        phaseLabel.setText(controller.getPhase().getName() + "Phase");
-        queueSizeLabel.setText(String.valueOf(controller.getTurnsQueue().size()));
-        IPlayableCharacter currentChar = controller.getCurrentChar();
-        if (currentChar != null) {
-            characterNameLabel.setText(currentChar.getName());
-        } else {
-            characterNameLabel.setText("");
+        if (controller.getUiScene().getRoot() != root) {
+            controller.getUiScene().setRoot(root);
         }
+
+        phaseLabel.setText(controller.getPhase().getName() + "Phase");
     }
 
     public Group getRoot() {
