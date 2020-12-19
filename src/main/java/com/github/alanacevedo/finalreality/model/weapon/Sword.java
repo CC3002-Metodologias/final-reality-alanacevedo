@@ -15,12 +15,14 @@ public class Sword extends AbstractWeapon{
     }
 
     @Override
-    public void equipToKnight(Knight knight) {
+    public int equipToKnight(Knight knight) {
         knight.setEquippedWeapon(this);
+        return 1;
     }
 
     @Override
-    public void equipToThief(Thief thief) {
+    public int equipToThief(Thief thief) {
         thief.setEquippedWeapon(this);
+        return 1;
     }
 }

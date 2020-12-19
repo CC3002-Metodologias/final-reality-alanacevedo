@@ -44,11 +44,13 @@ public class Player implements IPlayer {
     public void equipWeaponToCharacter(int inventorySlot, int partySlot) {
         IWeapon weapon = inventory.getWeapon(inventorySlot);
         IWeapon prevWeapon = party.getCharacter(partySlot).getEquippedWeapon();
-        party.getCharacter(partySlot).equip(weapon);
-        inventory.removeWeapon(weapon);
-        if (prevWeapon != null) {
+        // add int return to equip if successfull?
+        if (party.getCharacter(partySlot).equip(weapon) == 1) { // exito
+            inventory.removeWeapon(weapon);
             inventory.addWeapon(prevWeapon);
         }
+
+
 
     }
 

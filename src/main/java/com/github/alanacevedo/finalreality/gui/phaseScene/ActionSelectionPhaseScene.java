@@ -18,6 +18,7 @@ public class ActionSelectionPhaseScene extends AbstractPhaseScene {
     private Button attackButton = new Button("Attack");
     private Button inventoryButton = new Button("Inventory");
     private Button magicButton = new Button("Magic");
+
     private Group root = new Group();
 
 
@@ -55,12 +56,13 @@ public class ActionSelectionPhaseScene extends AbstractPhaseScene {
         root.getChildren().add(magicButton);
         magicButton.setLayoutX(300);
         magicButton.setLayoutY(200);
+        magicButton.setOnAction(event -> ((ActionSelectionPhase) controller.getPhase()).getMagicCommand().doAction());
         //magicButton.setOpacity(0.5);
         //magicButton.setPrefSize(30, 30);
         //ImageIcon myImage = new ImageIcon("images/myImage.jpg");
         //JButton button = new JButton(myImage);
         //magicButton.setBorder(null);
-        magicButton.setOnAction(event -> ((ActionSelectionPhase) controller.getPhase()).getMagicCommand().doAction());
+
 
 
     }

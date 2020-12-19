@@ -19,7 +19,9 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
     private Label queueSizeLabel = new Label();
     private Label characterNameLabel = new Label();
     private Label highlightedSlotLabel = new Label();
+    private Label equippedWeaponLabel = new Label();
     private Button backButton = new Button("Return");
+    private Button equipButton = new Button("Equip Selected");
     private ToggleGroup slotButtonsToggle = new ToggleGroup();
     private Group slotButtons = new Group();
     private ToggleButton slot0Button = new ToggleButton();
@@ -45,6 +47,10 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
         characterNameLabel.setLayoutX(10);
         characterNameLabel.setLayoutY(50);
 
+        root.getChildren().add(equippedWeaponLabel);
+        equippedWeaponLabel.setLayoutX(10);
+        equippedWeaponLabel.setLayoutY(70);
+
         root.getChildren().add(backButton);
         backButton.setLayoutY(300);
         backButton.setLayoutX(300);
@@ -67,6 +73,11 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
         highlightedSlotLabel.setLayoutY(250);
         highlightedSlotLabel.setLayoutX(100);
 
+        root.getChildren().add(equipButton);
+        equipButton.setLayoutX(300);
+        equipButton.setLayoutY(330);
+        equipButton.setOnAction(event -> ((InventoryPhase) controller.getPhase()).getEquipCommand().doAction());
+
 
 
     }
@@ -87,6 +98,7 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
         slot2Button.setText(controller.getPlayer().getWeaponFromInventory(topSlot+2).getName());
         highlightedSlotLabel.setText("Highlighted slot: " + ((InventoryPhase) controller.getPhase()).getHighlightedSlot());
 
+        equippedWeaponLabel.setText(controller.getCurrentChar().getEquippedWeapon().getName());
 
         partyStatus.handleTimer();
     }

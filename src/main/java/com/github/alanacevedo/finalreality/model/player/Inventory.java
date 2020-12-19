@@ -2,6 +2,8 @@ package com.github.alanacevedo.finalreality.model.player;
 
 import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 import com.github.alanacevedo.finalreality.controller.Settings;
+import com.github.alanacevedo.finalreality.model.weapon.NullWeapon;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -21,7 +23,7 @@ public class Inventory implements IInventory {
      */
     public Inventory(IWeapon... args) {
         weaponList = new IWeapon[maxSize]; // empty
-        Arrays.fill(weaponList, null);
+        Arrays.fill(weaponList, new NullWeapon());
         currentSize = 0;
         for (IWeapon weapon : args) {
             this.addWeapon(weapon);
@@ -32,7 +34,7 @@ public class Inventory implements IInventory {
     public void addWeapon(IWeapon weapon) {
         if (currentSize < maxSize) {
             for (int i=0; i<maxSize; i++) {
-                if (weaponList[i] == null) {
+                if (weaponList[i].isNull()) {
                     weaponList[i] = weapon;
                     currentSize++;
                     break;
@@ -45,7 +47,7 @@ public class Inventory implements IInventory {
     public void removeWeapon(IWeapon weapon) {
         for (int i=0; i<maxSize; i++) {
             if (weaponList[i] == weapon) {
-                weaponList[i] = null;
+                weaponList[i] = new NullWeapon();
                 currentSize--;
                 break;
             }
@@ -83,18 +85,9 @@ public class Inventory implements IInventory {
             return false;
         }
         for (int i=0; i<this.getCurrentSize(); i++) {
-
-            // null.equals() throws exception, so we handle it manually
-            if (inventory.getWeapon(i) == null) {
-                if (this.getWeapon(i) != null){
-                    return false;
-                }
-
-            } else {
                 if  (!(inventory.getWeapon(i).equals(this.getWeapon(i)))) {
                     return false;
                 }
-            }
         }
         return true;
     }

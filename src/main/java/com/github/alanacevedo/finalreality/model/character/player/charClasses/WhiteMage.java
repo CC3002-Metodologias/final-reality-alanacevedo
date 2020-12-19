@@ -67,8 +67,8 @@ public class WhiteMage extends AbsMageCharacter {
     }
 
     @Override
-    public void equip(IWeapon weapon) {
-        weapon.equipToWhiteMage(this);
+    public int equip(IWeapon weapon) {
+        return weapon.equipToWhiteMage(this);
     }
 
 }

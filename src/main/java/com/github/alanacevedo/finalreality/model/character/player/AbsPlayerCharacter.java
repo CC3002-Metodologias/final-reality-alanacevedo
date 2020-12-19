@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public abstract class AbsPlayerCharacter extends AbstractCharacter implements IPlayableCharacter {
 
-  protected AbstractWeapon equippedWeapon = null;
+  protected AbstractWeapon equippedWeapon = new NullWeapon();
 
   /**
    * Creates a new abstract party character.
@@ -53,11 +53,8 @@ public abstract class AbsPlayerCharacter extends AbstractCharacter implements IP
   @Override
   public void waitTurn(){
     super.waitTurn();
-    if (this.getEquippedWeapon() == null) {
-      scheduledExecutor.schedule(this::notifyAddToQueue, 1/10, TimeUnit.SECONDS);
-    } else {
-      scheduledExecutor.schedule(this::notifyAddToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
-    }
+    scheduledExecutor.schedule(this::notifyAddToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+
   }
 
   /**

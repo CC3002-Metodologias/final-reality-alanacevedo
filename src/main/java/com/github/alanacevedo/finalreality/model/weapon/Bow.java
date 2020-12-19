@@ -16,12 +16,14 @@ public class Bow extends AbstractWeapon{
     }
 
     @Override
-    public void equipToEngineer(Engineer engineer) {
+    public int equipToEngineer(Engineer engineer) {
         engineer.setEquippedWeapon(this);
+        return 1;
     }
 
     @Override
-    public void equipToThief(Thief thief) {
+    public int equipToThief(Thief thief) {
         thief.setEquippedWeapon(this);
+        return 1;
     }
 }

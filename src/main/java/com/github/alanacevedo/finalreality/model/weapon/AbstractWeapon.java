@@ -17,6 +17,7 @@ public abstract class AbstractWeapon implements IWeapon {
   private final String name;
   private final int ATK;
   private final int weight;
+  protected boolean isNull = false;
 
   /**
    * Creates a weapon with a name, a base damage, speed and it's type.
@@ -90,31 +91,37 @@ public abstract class AbstractWeapon implements IWeapon {
   // En caso de que si se pueda, se hará override al método correspondiente.
 
   @Override
-  public void equipToBlackMage(BlackMage blackMage) {
-    ;
+  public int equipToBlackMage(BlackMage blackMage) {
+    return 0;
   }
 
   @Override
-  public void equipToEngineer(Engineer engineer) {
-    ;
+  public int equipToEngineer(Engineer engineer) {
+    return 0;
   }
 
   @Override
-  public void equipToKnight(Knight knight) {
-    ;
+  public int equipToKnight(Knight knight) {
+    return 0;
   }
 
   @Override
-  public void equipToThief(Thief thief) {
-    ;
+  public int equipToThief(Thief thief) {
+    return 0;
   }
 
   @Override
-  public void equipToWhiteMage(WhiteMage whiteMage) {
-    ;
+  public int equipToWhiteMage(WhiteMage whiteMage) {
+    return 0;
   }
   @Override
   public int getMagicDamage(){
     return 0;
   }
+
+  @Override
+  public boolean isNull() {
+    return isNull;
+  }
 }
+

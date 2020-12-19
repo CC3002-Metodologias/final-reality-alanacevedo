@@ -17,17 +17,20 @@ public class Knife extends AbstractWeapon {
     }
 
     @Override
-    public void equipToThief(Thief thief) {
+    public int equipToThief(Thief thief) {
         thief.setEquippedWeapon(this);
+        return 1;
     }
 
     @Override
-    public void equipToKnight(Knight knight) {
+    public int equipToKnight(Knight knight) {
         knight.setEquippedWeapon(this);
+        return 1;
     }
 
     @Override
-    public void equipToBlackMage(BlackMage blackMage) {
+    public int equipToBlackMage(BlackMage blackMage) {
         blackMage.setEquippedWeapon(this);
+        return 1;
     }
 }
