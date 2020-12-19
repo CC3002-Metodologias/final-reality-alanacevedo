@@ -3,6 +3,8 @@ import com.github.alanacevedo.finalreality.controller.factory.CharacterFactory;
 import com.github.alanacevedo.finalreality.controller.factory.WeaponFactory;
 import com.github.alanacevedo.finalreality.controller.handler.*;
 import com.github.alanacevedo.finalreality.controller.phase.phase.*;
+import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
+import com.github.alanacevedo.finalreality.gui.phaseScene.WaitingPhaseScene;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
@@ -11,6 +13,7 @@ import com.github.alanacevedo.finalreality.model.character.enemy.IEnemyGroup;
 import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 import com.github.alanacevedo.finalreality.model.player.IPlayer;
 import com.github.alanacevedo.finalreality.model.player.Player;
+import javafx.scene.Scene;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -36,6 +39,7 @@ public class GameController {
     private final WeaponFactory weaponFactory = new WeaponFactory(this);
     private IPhase currentPhase;
     private IPlayableCharacter currentChar;
+    private Scene uiScene;
 
 
     /**
@@ -324,6 +328,15 @@ public class GameController {
         characterFactory.spawnEnemyGroup(30, 3, "Enemy1", "Enemy2", "Enemy3");
         weaponFactory.setupStandardPlayerInventory();
         startBattle();
+
+    }
+
+    public void setUiScene(Scene scene) {
+        this.uiScene = scene;
+    }
+
+    public Scene getUiScene() {
+        return uiScene;
     }
 
 }

@@ -1,10 +1,12 @@
 package com.github.alanacevedo.finalreality.controller.phase.phase;
 
 import com.github.alanacevedo.finalreality.controller.GameController;
+import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class AbstractPhase {
     protected String name;
+    protected AbstractPhaseScene phaseScene;
 
     public GameController controller;
 
@@ -20,5 +22,8 @@ public abstract class AbstractPhase {
         return controller;
     }
 
+    public AbstractPhaseScene getPhaseScene() {
+        return this.phaseScene;
+    }
 
 }
