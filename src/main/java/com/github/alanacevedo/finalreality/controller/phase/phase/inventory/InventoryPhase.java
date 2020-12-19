@@ -7,6 +7,7 @@ import com.github.alanacevedo.finalreality.controller.phase.command.inventory.in
 import com.github.alanacevedo.finalreality.controller.phase.phase.AbstractPhase;
 import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
 import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
+import com.github.alanacevedo.finalreality.gui.phaseScene.inventory.InventoryPhaseScene;
 import org.jetbrains.annotations.NotNull;
 
 // Equip or swap inventory items
@@ -41,12 +42,9 @@ public class InventoryPhase extends AbstractPhase implements IPhase {
         scrollUpCommand = new ScrollUpCommand(this);
         swapCommand = new SwapCommand(this);
         currentTopSlot = 0;
+        phaseScene = new InventoryPhaseScene(controller);
     }
 
-    @Override
-    public AbstractPhaseScene getPhaseScene() {
-        return null;
-    }
 
     public void scrollUp() {
         if (currentTopSlot > 0) {
@@ -107,6 +105,10 @@ public class InventoryPhase extends AbstractPhase implements IPhase {
 
     public String getName() {
         return this.name;
+    }
+
+    public int getCurrentTopSlot() {
+        return currentTopSlot;
     }
 
 }
