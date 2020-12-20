@@ -51,10 +51,10 @@ public class WeaponFactory {
     }
 
     public void setupStandardPlayerInventory() {
-        addAxeToPlayerInventory("Bronze Axe", 30, 10);
-        addBowToPlayerInventory("Wooden Bow", 20, 8);
-        addKnifeToPlayerInventory("Rusty Knife", 25, 8);
-        addSwordToPlayerInventory("Rusty Sword", 30, 10);
-        addStaffToPlayerInventory("Wooden Staff", 5, 10, 20);
+        addAxeToPlayerInventory("Bronze Axe", 80, 10);
+        addBowToPlayerInventory("Wooden Bow", 100, 8);
+        addKnifeToPlayerInventory("Rusty Knife", 60, 8);
+        addSwordToPlayerInventory("Rusty Sword", 70, 10);
+        addStaffToPlayerInventory("Wooden Staff", 50, 10, 20);
     }
 }
