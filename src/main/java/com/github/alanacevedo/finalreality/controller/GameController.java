@@ -3,8 +3,6 @@ import com.github.alanacevedo.finalreality.controller.factory.CharacterFactory;
 import com.github.alanacevedo.finalreality.controller.factory.WeaponFactory;
 import com.github.alanacevedo.finalreality.controller.handler.*;
 import com.github.alanacevedo.finalreality.controller.phase.phase.*;
-import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
-import com.github.alanacevedo.finalreality.gui.phaseScene.WaitingPhaseScene;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;

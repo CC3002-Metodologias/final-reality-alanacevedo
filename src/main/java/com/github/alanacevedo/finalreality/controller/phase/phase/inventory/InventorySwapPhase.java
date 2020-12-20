@@ -5,6 +5,7 @@ import com.github.alanacevedo.finalreality.controller.Settings;
 import com.github.alanacevedo.finalreality.controller.phase.command.inventory.inventorySwapPhase.*;
 import com.github.alanacevedo.finalreality.controller.phase.phase.AbstractPhase;
 import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
+import com.github.alanacevedo.finalreality.gui.phaseScene.inventory.InventorySwapPhaseScene;
 import org.jetbrains.annotations.NotNull;
 
 public class InventorySwapPhase extends AbstractPhase implements IPhase {
@@ -35,6 +36,7 @@ public class InventorySwapPhase extends AbstractPhase implements IPhase {
         scrollUpCommand = new ScrollUpCommand(this);
         goBackCommand = new GoBackCommand(this);
         confirmSwapCommand = new ConfirmSwapCommand(this);
+        phaseScene = new InventorySwapPhaseScene(controller);
     }
 
     public void scrollUp() {
@@ -97,5 +99,9 @@ public class InventorySwapPhase extends AbstractPhase implements IPhase {
 
     public String getName() {
         return this.name;
+    }
+
+    public int getCurrentTopSlot() {
+        return currentTopSlot;
     }
 }

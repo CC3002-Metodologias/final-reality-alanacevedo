@@ -19,5 +19,6 @@ public class ScrollUpCommand extends AbstractCommand implements ICommand {
     @Override
     public void doAction() {
         ((InventoryPhase) parentPhase).scrollUp();
+        ((InventoryPhase) parentPhase).setHighLightedSlot(-1);
     }
 }

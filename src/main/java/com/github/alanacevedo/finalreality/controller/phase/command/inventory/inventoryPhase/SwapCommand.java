@@ -18,7 +18,9 @@ public class SwapCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
-        parentPhase.changePhase(new InventorySwapPhase(parentPhase.getController(),
-                ((InventoryPhase) parentPhase).getHighlightedSlot()));
+        int slot = ((InventoryPhase) parentPhase).getHighlightedSlot();
+        if (slot != -1) {
+            parentPhase.changePhase(new InventorySwapPhase(parentPhase.getController(), slot));
+        }
     }
 }
