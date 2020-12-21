@@ -16,6 +16,9 @@ public class AttackCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
+        if (!parentPhase.getController().getCurrentChar().getEquippedWeapon().isNull()) {
         parentPhase.changePhase(new AttackTargetSelectionPhase(parentPhase.getController()));
+        }
     }
+
 }
