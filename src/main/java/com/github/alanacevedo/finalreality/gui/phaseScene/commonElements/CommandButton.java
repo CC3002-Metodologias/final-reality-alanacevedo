@@ -12,9 +12,11 @@ import javafx.scene.text.TextAlignment;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class ButtonFactory {
+public class CommandButton {
+    private final StackPane pane = new StackPane();
+    private final Text commandText = new Text();
 
-    public static StackPane generateButton(String text) {
+    public CommandButton(String text) {
         ImageView background = new ImageView();
         try {
             background = new ImageView(new Image(new FileInputStream("src/main/resources/command_background_1.png")));
@@ -26,14 +28,20 @@ public class ButtonFactory {
         background.setFitWidth(100);
         background.setFitHeight(30);
 
-        Text commandText = new Text(text);
+        commandText.setText(text);
         commandText.setFill(Color.WHITE);
         commandText.setTextAlignment(TextAlignment.CENTER);
 
-        StackPane pane = new StackPane();
-        pane.getChildren().addAll(background, commandText);
 
+        pane.getChildren().addAll(background, commandText);
+    }
+
+    public StackPane getNode() {
         return pane;
+    }
+
+    public void setText(String newText) {
+        commandText.setText(newText);
     }
 
 }

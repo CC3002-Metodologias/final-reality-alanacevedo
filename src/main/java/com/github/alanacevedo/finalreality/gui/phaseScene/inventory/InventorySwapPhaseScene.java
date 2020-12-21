@@ -1,110 +1,122 @@
 package com.github.alanacevedo.finalreality.gui.phaseScene.inventory;
 
 import com.github.alanacevedo.finalreality.controller.GameController;
+import com.github.alanacevedo.finalreality.controller.Settings;
 import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventoryPhase;
 import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventorySwapPhase;
 import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
-import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.PartyStatus;
-import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommandButton;
+import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
 import javafx.scene.Group;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
 public class InventorySwapPhaseScene extends AbstractPhaseScene {
     private GameController controller;
     private Group root = new Group();
-    private PartyStatus partyStatus;
-    private Label phaseLabel = new Label();
-    private Label queueSizeLabel = new Label();
-    private Label characterNameLabel = new Label();
     private Label highlightedSlotLabel = new Label();
     private Label equippedWeaponLabel = new Label();
-    private Button backButton = new Button("Return");
-    private Button swapButton = new Button("Confirm Swap");
-    private Button scrollUpButton = new Button("Up");
-    private Button scrollDownButton = new Button("Down");
-    private ToggleGroup slotButtonsToggle = new ToggleGroup();
     private Group slotButtons = new Group();
-    private ToggleButton slot0Button = new ToggleButton();
-    private ToggleButton slot1Button = new ToggleButton();
-    private ToggleButton slot2Button = new ToggleButton();
-
+    private CommandButton slot0Button = new CommandButton("");
+    private CommandButton slot1Button = new CommandButton("");
+    private CommandButton slot2Button = new CommandButton("");
+    private CommonBattlePhaseElements commonElements;
+    private Group otherGroup = new Group();
 
     public InventorySwapPhaseScene(GameController controller) {
         this.controller = controller;
-        partyStatus = new PartyStatus(controller);
-        partyStatus.getNode().setLayoutX(620);
-        partyStatus.getNode().setLayoutY(500);
-        root.getChildren().add(partyStatus.getNode());
 
-        root.getChildren().add(phaseLabel);
-        phaseLabel.setLayoutX(10);
-        phaseLabel.setLayoutY(10);
-
-        root.getChildren().add(queueSizeLabel);
-        queueSizeLabel.setLayoutX(10);
-        queueSizeLabel.setLayoutY(30);
-
-        root.getChildren().add(characterNameLabel);
-        characterNameLabel.setLayoutX(10);
-        characterNameLabel.setLayoutY(50);
+        commonElements = new CommonBattlePhaseElements(controller);
+        root.getChildren().add(commonElements.getNode());
 
         root.getChildren().add(equippedWeaponLabel);
         equippedWeaponLabel.setLayoutX(10);
         equippedWeaponLabel.setLayoutY(70);
 
-        root.getChildren().add(backButton);
-        backButton.setLayoutY(300);
-        backButton.setLayoutX(300);
-        backButton.setOnAction(event -> ((InventorySwapPhase) controller.getPhase()).getGoBackCommand().doAction());
 
-        slotButtonsToggle.getToggles().addAll(slot0Button, slot1Button, slot2Button);
-        slotButtons.getChildren().addAll(slot0Button, slot1Button, slot2Button);
+
+        StackPane slot0ButtonNode = slot0Button.getNode();
+        StackPane slot1ButtonNode = slot1Button.getNode();
+        StackPane slot2ButtonNode = slot2Button.getNode();
+
+
+        slot0ButtonNode.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ((InventorySwapPhase) controller.getPhase()).getHighlightCommand0().doAction();
+            otherGroup.setDisable(false);
+            otherGroup.setVisible(true);
+            event.consume();
+        });
+
+
+        slot1ButtonNode.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ((InventorySwapPhase) controller.getPhase()).getHighlightCommand1().doAction();
+            otherGroup.setDisable(false);
+            otherGroup.setVisible(true);
+            event.consume();
+        });
+
+        slot2ButtonNode.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ((InventorySwapPhase) controller.getPhase()).getHighlightCommand2().doAction();
+            otherGroup.setDisable(false);
+            otherGroup.setVisible(true);
+            event.consume();
+        });
+
+        slot0ButtonNode.setLayoutY(0);
+        slot1ButtonNode.setLayoutY(30);
+        slot2ButtonNode.setLayoutY(60);
+
+        slotButtons.getChildren().addAll(slot0ButtonNode, slot1ButtonNode, slot2ButtonNode);
+        slotButtons.setLayoutY(Settings.height-110);
+        slotButtons.setLayoutX(30);
         root.getChildren().add(slotButtons);
-
-        slot0Button.setOnAction(event -> ((InventorySwapPhase) controller.getPhase()).getHighlightCommand0().doAction());
-        slot1Button.setOnAction(event -> ((InventorySwapPhase) controller.getPhase()).getHighlightCommand1().doAction());
-        slot2Button.setOnAction(event -> ((InventorySwapPhase) controller.getPhase()).getHighlightCommand2().doAction());
-
-        slot1Button.setLayoutY(30);
-        slot2Button.setLayoutY(60);
-        slotButtons.setLayoutY(300);
-        slotButtons.setLayoutX(100);
 
         root.getChildren().add(highlightedSlotLabel);
         highlightedSlotLabel.setLayoutY(250);
         highlightedSlotLabel.setLayoutX(100);
 
-        root.getChildren().add(swapButton);
-        swapButton.setLayoutX(300);
-        swapButton.setLayoutY(330);
-        swapButton.setOnAction(event -> {
-            ((InventorySwapPhase) controller.getPhase()).getConfirmSwapCommand().doAction();
-            slot0Button.setSelected(false);
-            slot1Button.setSelected(false);
-            slot2Button.setSelected(false);
-        });
-        root.getChildren().addAll(scrollDownButton, scrollUpButton);
-        scrollUpButton.setLayoutX(300);
-        scrollUpButton.setLayoutY(270);
-        scrollUpButton.setOnAction(event -> {
+        StackPane scrollUpButton = (new CommandButton("Scroll Up")).getNode();
+        scrollUpButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             ((InventorySwapPhase) controller.getPhase()).getScrollUpCommand().doAction();
-            slot0Button.setSelected(false);
-            slot1Button.setSelected(false);
-            slot2Button.setSelected(false);
+            event.consume();
         });
-        scrollDownButton.setLayoutX(300);
-        scrollDownButton.setLayoutY(390);
-        scrollDownButton.setOnAction(event -> {
+
+        StackPane scrollDownButton = (new CommandButton("Scroll Down")).getNode();
+        scrollDownButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             ((InventorySwapPhase) controller.getPhase()).getScrollDownCommand().doAction();
-            slot0Button.setSelected(false);
-            slot1Button.setSelected(false);
-            slot2Button.setSelected(false);
+            event.consume();
         });
+
+        StackPane backButton = (new CommandButton("Return")).getNode();
+        backButton.setLayoutY(30);
+        backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ((InventorySwapPhase) controller.getPhase()).getGoBackCommand().doAction();
+            event.consume();
+        });
+
+        Group scrollGroup = new Group(scrollDownButton, scrollUpButton, backButton);
+        scrollGroup.setLayoutX(135);
+        scrollGroup.setLayoutY(Settings.height-110);
+        scrollUpButton.setLayoutY(0);
+        scrollDownButton.setLayoutY(60);
+        root.getChildren().add(scrollGroup);
+
+        StackPane swapButton = (new CommandButton("Confirm Swap")).getNode();
+        swapButton.setLayoutY(30);
+        swapButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ((InventorySwapPhase) controller.getPhase()).getConfirmSwapCommand().doAction();
+            event.consume();
+        });
+
+
+        otherGroup.getChildren().add(swapButton);
+        otherGroup.setLayoutY(Settings.height-110);
+        otherGroup.setLayoutX(240);
+        otherGroup.setVisible(false);
+        otherGroup.setDisable(true);
+
+        root.getChildren().add(otherGroup);
 
 
     }
@@ -114,20 +126,16 @@ public class InventorySwapPhaseScene extends AbstractPhaseScene {
         if (controller.getUiScene().getRoot() != root) {
             controller.getUiScene().setRoot(root);
         }
-        phaseLabel.setText(controller.getPhase().getName() + "Phase");
-        queueSizeLabel.setText(String.valueOf(controller.getTurnsQueue().size()));
-        IPlayableCharacter currentChar = controller.getCurrentChar();
-        characterNameLabel.setText(currentChar.getName());
+        commonElements.handleTimer();
 
         int topSlot = ((InventorySwapPhase) controller.getPhase()).getCurrentTopSlot();
-        slot0Button.setText(topSlot + ". " + controller.getPlayer().getWeaponFromInventory(topSlot).getName());
-        slot1Button.setText((topSlot+1) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+1).getName());
-        slot2Button.setText((topSlot+2) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+2).getName());
+        slot0Button.setText((topSlot+1) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot).getName());
+        slot1Button.setText((topSlot+2) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+1).getName());
+        slot2Button.setText((topSlot+3) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+2).getName());
         highlightedSlotLabel.setText("Highlighted slot: " + ((InventorySwapPhase) controller.getPhase()).getHighlightedSlot());
 
         equippedWeaponLabel.setText(controller.getCurrentChar().getEquippedWeapon().getName());
 
-        partyStatus.handleTimer();
     }
 
     @Override
