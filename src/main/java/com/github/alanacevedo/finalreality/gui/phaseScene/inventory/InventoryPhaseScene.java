@@ -10,6 +10,13 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class InventoryPhaseScene extends AbstractPhaseScene {
     private GameController controller;
@@ -19,6 +26,7 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
     private CommandButton slot1Button = new CommandButton("");
     private CommandButton slot2Button = new CommandButton("");
     private Group otherGroup = new Group();
+    private Text centerText = new Text();
 
     public InventoryPhaseScene(GameController controller) {
         this.controller = controller;
@@ -108,22 +116,33 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
 
         root.getChildren().add(otherGroup);
 
-        //commonElements.displaceCenterTextPosition(40, -10);
+        Font font = null;
+        try {
+            font = Font.loadFont(new FileInputStream(Settings.resourcePath+"manaspc.ttf"), 15);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        root.getChildren().add(centerText);
+        centerText.setFont(font);
+        centerText.setLayoutX(370);
+        centerText.setLayoutY(520);
+        centerText.setFill(Color.WHITE);
+        centerText.setTextAlignment(TextAlignment.CENTER);
     }
 
     @Override
     public void handleTimer() {
         var currentWeapon = controller.getCurrentChar().getEquippedWeapon();
         if (currentWeapon.isNull()) {
-            //commonElements.setCenterText("");
+            centerText.setText("Equip a weapon");
         } else {
-            /*commonElements.setCenterText("Currently Equipped:\n" +
+            centerText.setText("Currently Equipped:\n" +
                     currentWeapon.getName()+
                     "\nATK: "+ currentWeapon.getDamage()+
                     " WT: "+ currentWeapon.getWeight());
-*/
+
         }
-//        commonElements.handleTimer();
 
         int topSlot = ((InventoryPhase) controller.getPhase()).getCurrentTopSlot();
         slot0Button.setText((topSlot+1) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot).getName());

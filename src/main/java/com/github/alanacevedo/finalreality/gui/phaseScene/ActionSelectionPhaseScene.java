@@ -14,6 +14,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -21,6 +22,7 @@ import java.io.FileNotFoundException;
 public class ActionSelectionPhaseScene extends AbstractPhaseScene {
     private final GameController controller;
     private final Group root = new Group();
+    private Text centerText = new Text();
 
     public ActionSelectionPhaseScene(GameController controller){
         this.controller = controller;
@@ -54,14 +56,24 @@ public class ActionSelectionPhaseScene extends AbstractPhaseScene {
         commandGroup.setLayoutY(Settings.height-110);
         root.getChildren().add(commandGroup);
 
+        Font font = null;
+        try {
+            font = Font.loadFont(new FileInputStream(Settings.resourcePath+"manaspc.ttf"), 15);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-        //commonElements.setCenterText(controller.getCurrentChar().getName()+"'s Turn.\nChoose action.");
-
+        root.getChildren().add(centerText);
+        centerText.setText(controller.getCurrentChar().getName()+"'s Turn.\nSelect action.");
+        centerText.setFont(font);
+        centerText.setLayoutX(310);
+        centerText.setLayoutY(530);
+        centerText.setFill(Color.WHITE);
+        centerText.setTextAlignment(TextAlignment.CENTER);
     }
 
     public void handleTimer() {
 
-        //commonElements.handleTimer();
     }
 
     public Group getRoot() {

@@ -9,25 +9,25 @@ import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonB
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public class InventorySwapPhaseScene extends AbstractPhaseScene {
-    private GameController controller;
-    private Group root = new Group();
-    private Text highlightedSlotLabel = new Text();
-    private Text equippedWeaponLabel = new Text();
-    private Group slotButtons = new Group();
-    private CommandButton slot0Button = new CommandButton("");
-    private CommandButton slot1Button = new CommandButton("");
-    private CommandButton slot2Button = new CommandButton("");
-    private Group otherGroup = new Group();
+    private final GameController controller;
+    private final Group root = new Group();
+    private final CommandButton slot0Button = new CommandButton("");
+    private final CommandButton slot1Button = new CommandButton("");
+    private final CommandButton slot2Button = new CommandButton("");
+    private final Group otherGroup = new Group();
+    private final Text centerText = new Text();
 
     public InventorySwapPhaseScene(GameController controller) {
         this.controller = controller;
-
-        root.getChildren().add(equippedWeaponLabel);
-        equippedWeaponLabel.setLayoutX(10);
-        equippedWeaponLabel.setLayoutY(70);
 
         StackPane slot0ButtonNode = slot0Button.getNode();
         StackPane slot1ButtonNode = slot1Button.getNode();
@@ -60,14 +60,11 @@ public class InventorySwapPhaseScene extends AbstractPhaseScene {
         slot1ButtonNode.setLayoutY(30);
         slot2ButtonNode.setLayoutY(60);
 
+        Group slotButtons = new Group();
         slotButtons.getChildren().addAll(slot0ButtonNode, slot1ButtonNode, slot2ButtonNode);
         slotButtons.setLayoutY(Settings.height-110);
         slotButtons.setLayoutX(30);
         root.getChildren().add(slotButtons);
-
-        root.getChildren().add(highlightedSlotLabel);
-        highlightedSlotLabel.setLayoutY(250);
-        highlightedSlotLabel.setLayoutX(100);
 
         StackPane scrollUpButton = (new CommandButton("Scroll Up")).getNode();
         scrollUpButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -111,20 +108,40 @@ public class InventorySwapPhaseScene extends AbstractPhaseScene {
 
         root.getChildren().add(otherGroup);
 
+        Font font = null;
+        try {
+            font = Font.loadFont(new FileInputStream(Settings.resourcePath+"manaspc.ttf"), 15);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        root.getChildren().add(centerText);
+        centerText.setFont(font);
+        centerText.setLayoutX(370);
+        centerText.setLayoutY(520);
+        centerText.setFill(Color.WHITE);
+        centerText.setTextAlignment(TextAlignment.CENTER);
 
     }
 
     @Override
     public void handleTimer() {
-        //commonElements.handleTimer();
 
         int topSlot = ((InventorySwapPhase) controller.getPhase()).getCurrentTopSlot();
         slot0Button.setText((topSlot+1) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot).getName());
         slot1Button.setText((topSlot+2) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+1).getName());
         slot2Button.setText((topSlot+3) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+2).getName());
-        highlightedSlotLabel.setText("Highlighted slot: " + ((InventorySwapPhase) controller.getPhase()).getHighlightedSlot());
 
-        equippedWeaponLabel.setText(controller.getCurrentChar().getEquippedWeapon().getName());
+        var currentWeapon = controller.getCurrentChar().getEquippedWeapon();
+        if (currentWeapon.isNull()) {
+            centerText.setText("Equip a weapon");
+        } else {
+            centerText.setText("Currently Equipped:\n" +
+                    currentWeapon.getName()+
+                    "\nATK: "+ currentWeapon.getDamage()+
+                    " WT: "+ currentWeapon.getWeight());
+
+        }
 
     }
 

@@ -62,11 +62,11 @@ public class PartyStatus {
         char1Label.setFill(Color.WHITE);
         char2Label.setFill(Color.WHITE);
 
-        char0Label.setLayoutY(13);
+        char0Label.setLayoutY(23);
         char0Label.setLayoutX(10);
-        char1Label.setLayoutY(38);
+        char1Label.setLayoutY(48);
         char1Label.setLayoutX(10);
-        char2Label.setLayoutY(63);
+        char2Label.setLayoutY(73);
         char2Label.setLayoutX(10);
 
         root.getChildren().addAll(char0Label, char1Label, char2Label);

@@ -3,15 +3,11 @@ package com.github.alanacevedo.finalreality.gui.phaseScene.commonElements;
 import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.controller.Settings;
 import com.github.alanacevedo.finalreality.gui.nodes.CharacterSprite;
-import javafx.geometry.Pos;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
+
 import javafx.scene.text.Text;
-import javafx.scene.text.TextAlignment;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -19,17 +15,16 @@ import java.io.FileNotFoundException;
 public class CommonBattlePhaseElements {
     private final GameController controller;
     private final Group root = new Group();
-    private ImageView background = new ImageView();
     private final PartyStatus partyStatus;
-    private CharacterSprite enemy0;
-    private CharacterSprite enemy1;
-    private CharacterSprite enemy2;
-    private Text centerText = new Text("xd");
+    private final CharacterSprite enemy0;
+    private final CharacterSprite enemy1;
+    private final CharacterSprite enemy2;
 
     public CommonBattlePhaseElements(GameController controller) {
         this.controller = controller;
         root.getChildren().add(new Group(new Text("")));
 
+        ImageView background = new ImageView();
         try {
             background = new ImageView(new Image(new FileInputStream(Settings.resourcePath+"background.png")));
         } catch (FileNotFoundException e) {
@@ -40,28 +35,10 @@ public class CommonBattlePhaseElements {
         background.setFitHeight(Settings.height);
         root.getChildren().add(background);
 
-        Font font = null;
-        try {
-            font = Font.loadFont(new FileInputStream(Settings.resourcePath+"manaspc.ttf"), 15);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-
-        root.getChildren().add(centerText);
-        centerText.setFont(font);
-        centerText.setLayoutX(310);
-        centerText.setLayoutY(510);
-        centerText.setFill(Color.WHITE);
-        centerText.setTextAlignment(TextAlignment.CENTER);
-
-
-
         partyStatus = new PartyStatus(controller);
         partyStatus.getNode().setLayoutX(620);
         partyStatus.getNode().setLayoutY(Settings.height-110);
         root.getChildren().add(partyStatus.getNode());
-
 
         enemy0 = new CharacterSprite("Enemy.png");
         enemy0.getIdleAnimation().play();
@@ -102,8 +79,6 @@ public class CommonBattlePhaseElements {
         thief.getNode().setLayoutY(330);
         root.getChildren().add(thief.getNode());
 
-        setCenterText(controller.getPhase().getName());
-
     }
 
     public void handleTimer() {
@@ -113,28 +88,8 @@ public class CommonBattlePhaseElements {
         enemy2.updateHealthBar(controller.getEnemyGroup().getEnemy(2).getHP());
     }
 
-    public void setCenterText(String newText) {
-        centerText.setText(newText);
-    }
-
-    public void displaceCenterTextPosition(double x, double y){
-        centerText.setLayoutX(centerText.getLayoutX() + x);
-        centerText.setLayoutY(centerText.getLayoutY() + y);
-    }
-
     public Group getNode() {
         return root;
     }
 
-    public Group getEnemy0SpriteNode() {
-        return enemy0.getNode();
-    }
-
-    public Group getEnemy1SpriteNode() {
-        return enemy1.getNode();
-    }
-
-    public Group getEnemy2SpriteNode() {
-        return enemy2.getNode();
-    }
 }
