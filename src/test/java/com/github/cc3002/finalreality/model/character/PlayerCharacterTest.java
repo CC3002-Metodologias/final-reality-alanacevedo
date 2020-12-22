@@ -1,9 +1,5 @@
 package com.github.cc3002.finalreality.model.character;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
-
 import com.github.alanacevedo.finalreality.model.character.AbstractCharacter;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.player.AbsPlayerCharacter;
@@ -13,6 +9,8 @@ import java.util.ArrayList;
 import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Set of tests for the {@code PlayerCharacter} class.
@@ -157,7 +155,7 @@ class PlayerCharacterTest extends AbsCharacterTest {
     // Test equipar armas a Knight. Debería sólo poder equipar Sword, Axe, Knife.
 
     // En un comienzo no debería tener un arma equipada
-    assertNull(testKnight.getEquippedWeapon());
+    assertTrue(testKnight.getEquippedWeapon().isNull());
     testKnight.equip(testAxe);
     assertEquals(testKnight.getEquippedWeapon(), testAxe);
     testKnight.equip(testSword);
@@ -173,7 +171,7 @@ class PlayerCharacterTest extends AbsCharacterTest {
 
     // Test equipar armas a Engineer. Debería sólo poder equipar Axe, Bow.
 
-    assertNull(testEngineer.getEquippedWeapon());
+    assertTrue(testEngineer.getEquippedWeapon().isNull());
     testEngineer.equip(testAxe);
     assertEquals(testEngineer.getEquippedWeapon(), testAxe);
     testEngineer.equip(testSword);
@@ -190,9 +188,9 @@ class PlayerCharacterTest extends AbsCharacterTest {
 
     // Test equipar armas a Thief. Debería sólo poder equipar Sword, Knife, Bow.
 
-    assertNull(testThief.getEquippedWeapon());
+    assertTrue(testThief.getEquippedWeapon().isNull());
     testThief.equip(testAxe);
-    assertNull(testThief.getEquippedWeapon());
+    assertTrue(testThief.getEquippedWeapon().isNull());
     assertNotEquals(testThief.getEquippedWeapon(), testAxe);
     testThief.equip(testSword);
     assertEquals(testThief.getEquippedWeapon(), testSword);
@@ -208,11 +206,11 @@ class PlayerCharacterTest extends AbsCharacterTest {
 
     // Test equipar armas a BlackMage. Debería poder equipar Knife, Staff.
 
-    assertNull(testBlackMage.getEquippedWeapon());
+    assertTrue(testBlackMage.getEquippedWeapon().isNull());
     testBlackMage.equip(testAxe);
-    assertNull(testBlackMage.getEquippedWeapon());
+    assertTrue(testBlackMage.getEquippedWeapon().isNull());
     testBlackMage.equip(testSword);
-    assertNull(testBlackMage.getEquippedWeapon());
+    assertTrue(testBlackMage.getEquippedWeapon().isNull());
     testBlackMage.equip(testKnife);
     assertEquals(testBlackMage.getEquippedWeapon(), testKnife);
     testBlackMage.equip(testBow);
@@ -224,15 +222,15 @@ class PlayerCharacterTest extends AbsCharacterTest {
 
     // Test equipar armas a WhiteMage. Debería poder equipar Staff.
 
-    assertNull(testWhiteMage.getEquippedWeapon());
+    assertTrue(testWhiteMage.getEquippedWeapon().isNull());
     testWhiteMage.equip(testAxe);
-    assertNull(testWhiteMage.getEquippedWeapon());
+    assertTrue(testWhiteMage.getEquippedWeapon().isNull());
     testWhiteMage.equip(testSword);
-    assertNull(testWhiteMage.getEquippedWeapon());
+    assertTrue(testWhiteMage.getEquippedWeapon().isNull());
     testWhiteMage.equip(testKnife);
-    assertNull(testWhiteMage.getEquippedWeapon());
+    assertTrue(testWhiteMage.getEquippedWeapon().isNull());
     testWhiteMage.equip(testBow);
-    assertNull(testWhiteMage.getEquippedWeapon());
+    assertTrue(testWhiteMage.getEquippedWeapon().isNull());
     testWhiteMage.equip(testStaff);
     assertEquals(testWhiteMage.getEquippedWeapon(), testStaff);
 

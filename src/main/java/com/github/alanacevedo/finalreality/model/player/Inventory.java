@@ -32,7 +32,7 @@ public class Inventory implements IInventory {
 
     @Override
     public void addWeapon(IWeapon weapon) {
-        if (currentSize < maxSize) {
+        if (currentSize < maxSize && !weapon.isNull()) {
             for (int i=0; i<maxSize; i++) {
                 if (weaponList[i].isNull()) {
                     weaponList[i] = weapon;

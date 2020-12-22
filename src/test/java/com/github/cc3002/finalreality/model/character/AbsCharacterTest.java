@@ -95,7 +95,7 @@ public abstract class AbsCharacterTest {
     BlackMage testBlackMage = new BlackMage(BLACK_MAGE_NAME, turns, 100, 10, testMP);
 
     // Si un personaje no tiene un arma equipada, no debería hacer daño al intentar atacar.
-    assertNull(testKnight.getEquippedWeapon());
+    assertTrue(testKnight.getEquippedWeapon().isNull());
     assertEquals(testBlackMage.getHP(), 100); // BlackMage HP = 100, DEF= 10
     testKnight.attack(testBlackMage);
     assertEquals(testBlackMage.getHP(), 100); // Como no tenía arma, no debería hacer daño.

@@ -45,7 +45,7 @@ public class FinalReality extends Application {
     String s = Settings.resourcePath+"bg_music.mp3";
     Media backgroundMusic = new Media(Paths.get(s).toUri().toString());
     mediaPlayer = new MediaPlayer(backgroundMusic);
-    mediaPlayer.setVolume(0.5);
+    mediaPlayer.setVolume(0.1);
     mediaPlayer.play();
 
     setupTimer();
