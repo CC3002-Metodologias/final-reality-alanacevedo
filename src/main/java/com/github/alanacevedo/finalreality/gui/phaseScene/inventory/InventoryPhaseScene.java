@@ -18,14 +18,11 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
     private CommandButton slot0Button = new CommandButton("");
     private CommandButton slot1Button = new CommandButton("");
     private CommandButton slot2Button = new CommandButton("");
-    private CommonBattlePhaseElements commonElements;
     private Group otherGroup = new Group();
 
     public InventoryPhaseScene(GameController controller) {
         this.controller = controller;
 
-        commonElements = new CommonBattlePhaseElements(controller);
-        root.getChildren().add(commonElements.getNode());
 
         StackPane slot0ButtonNode = slot0Button.getNode();
         StackPane slot1ButtonNode = slot1Button.getNode();
@@ -111,22 +108,22 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
 
         root.getChildren().add(otherGroup);
 
-        commonElements.displaceCenterTextPosition(40, -10);
+        //commonElements.displaceCenterTextPosition(40, -10);
     }
 
     @Override
     public void handleTimer() {
         var currentWeapon = controller.getCurrentChar().getEquippedWeapon();
         if (currentWeapon.isNull()) {
-            commonElements.setCenterText("");
+            //commonElements.setCenterText("");
         } else {
-            commonElements.setCenterText("Currently Equipped:\n" +
+            /*commonElements.setCenterText("Currently Equipped:\n" +
                     currentWeapon.getName()+
                     "\nATK: "+ currentWeapon.getDamage()+
                     " WT: "+ currentWeapon.getWeight());
-
+*/
         }
-        commonElements.handleTimer();
+//        commonElements.handleTimer();
 
         int topSlot = ((InventoryPhase) controller.getPhase()).getCurrentTopSlot();
         slot0Button.setText((topSlot+1) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot).getName());

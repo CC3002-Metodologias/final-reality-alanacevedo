@@ -4,6 +4,7 @@ import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.controller.Settings;
 import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
 import com.github.alanacevedo.finalreality.gui.phaseScene.WaitingPhaseScene;
+import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -27,10 +28,10 @@ public class FinalReality extends Application {
   private static final String RESOURCE_PATH = "src/main/resources/";
   private final GameController controller = new GameController();
   private MediaPlayer mediaPlayer;
-  private Group phaseRoot;
   private Group root = new Group();
   private Scene scene;
-
+  private CommonBattlePhaseElements commonElements;
+  private Group commonElementsNode;
   public static void main(String[] args) {
     launch(args);
   }
@@ -41,9 +42,12 @@ public class FinalReality extends Application {
     controller.setupStandardBattle();
 
     scene = new Scene(root, Settings.width, Settings.height);
+    commonElements = new CommonBattlePhaseElements(controller);
+    commonElementsNode = commonElements.getNode();
+    root.getChildren().add(commonElementsNode);
+    root.getChildren().add(new Group());
     primaryStage.setScene(scene);
-    phaseRoot = controller.getPhase().getPhaseScene().getRoot();
-    root.getChildren().add(phaseRoot);
+
 
     String s = Settings.resourcePath+"bg_music.mp3";
     Media backgroundMusic = new Media(Paths.get(s).toUri().toString());
@@ -61,7 +65,8 @@ public class FinalReality extends Application {
       @Override
       public void handle(long now) {
         controller.getPhase().getPhaseScene().handleTimer();
-        scene.setRoot(controller.getPhase().getPhaseScene().getRoot());
+        root.getChildren().set(1, controller.getPhase().getPhaseScene().getRoot());
+        commonElements.handleTimer();
       }
     };
     timer.start();

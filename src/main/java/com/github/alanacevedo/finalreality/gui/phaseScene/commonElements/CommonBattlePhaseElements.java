@@ -24,16 +24,18 @@ public class CommonBattlePhaseElements {
     private CharacterSprite enemy0;
     private CharacterSprite enemy1;
     private CharacterSprite enemy2;
-    private Text centerText = new Text();
+    private Text centerText = new Text("xd");
 
     public CommonBattlePhaseElements(GameController controller) {
         this.controller = controller;
+        root.getChildren().add(new Group(new Text("")));
 
         try {
             background = new ImageView(new Image(new FileInputStream(Settings.resourcePath+"background.png")));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
         background.setFitWidth(Settings.width);
         background.setFitHeight(Settings.height);
         root.getChildren().add(background);
@@ -45,12 +47,15 @@ public class CommonBattlePhaseElements {
             e.printStackTrace();
         }
 
+
         root.getChildren().add(centerText);
         centerText.setFont(font);
         centerText.setLayoutX(310);
         centerText.setLayoutY(510);
         centerText.setFill(Color.WHITE);
         centerText.setTextAlignment(TextAlignment.CENTER);
+
+
 
         partyStatus = new PartyStatus(controller);
         partyStatus.getNode().setLayoutX(620);
@@ -97,8 +102,7 @@ public class CommonBattlePhaseElements {
         thief.getNode().setLayoutY(330);
         root.getChildren().add(thief.getNode());
 
-
-
+        setCenterText(controller.getPhase().getName());
 
     }
 

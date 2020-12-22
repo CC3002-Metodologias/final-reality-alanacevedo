@@ -19,12 +19,12 @@ import javafx.scene.paint.Color;
 public class AttackTargetSelectionPhaseScene extends AbstractPhaseScene {
     private GameController controller;
     private Group root = new Group();
-    private CommonBattlePhaseElements commonElements;
+    //private CommonBattlePhaseElements commonElements;
 
     public AttackTargetSelectionPhaseScene(GameController controller) {
         this.controller = controller;
-        commonElements = new CommonBattlePhaseElements(controller);
-        root.getChildren().add(commonElements.getNode());
+        //commonElements = new CommonBattlePhaseElements(controller);
+        //root.getChildren().add(commonElements.getNode());
 
         StackPane backButton = (new CommandButton("Return")).getNode();
         backButton.setLayoutY(540);
@@ -36,7 +36,7 @@ public class AttackTargetSelectionPhaseScene extends AbstractPhaseScene {
         root.getChildren().add(backButton);
 
 
-
+/*
         Group enemy0Sprite = commonElements.getEnemy0SpriteNode();
         enemy0Sprite.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             ((AttackTargetSelectionPhase) controller.getPhase()).getAttackCommand0().doAction();
@@ -56,13 +56,13 @@ public class AttackTargetSelectionPhaseScene extends AbstractPhaseScene {
         });
 
         commonElements.setCenterText("Select Target");
-
+*/
     }
 
     @Override
     public void handleTimer() {
 
-        commonElements.handleTimer();
+        //commonElements.handleTimer();
     }
 
     @Override

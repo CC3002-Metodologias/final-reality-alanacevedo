@@ -26,6 +26,7 @@ public class GameControllerTest {
         controller = new GameController();
     }
 
+    /*
     @Test
     void addCharacterToPartyTest() {
         var turnsQueue = controller.getTurnsQueue();
@@ -156,6 +157,7 @@ public class GameControllerTest {
         assertTrue(controller.getTurnsQueue().isEmpty());
 
     }
+    */
 
 
     @Test

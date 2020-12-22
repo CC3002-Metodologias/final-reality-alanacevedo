@@ -18,12 +18,9 @@ import javafx.scene.layout.StackPane;
 public class MagicSelectionPhaseScene extends AbstractPhaseScene {
     private GameController controller;
     private Group root = new Group();
-    private CommonBattlePhaseElements commonElements;
 
     public MagicSelectionPhaseScene(GameController controller) {
         this.controller = controller;
-        commonElements = new CommonBattlePhaseElements(controller);
-        root.getChildren().add(commonElements.getNode());
 
         StackPane backButton = (new CommandButton("Return")).getNode();
         backButton.setLayoutY(540);
@@ -34,8 +31,8 @@ public class MagicSelectionPhaseScene extends AbstractPhaseScene {
         });
         root.getChildren().add(backButton);
 
-        commonElements.displaceCenterTextPosition(-75, 0);
-        commonElements.setCenterText("Magic is yet to be implemented.");
+
+        //commonElements.setCenterText("Magic is yet to be implemented.");
     }
 
     @Override

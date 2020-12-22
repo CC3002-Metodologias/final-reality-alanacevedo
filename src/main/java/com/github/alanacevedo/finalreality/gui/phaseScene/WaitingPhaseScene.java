@@ -16,7 +16,6 @@ public class WaitingPhaseScene extends AbstractPhaseScene {
     private GameController controller;
 
     private Text phaseLabel = new Text();
-    ImageView background;
 
     private Group root;
 
@@ -24,14 +23,6 @@ public class WaitingPhaseScene extends AbstractPhaseScene {
     public WaitingPhaseScene(GameController controller) {
         this.controller = controller;
         root = new Group();
-        try {
-            background = new javafx.scene.image.ImageView(new Image(new FileInputStream(Settings.resourcePath+"background.png")));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        background.setFitWidth(Settings.width);
-        background.setFitHeight(Settings.height);
-        root.getChildren().add(background);
 
         root.getChildren().add(phaseLabel);
         phaseLabel.setLayoutX(10);

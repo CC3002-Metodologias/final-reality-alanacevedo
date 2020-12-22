@@ -20,14 +20,10 @@ public class InventorySwapPhaseScene extends AbstractPhaseScene {
     private CommandButton slot0Button = new CommandButton("");
     private CommandButton slot1Button = new CommandButton("");
     private CommandButton slot2Button = new CommandButton("");
-    private CommonBattlePhaseElements commonElements;
     private Group otherGroup = new Group();
 
     public InventorySwapPhaseScene(GameController controller) {
         this.controller = controller;
-
-        commonElements = new CommonBattlePhaseElements(controller);
-        root.getChildren().add(commonElements.getNode());
 
         root.getChildren().add(equippedWeaponLabel);
         equippedWeaponLabel.setLayoutX(10);
@@ -120,7 +116,7 @@ public class InventorySwapPhaseScene extends AbstractPhaseScene {
 
     @Override
     public void handleTimer() {
-        commonElements.handleTimer();
+        //commonElements.handleTimer();
 
         int topSlot = ((InventorySwapPhase) controller.getPhase()).getCurrentTopSlot();
         slot0Button.setText((topSlot+1) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot).getName());

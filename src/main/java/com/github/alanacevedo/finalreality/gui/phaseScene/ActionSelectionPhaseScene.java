@@ -20,13 +20,10 @@ import java.io.FileNotFoundException;
 
 public class ActionSelectionPhaseScene extends AbstractPhaseScene {
     private final GameController controller;
-    private final CommonBattlePhaseElements commonElements;
     private final Group root = new Group();
 
     public ActionSelectionPhaseScene(GameController controller){
         this.controller = controller;
-        commonElements = new CommonBattlePhaseElements(controller);
-        root.getChildren().add(commonElements.getNode());
         StackPane attackButton = (new CommandButton("Attack")).getNode();
         root.getChildren().add(attackButton);
         attackButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -58,13 +55,13 @@ public class ActionSelectionPhaseScene extends AbstractPhaseScene {
         root.getChildren().add(commandGroup);
 
 
-        commonElements.setCenterText(controller.getCurrentChar().getName()+"'s Turn.\nChoose action.");
+        //commonElements.setCenterText(controller.getCurrentChar().getName()+"'s Turn.\nChoose action.");
 
     }
 
     public void handleTimer() {
 
-        commonElements.handleTimer();
+        //commonElements.handleTimer();
     }
 
     public Group getRoot() {
