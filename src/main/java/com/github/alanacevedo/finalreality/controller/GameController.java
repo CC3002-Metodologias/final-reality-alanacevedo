@@ -249,8 +249,6 @@ public class GameController {
               currentPhase.changePhase(new ActionSelectionPhase(this));
           }
 
-
-
     public void setCurrentChar(IPlayableCharacter character) {
         currentChar = character;
     }
