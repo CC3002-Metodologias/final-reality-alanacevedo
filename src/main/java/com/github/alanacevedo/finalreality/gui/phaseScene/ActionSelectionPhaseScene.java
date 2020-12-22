@@ -6,10 +6,14 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.ActionSelectio
 import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommandButton;
 import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
 import javafx.scene.Group;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -53,6 +57,9 @@ public class ActionSelectionPhaseScene extends AbstractPhaseScene {
         commandGroup.setLayoutX(30);
         commandGroup.setLayoutY(Settings.height-110);
         root.getChildren().add(commandGroup);
+
+
+        commonElements.setCenterText(controller.getCurrentChar().getName()+"'s Turn.\nChoose action.");
 
     }
 

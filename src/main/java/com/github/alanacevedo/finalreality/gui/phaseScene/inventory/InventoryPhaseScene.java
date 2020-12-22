@@ -14,8 +14,6 @@ import javafx.scene.layout.StackPane;
 public class InventoryPhaseScene extends AbstractPhaseScene {
     private GameController controller;
     private Group root = new Group();
-    private Label highlightedSlotLabel = new Label();
-    private Label equippedWeaponLabel = new Label();
     private Group slotButtons = new Group();
     private CommandButton slot0Button = new CommandButton("");
     private CommandButton slot1Button = new CommandButton("");
@@ -28,12 +26,6 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
 
         commonElements = new CommonBattlePhaseElements(controller);
         root.getChildren().add(commonElements.getNode());
-
-        root.getChildren().add(equippedWeaponLabel);
-        equippedWeaponLabel.setLayoutX(10);
-        equippedWeaponLabel.setLayoutY(70);
-
-
 
         StackPane slot0ButtonNode = slot0Button.getNode();
         StackPane slot1ButtonNode = slot1Button.getNode();
@@ -70,10 +62,6 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
         slotButtons.setLayoutY(Settings.height-110);
         slotButtons.setLayoutX(30);
         root.getChildren().add(slotButtons);
-
-        root.getChildren().add(highlightedSlotLabel);
-        highlightedSlotLabel.setLayoutY(250);
-        highlightedSlotLabel.setLayoutX(100);
 
         StackPane scrollUpButton = (new CommandButton("Scroll Up")).getNode();
         scrollUpButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -123,6 +111,7 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
 
         root.getChildren().add(otherGroup);
 
+        commonElements.displaceCenterTextPosition(40, -10);
     }
 
     @Override
@@ -130,15 +119,22 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
         if (controller.getUiScene().getRoot() != root) {
             controller.getUiScene().setRoot(root);
         }
+        var currentWeapon = controller.getCurrentChar().getEquippedWeapon();
+        if (currentWeapon.isNull()) {
+            commonElements.setCenterText("");
+        } else {
+            commonElements.setCenterText("Currently Equipped:\n" +
+                    currentWeapon.getName()+
+                    "\nATK: "+ currentWeapon.getDamage()+
+                    " WT: "+ currentWeapon.getWeight());
+
+        }
         commonElements.handleTimer();
 
         int topSlot = ((InventoryPhase) controller.getPhase()).getCurrentTopSlot();
         slot0Button.setText((topSlot+1) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot).getName());
         slot1Button.setText((topSlot+2) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+1).getName());
         slot2Button.setText((topSlot+3) + ". " + controller.getPlayer().getWeaponFromInventory(topSlot+2).getName());
-        highlightedSlotLabel.setText("Highlighted slot: " + ((InventoryPhase) controller.getPhase()).getHighlightedSlot());
-
-        equippedWeaponLabel.setText(controller.getCurrentChar().getEquippedWeapon().getName());
 
     }
 

@@ -86,7 +86,7 @@ public class CharacterFactory {
     public void setupStandardPlayerParty() {
         addBlackMageToPlayerParty("Blanche");
         addKnightToPlayerParty("Lucia");
-        addThiefToPlayerParty("Thancred");
+        addThiefToPlayerParty("Ramza");
     }
 
 }

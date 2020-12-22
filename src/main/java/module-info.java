@@ -3,4 +3,5 @@ module finalreality.main {
   requires javafx.controls;
   requires org.jetbrains.annotations;
   requires java.desktop;
+    requires javafx.media;
 }

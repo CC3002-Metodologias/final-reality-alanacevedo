@@ -5,44 +5,37 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.attack.AttackT
 import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventoryPhase;
 import com.github.alanacevedo.finalreality.controller.phase.phase.magic.MagicSelectionPhase;
 import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
+import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommandButton;
+import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
 import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.PartyStatus;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.StackPane;
 
 public class MagicSelectionPhaseScene extends AbstractPhaseScene {
     private GameController controller;
     private Group root = new Group();
-    private PartyStatus partyStatus;
-    private Label phaseLabel = new Label();
-    private Label queueSizeLabel = new Label();
-    private Label characterNameLabel = new Label();
-    private Button backButton = new Button("Return");
+    private CommonBattlePhaseElements commonElements;
 
     public MagicSelectionPhaseScene(GameController controller) {
         this.controller = controller;
-        partyStatus = new PartyStatus(controller);
-        partyStatus.getNode().setLayoutX(620);
-        partyStatus.getNode().setLayoutY(500);
-        root.getChildren().add(partyStatus.getNode());
+        commonElements = new CommonBattlePhaseElements(controller);
+        root.getChildren().add(commonElements.getNode());
 
-        root.getChildren().add(phaseLabel);
-        phaseLabel.setLayoutX(10);
-        phaseLabel.setLayoutY(10);
-
-        root.getChildren().add(queueSizeLabel);
-        queueSizeLabel.setLayoutX(10);
-        queueSizeLabel.setLayoutY(30);
-
-        root.getChildren().add(characterNameLabel);
-        characterNameLabel.setLayoutX(10);
-        characterNameLabel.setLayoutY(50);
-
+        StackPane backButton = (new CommandButton("Return")).getNode();
+        backButton.setLayoutY(540);
+        backButton.setLayoutX(325);
+        backButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            ((MagicSelectionPhase) controller.getPhase()).getGoBackCommand().doAction();
+            event.consume();
+        });
         root.getChildren().add(backButton);
-        backButton.setLayoutY(300);
-        backButton.setLayoutX(300);
-        backButton.setOnAction(event -> ((MagicSelectionPhase) controller.getPhase()).getGoBackCommand().doAction());
+
+        commonElements.displaceCenterTextPosition(-75, 0);
+        commonElements.setCenterText("Magic is yet to be implemented.");
     }
 
     @Override
@@ -50,13 +43,6 @@ public class MagicSelectionPhaseScene extends AbstractPhaseScene {
         if (controller.getUiScene().getRoot() != root) {
             controller.getUiScene().setRoot(root);
         }
-
-        phaseLabel.setText(controller.getPhase().getName() + "Phase");
-        queueSizeLabel.setText(String.valueOf(controller.getTurnsQueue().size()));
-        IPlayableCharacter currentChar = controller.getCurrentChar();
-        characterNameLabel.setText(currentChar.getName());
-
-        partyStatus.handleTimer();
     }
 
     @Override

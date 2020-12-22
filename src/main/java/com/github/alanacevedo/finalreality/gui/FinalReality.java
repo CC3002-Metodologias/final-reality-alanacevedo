@@ -10,6 +10,10 @@ import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
+
+import java.nio.file.Paths;
 
 /**
  * Main entry point for the application.
@@ -22,7 +26,7 @@ import javafx.stage.Stage;
 public class FinalReality extends Application {
   private static final String RESOURCE_PATH = "src/main/resources/";
   private final GameController controller = new GameController();
-
+  private MediaPlayer mediaPlayer;
 
   public static void main(String[] args) {
     launch(args);
@@ -37,6 +41,13 @@ public class FinalReality extends Application {
     Scene scene = new Scene(root, Settings.width, Settings.height);
     controller.setUiScene(scene);
     primaryStage.setScene(scene);
+
+    String s = Settings.resourcePath+"bg_music.mp3";
+    Media backgroundMusic = new Media(Paths.get(s).toUri().toString());
+    mediaPlayer = new MediaPlayer(backgroundMusic);
+    mediaPlayer.setVolume(0.5);
+    mediaPlayer.play();
+
     setupTimer();
     primaryStage.show();
   }
