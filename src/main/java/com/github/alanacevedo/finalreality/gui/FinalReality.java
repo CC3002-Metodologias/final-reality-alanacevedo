@@ -27,6 +27,9 @@ public class FinalReality extends Application {
   private static final String RESOURCE_PATH = "src/main/resources/";
   private final GameController controller = new GameController();
   private MediaPlayer mediaPlayer;
+  private Group phaseRoot;
+  private Group root = new Group();
+  private Scene scene;
 
   public static void main(String[] args) {
     launch(args);
@@ -37,15 +40,15 @@ public class FinalReality extends Application {
     primaryStage.setTitle("Final Reality");
     controller.setupStandardBattle();
 
-    Group root = controller.getPhase().getPhaseScene().getRoot();
-    Scene scene = new Scene(root, Settings.width, Settings.height);
-    controller.setUiScene(scene);
+    scene = new Scene(root, Settings.width, Settings.height);
     primaryStage.setScene(scene);
+    phaseRoot = controller.getPhase().getPhaseScene().getRoot();
+    root.getChildren().add(phaseRoot);
 
     String s = Settings.resourcePath+"bg_music.mp3";
     Media backgroundMusic = new Media(Paths.get(s).toUri().toString());
     mediaPlayer = new MediaPlayer(backgroundMusic);
-    mediaPlayer.setVolume(0.1);
+    mediaPlayer.setVolume(0.05);
     mediaPlayer.play();
 
     setupTimer();
@@ -53,10 +56,12 @@ public class FinalReality extends Application {
   }
 
   private void setupTimer() {
+
     AnimationTimer timer = new AnimationTimer() {
       @Override
       public void handle(long now) {
         controller.getPhase().getPhaseScene().handleTimer();
+        scene.setRoot(controller.getPhase().getPhaseScene().getRoot());
       }
     };
     timer.start();

@@ -2,21 +2,20 @@ package com.github.alanacevedo.finalreality.gui.phaseScene.inventory;
 
 import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.controller.Settings;
-import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventoryPhase;
 import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventorySwapPhase;
 import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
 import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommandButton;
 import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 
 public class InventorySwapPhaseScene extends AbstractPhaseScene {
     private GameController controller;
     private Group root = new Group();
-    private Label highlightedSlotLabel = new Label();
-    private Label equippedWeaponLabel = new Label();
+    private Text highlightedSlotLabel = new Text();
+    private Text equippedWeaponLabel = new Text();
     private Group slotButtons = new Group();
     private CommandButton slot0Button = new CommandButton("");
     private CommandButton slot1Button = new CommandButton("");
@@ -33,8 +32,6 @@ public class InventorySwapPhaseScene extends AbstractPhaseScene {
         root.getChildren().add(equippedWeaponLabel);
         equippedWeaponLabel.setLayoutX(10);
         equippedWeaponLabel.setLayoutY(70);
-
-
 
         StackPane slot0ButtonNode = slot0Button.getNode();
         StackPane slot1ButtonNode = slot1Button.getNode();
@@ -123,9 +120,6 @@ public class InventorySwapPhaseScene extends AbstractPhaseScene {
 
     @Override
     public void handleTimer() {
-        if (controller.getUiScene().getRoot() != root) {
-            controller.getUiScene().setRoot(root);
-        }
         commonElements.handleTimer();
 
         int topSlot = ((InventorySwapPhase) controller.getPhase()).getCurrentTopSlot();

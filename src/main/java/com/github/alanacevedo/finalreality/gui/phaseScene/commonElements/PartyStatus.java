@@ -11,15 +11,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class PartyStatus {
     Pane root = new Pane();
-    Label char0Label;
-    Label char1Label;
-    Label char2Label;
+    Text char0Label;
+    Text char1Label;
+    Text char2Label;
     IPlayableCharacter char0;
     IPlayableCharacter char1;
     IPlayableCharacter char2;
@@ -49,17 +50,17 @@ public class PartyStatus {
         char1 = controller.getPlayer().getCharacterFromParty(1);
         char2 = controller.getPlayer().getCharacterFromParty(2);
 
-        char0Label = new Label(char0.getName() + "   HP: "+ char0.getHP() +"/" + char1.getMaxHP());
-        char1Label = new Label(char1.getName() + "   HP: "+ char1.getHP() +"/" + char1.getMaxHP());
-        char2Label = new Label(char2.getName() + "   HP: "+ char2.getHP() +"/" + char2.getMaxHP());
+        char0Label = new Text(char0.getName() + "   HP: "+ char0.getHP() +"/" + char1.getMaxHP());
+        char1Label = new Text(char1.getName() + "   HP: "+ char1.getHP() +"/" + char1.getMaxHP());
+        char2Label = new Text(char2.getName() + "   HP: "+ char2.getHP() +"/" + char2.getMaxHP());
 
         char0Label.setFont(font);
         char1Label.setFont(font);
         char2Label.setFont(font);
 
-        char0Label.setTextFill(Color.WHITE);
-        char1Label.setTextFill(Color.WHITE);
-        char2Label.setTextFill(Color.WHITE);
+        char0Label.setFill(Color.WHITE);
+        char1Label.setFill(Color.WHITE);
+        char2Label.setFill(Color.WHITE);
 
         char0Label.setLayoutY(13);
         char0Label.setLayoutX(10);

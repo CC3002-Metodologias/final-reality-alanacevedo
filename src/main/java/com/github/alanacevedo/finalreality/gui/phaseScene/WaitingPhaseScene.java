@@ -6,6 +6,8 @@ import javafx.scene.Group;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,7 +15,7 @@ import java.io.FileNotFoundException;
 public class WaitingPhaseScene extends AbstractPhaseScene {
     private GameController controller;
 
-    private Label phaseLabel = new Label();
+    private Text phaseLabel = new Text();
     ImageView background;
 
     private Group root;
@@ -34,15 +36,12 @@ public class WaitingPhaseScene extends AbstractPhaseScene {
         root.getChildren().add(phaseLabel);
         phaseLabel.setLayoutX(10);
         phaseLabel.setLayoutY(10);
+        phaseLabel.setFill(Color.WHITE);
 
 
     }
 
     public void handleTimer() {
-
-        if (controller.getUiScene().getRoot() != root) {
-            controller.getUiScene().setRoot(root);
-        }
 
         phaseLabel.setText(controller.getPhase().getName() + "Phase");
     }

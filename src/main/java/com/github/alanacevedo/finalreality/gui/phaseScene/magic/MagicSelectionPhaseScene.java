@@ -40,9 +40,7 @@ public class MagicSelectionPhaseScene extends AbstractPhaseScene {
 
     @Override
     public void handleTimer() {
-        if (controller.getUiScene().getRoot() != root) {
-            controller.getUiScene().setRoot(root);
-        }
+        
     }
 
     @Override

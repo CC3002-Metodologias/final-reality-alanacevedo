@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 
 import java.io.FileInputStream;
@@ -18,12 +19,12 @@ import java.io.FileNotFoundException;
 public class CommonBattlePhaseElements {
     private final GameController controller;
     private final Group root = new Group();
-    private ImageView background;
+    private ImageView background = new ImageView();
     private final PartyStatus partyStatus;
     private CharacterSprite enemy0;
     private CharacterSprite enemy1;
     private CharacterSprite enemy2;
-    private Label centerText = new Label();
+    private Text centerText = new Text();
 
     public CommonBattlePhaseElements(GameController controller) {
         this.controller = controller;
@@ -48,7 +49,7 @@ public class CommonBattlePhaseElements {
         centerText.setFont(font);
         centerText.setLayoutX(310);
         centerText.setLayoutY(510);
-        centerText.setTextFill(Color.WHITE);
+        centerText.setFill(Color.WHITE);
         centerText.setTextAlignment(TextAlignment.CENTER);
 
         partyStatus = new PartyStatus(controller);

@@ -156,4 +156,10 @@ public class GameControllerTest {
         assertTrue(controller.getTurnsQueue().isEmpty());
 
     }
+
+
+    @Test
+    public void fillTest() {
+        assertTrue(true);
+    }
 }

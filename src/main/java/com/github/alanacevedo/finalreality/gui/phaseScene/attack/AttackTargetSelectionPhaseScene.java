@@ -19,19 +19,12 @@ import javafx.scene.paint.Color;
 public class AttackTargetSelectionPhaseScene extends AbstractPhaseScene {
     private GameController controller;
     private Group root = new Group();
-    private Button backButton = new Button("Return");
-    private Label enemy0Label = new Label();
-    private Label enemy1Label = new Label();
-    private Label enemy2Label = new Label();
     private CommonBattlePhaseElements commonElements;
 
     public AttackTargetSelectionPhaseScene(GameController controller) {
         this.controller = controller;
         commonElements = new CommonBattlePhaseElements(controller);
         root.getChildren().add(commonElements.getNode());
-
-
-
 
         StackPane backButton = (new CommandButton("Return")).getNode();
         backButton.setLayoutY(540);
@@ -68,20 +61,6 @@ public class AttackTargetSelectionPhaseScene extends AbstractPhaseScene {
 
     @Override
     public void handleTimer() {
-        if (controller.getUiScene().getRoot() != root) {
-            controller.getUiScene().setRoot(root);
-        }
-
-        var enemy0 = controller.getEnemyGroup().getEnemy(0);
-        var enemy1 = controller.getEnemyGroup().getEnemy(1);
-        var enemy2 = controller.getEnemyGroup().getEnemy(2);
-
-        enemy0Label.setText(enemy0.getName() + " HP: " + enemy0.getHP() + "/" + enemy0.getMaxHP());
-        enemy1Label.setText(enemy1.getName() + " HP: " + enemy1.getHP() + "/" + enemy1.getMaxHP());
-        enemy2Label.setText(enemy2.getName() + " HP: " + enemy2.getHP() + "/" + enemy2.getMaxHP());
-        enemy0Label.setTextFill(Color.WHITE);
-        enemy1Label.setTextFill(Color.WHITE);
-        enemy2Label.setTextFill(Color.WHITE);
 
         commonElements.handleTimer();
     }

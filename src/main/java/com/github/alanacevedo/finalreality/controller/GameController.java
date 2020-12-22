@@ -11,7 +11,6 @@ import com.github.alanacevedo.finalreality.model.character.enemy.IEnemyGroup;
 import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 import com.github.alanacevedo.finalreality.model.player.IPlayer;
 import com.github.alanacevedo.finalreality.model.player.Player;
-import javafx.scene.Scene;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -37,7 +36,6 @@ public class GameController {
     private final WeaponFactory weaponFactory = new WeaponFactory(this);
     private IPhase currentPhase;
     private IPlayableCharacter currentChar;
-    private Scene uiScene;
 
 
     /**
@@ -327,12 +325,5 @@ public class GameController {
 
     }
 
-    public void setUiScene(Scene scene) {
-        this.uiScene = scene;
-    }
-
-    public Scene getUiScene() {
-        return uiScene;
-    }
 
 }

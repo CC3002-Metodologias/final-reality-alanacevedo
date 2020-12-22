@@ -20,10 +20,10 @@ public class ActionSelectionPhase extends AbstractPhase implements IPhase{
 
     public ActionSelectionPhase(@NotNull GameController controller) {
         super(controller);
+        phaseScene = new ActionSelectionPhaseScene(controller);
         attackCommand = new AttackCommand(this);
         magicCommand = new MagicCommand(this);
         inventoryCommand = new InventoryCommand(this);
-        phaseScene = new ActionSelectionPhaseScene(controller);
     }
 
     @Override

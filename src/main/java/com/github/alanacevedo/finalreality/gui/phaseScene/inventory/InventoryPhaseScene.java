@@ -116,9 +116,6 @@ public class InventoryPhaseScene extends AbstractPhaseScene {
 
     @Override
     public void handleTimer() {
-        if (controller.getUiScene().getRoot() != root) {
-            controller.getUiScene().setRoot(root);
-        }
         var currentWeapon = controller.getCurrentChar().getEquippedWeapon();
         if (currentWeapon.isNull()) {
             commonElements.setCenterText("");

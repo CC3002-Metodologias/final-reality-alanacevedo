@@ -27,7 +27,6 @@ public class ActionSelectionPhaseScene extends AbstractPhaseScene {
         this.controller = controller;
         commonElements = new CommonBattlePhaseElements(controller);
         root.getChildren().add(commonElements.getNode());
-
         StackPane attackButton = (new CommandButton("Attack")).getNode();
         root.getChildren().add(attackButton);
         attackButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -65,9 +64,6 @@ public class ActionSelectionPhaseScene extends AbstractPhaseScene {
 
     public void handleTimer() {
 
-        if (controller.getUiScene().getRoot() != root) {
-            controller.getUiScene().setRoot(root);
-        }
         commonElements.handleTimer();
     }
 
