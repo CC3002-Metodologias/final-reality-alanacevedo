@@ -6,6 +6,9 @@ import com.github.alanacevedo.finalreality.controller.phase.command.AbstractComm
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 
+/**
+ * Casts previously selected spell onto a character.
+ */
 public class CastOnEnemySlotCommand extends AbstractCommand implements ICommand {
     private final int slot;
 
@@ -21,7 +24,7 @@ public class CastOnEnemySlotCommand extends AbstractCommand implements ICommand 
 
     @Override
     public void doAction() {
-        IMagicSpell spell = ((MagicTargetSelectionPhase) parentPhase).getSpell();
-        parentPhase.getController().castSpellOnEnemySlot(spell, slot);
+       // IMagicSpell spell = ((MagicTargetSelectionPhase) parentPhase).getSpell();
+       // parentPhase.getController().castSpellOnEnemySlot(spell, slot);
     }
 }

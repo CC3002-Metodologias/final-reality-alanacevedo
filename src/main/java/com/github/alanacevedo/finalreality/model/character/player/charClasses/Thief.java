@@ -61,7 +61,7 @@ public class Thief extends AbsPlayerCharacter {
     // Equipamiento de armas
 
     @Override
-    public void equip(IWeapon weapon) {
-        weapon.equipToThief(this);
+    public int equip(IWeapon weapon) {
+        return weapon.equipToThief(this);
     }
 }

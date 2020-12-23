@@ -61,7 +61,7 @@ public class Engineer extends AbsPlayerCharacter {
 
 
     @Override
-    public void equip(IWeapon weapon) {
-        weapon.equipToEngineer(this);
+    public int equip(IWeapon weapon) {
+      return weapon.equipToEngineer(this);
     }
 }

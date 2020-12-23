@@ -1,3 +1,4 @@
+/*
 package com.github.alanacevedo.finalreality.controller.phase.command.magic.magicTargetSelectionPhase;
 
 import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
@@ -20,3 +21,6 @@ public class GoBackCommand extends AbstractCommand implements ICommand {
         parentPhase.changePhase(new MagicSelectionPhase(parentPhase.getController()));
     }
 }
+
+
+ */

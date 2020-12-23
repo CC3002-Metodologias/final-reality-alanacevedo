@@ -22,31 +22,33 @@ public interface IWeapon {
      * Intenta equipar esta arma a un Black Mage
      * @param blackMage personaje al que se intentará equipar esta arma.
      */
-    void equipToBlackMage(BlackMage blackMage);
+    int equipToBlackMage(BlackMage blackMage);
 
     /**
      * Intenta equipar esta arma a un Engineer
      * @param engineer personaje al que se intentará equipar esta arma.
      */
-    void equipToEngineer(Engineer engineer);
+    int equipToEngineer(Engineer engineer);
 
     /**
      * Intenta equipar esta arma a un Knight
      * @param knight personaje al que se intentará equipar esta arma.
      */
-    void equipToKnight(Knight knight);
+    int equipToKnight(Knight knight);
 
     /**
      * Intenta equipar esta arma a un Thief
      * @param thief personaje al que se intentará equipar esta arma.
      */
-    void equipToThief(Thief thief);
+    int equipToThief(Thief thief);
 
     /**
      * Intenta equipar esta arma a un White Mage
      * @param whiteMage personaje al que se intentará equipar esta arma.
      */
-    void equipToWhiteMage(WhiteMage whiteMage);
+    int equipToWhiteMage(WhiteMage whiteMage);
+
+    boolean isNull();
 
 
 }

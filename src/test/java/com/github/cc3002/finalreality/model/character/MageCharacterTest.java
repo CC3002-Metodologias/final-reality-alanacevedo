@@ -62,7 +62,7 @@ public class MageCharacterTest extends PlayerCharacterTest{
     void fireTest() {
         generateCharactersAndWeapons();
         assertEquals(testKnight.getHP(), 100);
-        assertNull(testBlackMage.getEquippedWeapon());
+        assertTrue(testBlackMage.getEquippedWeapon().isNull());
         testBlackMage.getSpellBook().getSpell("Fire").cast(testKnight); // Si no tiene arma equipada no debería poder castear
         testBlackMage.equip(testStaff); // magicDamage = 10;
         testBlackMage.getSpellBook().getSpell("Fire").cast(testKnight);
@@ -76,7 +76,7 @@ public class MageCharacterTest extends PlayerCharacterTest{
         testBlackMage.getSpellBook().getSpell("Fire").cast(testKnight); // Objetivo muerto, no debería castear
         assertEquals(testKnight.getHP(), 0);
         assertFalse(testKnight.isAlive());
-        assertEquals(testBlackMage.getMP(), 20);
+        assertEquals(testBlackMage.getMP(), 5);
 
         testEngineer.receiveDamage(50); // HP = 50/100
         testBlackMage.spendMP(15);
@@ -96,7 +96,7 @@ public class MageCharacterTest extends PlayerCharacterTest{
     void thunderTest() {
         generateCharactersAndWeapons();
         assertEquals(testKnight.getHP(), 100);
-        assertNull(testBlackMage.getEquippedWeapon());
+        assertTrue(testBlackMage.getEquippedWeapon().isNull());
         testBlackMage.getSpellBook().getSpell("Thunder").cast(testKnight); // Si no tiene arma equipada no debería poder castear
         testBlackMage.equip(testStaff); // magicDamage = 10;
         testBlackMage.getSpellBook().getSpell("Thunder").cast(testKnight);
@@ -110,7 +110,7 @@ public class MageCharacterTest extends PlayerCharacterTest{
         testBlackMage.getSpellBook().getSpell("Thunder").cast(testKnight); // Objetivo muerto, no debería castear
         assertEquals(testKnight.getHP(), 0);
         assertFalse(testKnight.isAlive());
-        assertEquals(testBlackMage.getMP(), 20);
+        assertEquals(testBlackMage.getMP(), 5);
 
         testEngineer.receiveDamage(50); // HP = 50/100
         testBlackMage.spendMP(15);

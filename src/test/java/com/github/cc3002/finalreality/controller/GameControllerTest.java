@@ -27,133 +27,61 @@ public class GameControllerTest {
     }
 
     @Test
-    void addCharacterToPartyTest() {
-        var turnsQueue = controller.getTurnsQueue();
-        BlackMage blackMage = new BlackMage("maguito", turnsQueue);
-        controller.getCharacterFactory().addBlackMageToPlayerParty("maguito");
-        assertEquals(controller.getPlayer().getCharacterFromParty(0), blackMage);
-
-        controller.getCharacterFactory().addEngineerToPlayerParty("engi");
-        controller.getCharacterFactory().addKnightToPlayerParty("caballero");
-        controller = new GameController();
-        controller.getCharacterFactory().addWhiteMageToPlayerParty("maguito2");
-        controller.getCharacterFactory().addThiefToPlayerParty("ladroncito");
-    }
-
-    @Test
-    void addWeaponToInventoryTest() {
-        Axe axe = new Axe("hacha", 30, 12);
-        controller.getWeaponFactory().addAxeToPlayerInventory("hacha", 30, 12);
-        assertEquals(controller.getPlayer().getWeaponFromInventory(0), axe);
-        controller.getWeaponFactory().addBowToPlayerInventory("bow", 1, 1);
-        controller.getWeaponFactory().addStaffToPlayerInventory("palo", 3, 2, 1);
-        controller.getWeaponFactory().addSwordToPlayerInventory("palito", 12, 1);
-        controller.getWeaponFactory().addKnifeToPlayerInventory("cuchillo", 12, 11);
-        Knife knife = new Knife("cuchillo", 12, 11);
-        assertEquals(controller.getPlayer().getWeaponFromInventory(4), knife);
-        controller.swapInventorySlots(0, 4);
-        assertEquals(controller.getPlayer().getWeaponFromInventory(4), axe);
-    }
-
-    @Test
-    void attackTest() {
-        controller.getCharacterFactory().spawnEnemyGroup(40, 3, "uno", "dos", "tres");
-        controller.getWeaponFactory().addSwordToPlayerInventory("espada", 200, 10);
-        controller.getCharacterFactory().addKnightToPlayerParty("caballero");
-        controller.equipWeaponToCharacter(0,0);
-
-        controller.EnemyAttackPChar(0, 0);
-        int knightCurrentHp = controller.getPlayer().getCharacterFromParty(0).getHP();
-        int knightMaxHp = controller.getPlayer().getCharacterFromParty(0).getMaxHP();
-        assertNotEquals(knightCurrentHp, knightMaxHp);
-
-        controller.PCharAttackEnemy(0, 0);
-        int enemyCurrentHp = controller.getEnemyGroup().getEnemy(0).getHP();
-        int enemyMaxHp = controller.getEnemyGroup().getEnemy(0).getMaxHP();
-        assertNotEquals(enemyCurrentHp, enemyMaxHp);
-
-    }
-
-    @Test
-    void addToQueueHandlerTest() {
-        controller.getCharacterFactory().spawnEnemyGroup(30, 3, "uno", "dos", "tres");
-        controller.getWeaponFactory().addSwordToPlayerInventory("espada1", 50, 14);
-        controller.getWeaponFactory().addSwordToPlayerInventory("espada2", 70, 15);
-        controller.getWeaponFactory().addSwordToPlayerInventory("espada3", 80, 30);
-        controller.getCharacterFactory().addKnightToPlayerParty("caballero1");
-        controller.getCharacterFactory().addKnightToPlayerParty("caballero2");
-        controller.getCharacterFactory().addKnightToPlayerParty("caballero3");
-        controller.equipWeaponToCharacter(0,0);
-        controller.equipWeaponToCharacter(1,1);
-        controller.equipWeaponToCharacter(2,2);
-
-        IPlayableCharacter char1 = controller.getPlayer().getCharacterFromParty(0);
-        IPlayableCharacter char2 = controller.getPlayer().getCharacterFromParty(1);
-        IPlayableCharacter char3 = controller.getPlayer().getCharacterFromParty(2);
-
-        Enemy enemy1 = controller.getEnemyGroup().getEnemy(0);
-        Enemy enemy2 = controller.getEnemyGroup().getEnemy(1);
-        Enemy enemy3 = controller.getEnemyGroup().getEnemy(2);
-
-        controller.startBattle();
-
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // Because attack targets are random, we just make sure that at least one PC and one enemy are attacked.
-
-        boolean cond1 = char1.getHP()!=char1.getMaxHP() || char2.getHP()!=char2.getMaxHP() || char3.getHP()!=char3.getMaxHP();
-        boolean cond2 = enemy1.getHP()!=enemy1.getMaxHP() || enemy2.getHP()!=enemy2.getMaxHP() || enemy3.getHP()!=enemy3.getMaxHP();
-
-        assertTrue(cond1 && cond2);
-
-    }
-
-    @Test
-    void deathHandlerTest() {
-        controller.getCharacterFactory().spawnEnemyGroup(30, 3, "uno", "dos", "tres");
-        controller.getWeaponFactory().addSwordToPlayerInventory("espada1", 50, 14);
-        controller.getWeaponFactory().addSwordToPlayerInventory("espada2", 70, 15);
-        controller.getWeaponFactory().addSwordToPlayerInventory("espada3", 80, 30);
-        controller.getCharacterFactory().addKnightToPlayerParty("caballero1");
-        controller.getCharacterFactory().addKnightToPlayerParty("caballero2");
-        controller.getCharacterFactory().addKnightToPlayerParty("caballero3");
-        controller.equipWeaponToCharacter(0,0);
-        controller.equipWeaponToCharacter(1,1);
-        controller.equipWeaponToCharacter(2,2);
-
-        IPlayableCharacter char1 = controller.getPlayer().getCharacterFromParty(0);
-        IPlayableCharacter char2 = controller.getPlayer().getCharacterFromParty(1);
-        IPlayableCharacter char3 = controller.getPlayer().getCharacterFromParty(2);
-
-        Enemy enemy1 = controller.getEnemyGroup().getEnemy(0);
-        Enemy enemy2 = controller.getEnemyGroup().getEnemy(1);
-        Enemy enemy3 = controller.getEnemyGroup().getEnemy(2);
-
-        assertFalse(controller.isBattleActive());
-        controller.startBattle();
+    void standardSetupTest() {
+        controller.setupStandardBattle();
         assertTrue(controller.isBattleActive());
-
-        try {
-            // Characters attack each other until either group dies
-            while(controller.isBattleActive()) {
-                Thread.sleep(5000);
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        // We check if either the party or the enemyGroup are dead.
-
-        boolean cond1 = !char1.isAlive() && !char2.isAlive() && !char3.isAlive();
-        boolean cond2 = !enemy1.isAlive() && !enemy2.isAlive() && !enemy3.isAlive();
-
-        assertTrue(cond1 || cond2);
+        controller.endBattle();
         assertFalse(controller.isBattleActive());
-        assertTrue(controller.getTurnsQueue().isEmpty());
+    }
 
+    @Test
+    void enemyDeathTest() {
+        controller.setupStandardBattle();
+        assertTrue(controller.isBattleActive());
+        controller.enemyDeath();
+        controller.enemyDeath();
+        controller.enemyDeath();
+        assertFalse(controller.isBattleActive());
+    }
+
+    @Test
+    void pcharDeathTest() {
+        controller.setupStandardBattle();
+        assertTrue(controller.isBattleActive());
+        controller.playerCharacterDeath();
+        controller.playerCharacterDeath();
+        controller.playerCharacterDeath();
+        assertFalse(controller.isBattleActive());
+    }
+
+    @Test
+    void enemyTurnTest() {
+        controller.setupStandardBattle();
+        controller.enemyTurn(controller.getEnemyGroup().getEnemy(0));
+        var char0 = controller.getPlayer().getCharacterFromParty(0);
+        var char1 = controller.getPlayer().getCharacterFromParty(1);
+        var char2 = controller.getPlayer().getCharacterFromParty(2);
+        assertTrue(char0.getHP()!=char0.getMaxHP() || char1.getHP()!=char1.getMaxHP() || char2.getHP()!=char2.getMaxHP());
+    }
+
+    @Test
+    void addToQueueTest() {
+        var queue = controller.getTurnsQueue();
+        controller.getCharacterFactory().addEngineerToPlayerParty("a");
+        controller.addToQueue(controller.getPlayer().getCharacterFromParty(0));
+        assertTrue(queue.isEmpty());
+        controller = new GameController();
+        controller.setupStandardBattle();
+        controller.addToQueue(controller.getPlayer().getCharacterFromParty(0));
+        controller.addToQueue(controller.getPlayer().getCharacterFromParty(1));
+        queue = controller.getTurnsQueue();
+        assertFalse(queue.isEmpty());
+        controller=new GameController();
+        controller.getCharacterFactory().addEngineerToPlayerParty("a");
+        controller.getPlayer().getCharacterFromParty(0).receiveDamage(500);
+        assertFalse(controller.getPlayer().getCharacterFromParty(0).isAlive());
+        controller.addToQueue(controller.getPlayer().getCharacterFromParty(0));
+        queue = controller.getTurnsQueue();
+        assertTrue(queue.isEmpty());
     }
 }

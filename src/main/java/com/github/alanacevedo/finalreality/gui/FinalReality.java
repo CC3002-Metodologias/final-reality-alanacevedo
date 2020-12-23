@@ -1,10 +1,20 @@
 package com.github.alanacevedo.finalreality.gui;
 
+import com.github.alanacevedo.finalreality.controller.GameController;
+import com.github.alanacevedo.finalreality.controller.Settings;
+import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
+import com.github.alanacevedo.finalreality.gui.phaseScene.WaitingPhaseScene;
+import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
+import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.Media;
+
+import java.nio.file.Paths;
 
 /**
  * Main entry point for the application.
@@ -12,25 +22,54 @@ import javafx.stage.Stage;
  * <Complete here with the details of the implemented application>
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Michael Alan Acevedo Salazar
  */
 public class FinalReality extends Application {
-
+  private static final String RESOURCE_PATH = "src/main/resources/";
+  private final GameController controller = new GameController();
+  private MediaPlayer mediaPlayer;
+  private Group root = new Group();
+  private Scene scene;
+  private CommonBattlePhaseElements commonElements;
+  private Group commonElementsNode;
   public static void main(String[] args) {
     launch(args);
   }
 
   @Override
   public void start(Stage primaryStage) {
-    primaryStage.setTitle("Final reality");
+    primaryStage.setTitle("Final Reality");
+    controller.setupStandardBattle();
 
-    Label label = new Label("This will be a game sometime");
-    label.setAlignment(Pos.CENTER);
-
-    // This sets the size of the Scene to be 400px wide, 200px high
-    Scene scene = new Scene(label, 400, 200);
+    scene = new Scene(root, Settings.width, Settings.height);
+    commonElements = new CommonBattlePhaseElements(controller);
+    commonElementsNode = commonElements.getNode();
+    root.getChildren().add(commonElementsNode);
+    root.getChildren().add(new Group());
     primaryStage.setScene(scene);
 
+
+    String s = Settings.resourcePath+"bg_music.mp3";
+    Media backgroundMusic = new Media(Paths.get(s).toUri().toString());
+    mediaPlayer = new MediaPlayer(backgroundMusic);
+    mediaPlayer.setVolume(0.05);
+    mediaPlayer.play();
+
+    setupTimer();
     primaryStage.show();
   }
+
+  private void setupTimer() {
+
+    AnimationTimer timer = new AnimationTimer() {
+      @Override
+      public void handle(long now) {
+        controller.getPhase().getPhaseScene().handleTimer();
+        root.getChildren().set(1, controller.getPhase().getPhaseScene().getRoot());
+        commonElements.handleTimer();
+      }
+    };
+    timer.start();
+  }
+
 }

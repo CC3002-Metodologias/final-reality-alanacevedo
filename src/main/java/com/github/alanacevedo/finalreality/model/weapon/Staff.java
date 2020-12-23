@@ -50,12 +50,14 @@ public class Staff extends AbstractWeapon {
     }
 
     @Override
-    public void equipToBlackMage(BlackMage blackMage) {
+    public int equipToBlackMage(BlackMage blackMage) {
         blackMage.setEquippedWeapon(this);
+        return 1;
     }
 
     @Override
-    public void equipToWhiteMage(WhiteMage whiteMage) {
+    public int equipToWhiteMage(WhiteMage whiteMage) {
         whiteMage.setEquippedWeapon(this);
+        return 1;
     }
 }

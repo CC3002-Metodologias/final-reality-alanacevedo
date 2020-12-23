@@ -3,6 +3,9 @@ package com.github.alanacevedo.finalreality.controller.factory;
 import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.model.weapon.*;
 
+/**
+ * Class in charge of generating weapon instances.
+ */
 public class WeaponFactory {
     GameController controller;
 
@@ -48,5 +51,16 @@ public class WeaponFactory {
     public void addStaffToPlayerInventory(String name, int damage, int weight, int magicDamage) {
         Staff weapon = new Staff(name, damage, weight, magicDamage);
         controller.getPlayer().addWeaponToInventory(weapon);
+    }
+
+    /**
+     * Sets up a standard player inventory. One of each weapon.
+     */
+    public void setupStandardPlayerInventory() {
+        addAxeToPlayerInventory("Bronze Axe", 80, 10);
+        addBowToPlayerInventory("Wooden Bow", 100, 8);
+        addKnifeToPlayerInventory("Rusty Knife", 60, 8);
+        addSwordToPlayerInventory("Rusty Sword", 70, 10);
+        addStaffToPlayerInventory("Wooden Staff", 50, 10, 20);
     }
 }

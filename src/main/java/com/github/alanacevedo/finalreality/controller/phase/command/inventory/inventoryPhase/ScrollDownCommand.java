@@ -5,6 +5,9 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.Inve
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
+/**
+ * Scrolls the visible inventory slots downwards
+ */
 public class ScrollDownCommand extends AbstractCommand implements ICommand {
 
     public ScrollDownCommand(IPhase phase) {
@@ -19,5 +22,6 @@ public class ScrollDownCommand extends AbstractCommand implements ICommand {
     @Override
     public void doAction() {
         ((InventoryPhase) parentPhase).scrollDown();
+        ((InventoryPhase) parentPhase).setHighLightedSlot(-1);
     }
 }

@@ -2,18 +2,14 @@ package com.github.alanacevedo.finalreality.controller;
 import com.github.alanacevedo.finalreality.controller.factory.CharacterFactory;
 import com.github.alanacevedo.finalreality.controller.factory.WeaponFactory;
 import com.github.alanacevedo.finalreality.controller.handler.*;
-import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
-import com.github.alanacevedo.finalreality.controller.phase.phase.WaitingPhase;
+import com.github.alanacevedo.finalreality.controller.phase.phase.*;
 import com.github.alanacevedo.finalreality.model.character.ICharacter;
 import com.github.alanacevedo.finalreality.model.character.IPlayableCharacter;
 import com.github.alanacevedo.finalreality.model.character.enemy.Enemy;
 import com.github.alanacevedo.finalreality.model.character.enemy.EnemyGroup;
 import com.github.alanacevedo.finalreality.model.character.enemy.IEnemyGroup;
-import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
-import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 import com.github.alanacevedo.finalreality.model.player.IPlayer;
 import com.github.alanacevedo.finalreality.model.player.Player;
-import com.github.alanacevedo.finalreality.model.weapon.*;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -51,7 +47,7 @@ public class GameController {
     }
 
     /**
-     * Adds this controller's handlers to a character listener list.
+     * Adds this controller handlers to character.
      */
     public void addListenersToPlayerChar(IPlayableCharacter character) {
         character.setAddToQueueHandler(queueHandler);
@@ -59,16 +55,25 @@ public class GameController {
         character.setDeathHandler(playerCharDeathHandler);
     }
 
+    /**
+     * Adds this controller handlers to enemy.
+     */
     public void addListenersToEnemy(Enemy enemy) {
         enemy.setAddToQueueHandler(queueHandler);
         enemy.setTurnStartHandler(enemyTurnStartHandler);
         enemy.setDeathHandler(enemyDeathHandler);
     }
 
+    /**
+     * Returns this controller's character factory.
+     */
     public CharacterFactory getCharacterFactory() {
         return characterFactory;
     }
 
+    /**
+     * Returns this controller's weapon factory.
+     */
     public WeaponFactory getWeaponFactory() {
         return weaponFactory;
     }
@@ -79,11 +84,14 @@ public class GameController {
      * @param partySlot Slot where the character is located.
      */
     public void equipWeaponToCharacter(int inventorySlot, int partySlot) {
-        if (player.getWeaponFromInventory(inventorySlot) != null) {
+        if (!player.getWeaponFromInventory(inventorySlot).isNull()) {
             player.equipWeaponToCharacter(inventorySlot, partySlot);
         }
     }
 
+    /**
+     * Equips to the current character the weapon stored in the indicated inventory slot.
+     */
     public void equipWeaponToCurrentCharacter(int inventorySlot) {
         int currentCharSlot = player.getCharacterSlot(currentChar);
         player.equipWeaponToCharacter(inventorySlot, currentCharSlot);
@@ -128,26 +136,6 @@ public class GameController {
     }
 
     /**
-     * Makes a character from the player's party attack an enemy from the enemy group.
-     * @param partySlot slot of the party where the attacking character is located.
-     * @param mobSlot slot of the enemy group where the attacked enemy is located.
-     */
-    public void PCharAttackEnemy(int partySlot, int mobSlot) {
-        Enemy enemy = enemyGroup.getEnemy(mobSlot);
-        player.charAttack(partySlot, enemy);
-    }
-
-    /**
-     * Makes a enemy from the enemy group attack a character from the player's party
-     * @param mobSlot slot of the enemy group where the attacking enemy is located.
-     * @param partySlot slot of the party where the attacked character is located.
-     */
-    public void EnemyAttackPChar(int mobSlot, int partySlot) {
-        Enemy enemy = enemyGroup.getEnemy(mobSlot);
-        enemy.attack(player.getCharacterFromParty(partySlot));
-    }
-
-    /**
      * Returns the player.
      */
     public IPlayer getPlayer() {
@@ -174,7 +162,7 @@ public class GameController {
      * @param character character to be added.
      */
     public void addToQueue(ICharacter character) {
-        if (battleActive && character.isAlive()) {
+        if (character.isAlive() && battleActive) {
             character.addToQueue();
             if (!attending) {
                 attending = true;
@@ -188,7 +176,6 @@ public class GameController {
      */
     void attendQueue() {
         ICharacter character = turnsQueue.poll();
-        assert character != null;
         character.takeTurn();
     }
 
@@ -198,6 +185,7 @@ public class GameController {
     public void endTurn() {
         if (turnsQueue.isEmpty()) {
             attending = false;
+            setPhase(new WaitingPhase(this));
         } else {
             attendQueue();
         }
@@ -222,54 +210,44 @@ public class GameController {
     }
 
     /**
-     * Makes a player character Turn take place.
-     * @param character player character that takes the turn.
-     */
+    * Makes a player character Turn take place.
+    * @param character player character that takes the turn.
+    */
+
     public void playerCharacterTurn(IPlayableCharacter character) {
-        // For the time being, will function similar to enemyTurn
-        // User interaction will be implemented later.
-        // later this method will be renamed randomPCTurn.
-        int groupSize = enemyGroup.getCurrentGroupSize();
-        int randSlot = ThreadLocalRandom.current().nextInt(0, groupSize);
-
-        // to avoid attacking dead players
-        while(!enemyGroup.getEnemy(randSlot).isAlive()) {
-            randSlot = ThreadLocalRandom.current().nextInt(0, groupSize);
-        }
-
-        character.attack(enemyGroup.getEnemy(randSlot));
-        character.waitTurn();
-        endTurn();
+          currentChar = character;
+          currentPhase.changePhase(new ActionSelectionPhase(this));
     }
 
     /**
-     *
-     * public void playerCharacterTurn(IPlayableCharacter character) {
-     *         currentChar = character;
-     *         currentPhase.changePhase(new ActionSelectionPhase(this));
-     *     }
-     *
+     * Sets "character" as the current character.
      */
-
     public void setCurrentChar(IPlayableCharacter character) {
         currentChar = character;
     }
 
+    /**
+     * Returns current character.
+     */
     public IPlayableCharacter getCurrentChar() {
         return currentChar;
     }
 
+    /**
+     * Makes the current character attack the enemy in the groups given slot.
+     */
     public void attackEnemySlot(int enemySlot) {
               Enemy enemy = enemyGroup.getEnemy(enemySlot);
               if (enemy != null) {
                   if (enemy.isAlive()) {
                       currentChar.attack(enemy);
-                      //currentChar.waitTurn();    for the time being this will not be tested
-                      //endTurn();
+                      currentChar.waitTurn();
+                      setPhase(new WaitingPhase(this));
+                      endTurn();
                   }
               }
           }
-
+/*
     public void castSpellOnEnemySlot(IMagicSpell spell, int enemySlot) {
         Enemy enemy = enemyGroup.getEnemy(enemySlot);
         if (enemy != null) {
@@ -280,13 +258,14 @@ public class GameController {
             }
         }
     }
-
+*/
 
     /**
      * Starts the battle. Makes all player characters and enemies start their turn timer.
      */
     public void startBattle() {
         battleActive = true;
+        setPhase(new WaitingPhase(this));
         for (int i=0; i<Settings.partySize; i++) {
             player.getCharacterFromParty(i).waitTurn();
         }
@@ -311,13 +290,30 @@ public class GameController {
         return battleActive;
     }
 
+    /**
+     * Sets the controller current game phase.
+     */
     public void setPhase(IPhase phase) {
         currentPhase = phase;
     }
+
+    /**
+     * Returns the current game phase.
+     */
     public IPhase getPhase() {
         return currentPhase;
     }
 
+
+    /**
+     * Sets a standard battle up. The battle consists in 3 enemies.
+     */
+    public void setupStandardBattle() {
+        characterFactory.setupStandardPlayerParty();
+        characterFactory.spawnEnemyGroup(30, 3, "Enemy1", "Enemy2", "Enemy3");
+        weaponFactory.setupStandardPlayerInventory();
+        startBattle();
+    }
 
 
 }

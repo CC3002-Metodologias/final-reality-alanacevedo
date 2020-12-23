@@ -57,7 +57,7 @@ public class Knight extends AbsPlayerCharacter {
     }
 
     @Override
-    public void equip(IWeapon weapon) {
-        weapon.equipToKnight(this);
+    public int equip(IWeapon weapon) {
+        return weapon.equipToKnight(this);
     }
 }

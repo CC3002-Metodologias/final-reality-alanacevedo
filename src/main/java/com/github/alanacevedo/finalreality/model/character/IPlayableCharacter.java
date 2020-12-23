@@ -18,7 +18,7 @@ public interface IPlayableCharacter extends ICharacter {
      * Equipa un arma a este personaje. Considera las restricciones de clases de los personajes.
      * @param weapon el arma a equipar
      */
-    void equip(IWeapon weapon);
+    int equip(IWeapon weapon);
 
     /**
      * changes value of equippedWeapon attribute

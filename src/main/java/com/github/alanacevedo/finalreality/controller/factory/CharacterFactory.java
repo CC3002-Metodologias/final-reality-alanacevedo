@@ -6,6 +6,9 @@ import com.github.alanacevedo.finalreality.model.character.player.charClasses.*;
 
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Class in charge of generating weapon instances.
+ */
 public class CharacterFactory {
     GameController controller;
 
@@ -83,5 +86,13 @@ public class CharacterFactory {
         controller.updateEnemyGroupSize();
     }
 
+    /**
+     * Sets up a standard player party. A black mage, a knight, and a thief.
+     */
+    public void setupStandardPlayerParty() {
+        addBlackMageToPlayerParty("Blanche");
+        addKnightToPlayerParty("Lucia");
+        addThiefToPlayerParty("Ramza");
+    }
 
 }

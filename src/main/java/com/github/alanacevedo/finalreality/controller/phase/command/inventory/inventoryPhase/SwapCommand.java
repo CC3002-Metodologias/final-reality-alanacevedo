@@ -6,6 +6,9 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.Inve
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
+/**
+ * Changes the phase to InventorySwapPhase, remembering the first selected weapon
+ */
 public class SwapCommand extends AbstractCommand implements ICommand {
     public SwapCommand(IPhase phase) {
         super(phase);
@@ -18,7 +21,9 @@ public class SwapCommand extends AbstractCommand implements ICommand {
 
     @Override
     public void doAction() {
-        parentPhase.changePhase(new InventorySwapPhase(parentPhase.getController(),
-                ((InventoryPhase) parentPhase).getHighlightedSlot()));
+        int slot = ((InventoryPhase) parentPhase).getHighlightedSlot();
+        if (slot != -1) {
+            parentPhase.changePhase(new InventorySwapPhase(parentPhase.getController(), slot));
+        }
     }
 }

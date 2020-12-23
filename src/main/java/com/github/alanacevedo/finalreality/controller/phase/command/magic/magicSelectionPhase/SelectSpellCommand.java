@@ -7,6 +7,9 @@ import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 import com.github.alanacevedo.finalreality.model.character.player.IMageCharacter;
 import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 
+/**
+ * Selects one of the mage's spells.
+ */
 public class SelectSpellCommand extends AbstractCommand implements ICommand {
     int slot;
     IMagicSpell spell;

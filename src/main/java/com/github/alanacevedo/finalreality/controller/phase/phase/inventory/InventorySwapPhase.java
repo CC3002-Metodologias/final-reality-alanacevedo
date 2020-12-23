@@ -5,9 +5,15 @@ import com.github.alanacevedo.finalreality.controller.Settings;
 import com.github.alanacevedo.finalreality.controller.phase.command.inventory.inventorySwapPhase.*;
 import com.github.alanacevedo.finalreality.controller.phase.phase.AbstractPhase;
 import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
+import com.github.alanacevedo.finalreality.gui.phaseScene.inventory.InventorySwapPhaseScene;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Class that represents the game phase in which the player swaps two items
+ * form his inventory.
+ */
 public class InventorySwapPhase extends AbstractPhase implements IPhase {
+
     private int firstSlot;
     private int currentTopSlot;
     private int highlightedSlot;
@@ -20,8 +26,10 @@ public class InventorySwapPhase extends AbstractPhase implements IPhase {
     GoBackCommand goBackCommand;
     ConfirmSwapCommand confirmSwapCommand;
 
+
     public InventorySwapPhase(@NotNull GameController controller, int firstSlot) {
         super(controller);
+
         this.firstSlot = firstSlot;
         highlightedSlot = -1;
         currentTopSlot = 0;
@@ -32,8 +40,12 @@ public class InventorySwapPhase extends AbstractPhase implements IPhase {
         scrollUpCommand = new ScrollUpCommand(this);
         goBackCommand = new GoBackCommand(this);
         confirmSwapCommand = new ConfirmSwapCommand(this);
+        phaseScene = new InventorySwapPhaseScene(controller);
     }
 
+    /**
+     * Moves the visible slots upwards
+     */
     public void scrollUp() {
         if (currentTopSlot > 0) {
             highlightCommand0.scrollUp();
@@ -43,6 +55,9 @@ public class InventorySwapPhase extends AbstractPhase implements IPhase {
         }
     }
 
+    /**
+     * Moves the visible slots downwards
+     */
     public void scrollDown() {
         if (currentTopSlot < maxSlot) {
             highlightCommand0.scrollDown();
@@ -52,43 +67,81 @@ public class InventorySwapPhase extends AbstractPhase implements IPhase {
         }
     }
 
+    /**
+     * Returns the first inventory slot selected.
+     */
     public int getFirstSlot() {
         return firstSlot;
     }
 
+    /**
+     * Returns the currently selected slot. -1 if none is selected.
+     */
     public int getHighlightedSlot() {
         return highlightedSlot;
     }
 
+    /**
+     * returns the corresponding command
+     */
     public ConfirmSwapCommand getConfirmSwapCommand() {
         return confirmSwapCommand;
     }
 
+    /**
+     * returns the corresponding command
+     */
     public GoBackCommand getGoBackCommand() {
         return goBackCommand;
     }
 
+    /**
+     * returns the corresponding command
+     */
     public HighlightSlotCommand getHighlightCommand0() {
         return highlightCommand0;
     }
 
+    /**
+     * returns the corresponding command
+     */
     public HighlightSlotCommand getHighlightCommand1() {
         return highlightCommand1;
     }
 
+    /**
+     * returns the corresponding command
+     */
     public HighlightSlotCommand getHighlightCommand2() {
         return highlightCommand2;
     }
 
+    /**
+     * returns the corresponding command
+     */
     public ScrollDownCommand getScrollDownCommand() {
         return scrollDownCommand;
     }
 
+    /**
+     * returns the corresponding command
+     */
     public ScrollUpCommand getScrollUpCommand() {
         return scrollUpCommand;
     }
 
+    /**
+     * sets the currently selected slot.
+     */
     public void setHighlightedSlot(int highlightedSlot) {
         this.highlightedSlot = highlightedSlot;
+    }
+
+
+    /**
+     * returns the topmost visible inventory slot.
+     */
+    public int getCurrentTopSlot() {
+        return currentTopSlot;
     }
 }

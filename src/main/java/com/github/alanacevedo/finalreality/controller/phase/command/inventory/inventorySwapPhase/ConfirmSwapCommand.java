@@ -5,6 +5,9 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.Inve
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
+/**
+ * Confirms swapping the two selected weapons
+ */
 public class ConfirmSwapCommand extends AbstractCommand implements ICommand {
     public ConfirmSwapCommand(IPhase phase) {
         super(phase);
