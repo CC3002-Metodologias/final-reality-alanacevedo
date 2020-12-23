@@ -4,6 +4,9 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.Inve
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
+/**
+ * Selects the second weapon to be swapped.
+ */
 public class HighlightSlotCommand extends AbstractCommand implements ICommand {
     int currentSlot;
     String name;

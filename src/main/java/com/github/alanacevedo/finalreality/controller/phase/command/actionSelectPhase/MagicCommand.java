@@ -5,6 +5,10 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.magic.MagicSel
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
+/**
+ * Changes the game phase to MagicSelectionPhase
+ * Can only be used if the current character is a mage
+ */
 public class MagicCommand extends AbstractCommand implements ICommand {
     public MagicCommand(IPhase phase) {
         super(phase);

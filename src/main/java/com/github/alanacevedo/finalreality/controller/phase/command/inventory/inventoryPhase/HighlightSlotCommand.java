@@ -5,6 +5,9 @@ import com.github.alanacevedo.finalreality.controller.phase.command.AbstractComm
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 import com.github.alanacevedo.finalreality.model.weapon.IWeapon;
 
+/**
+ * Selects a weapon to be equipped or swaped
+ */
 public class HighlightSlotCommand extends AbstractCommand implements ICommand {
     int currentSlot;
     String name;

@@ -6,6 +6,9 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.Inve
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
+/**
+ * Changes the phase to InventorySwapPhase, remembering the first selected weapon
+ */
 public class SwapCommand extends AbstractCommand implements ICommand {
     public SwapCommand(IPhase phase) {
         super(phase);

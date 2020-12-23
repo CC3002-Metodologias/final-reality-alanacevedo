@@ -3,6 +3,9 @@ package com.github.alanacevedo.finalreality.controller.factory;
 import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.model.weapon.*;
 
+/**
+ * Class in charge of generating weapon instances.
+ */
 public class WeaponFactory {
     GameController controller;
 
@@ -50,6 +53,9 @@ public class WeaponFactory {
         controller.getPlayer().addWeaponToInventory(weapon);
     }
 
+    /**
+     * Sets up a standard player inventory. One of each weapon.
+     */
     public void setupStandardPlayerInventory() {
         addAxeToPlayerInventory("Bronze Axe", 80, 10);
         addBowToPlayerInventory("Wooden Bow", 100, 8);

@@ -5,6 +5,9 @@ import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
 import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventoryPhase;
 
+/**
+ * Changes the game phase to InventoryPhase
+ */
 public class InventoryCommand extends AbstractCommand implements ICommand {
     public InventoryCommand(IPhase phase) {
         super(phase);

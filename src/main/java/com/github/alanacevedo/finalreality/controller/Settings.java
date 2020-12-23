@@ -1,5 +1,8 @@
 package com.github.alanacevedo.finalreality.controller;
 
+/**
+ * This class contains various settings values for the application.
+ */
 public class Settings {
     public static int partySize = 3;
     public static int maxEnemies = 3;

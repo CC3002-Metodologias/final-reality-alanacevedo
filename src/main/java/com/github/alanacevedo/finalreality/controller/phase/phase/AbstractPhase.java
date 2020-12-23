@@ -4,8 +4,7 @@ import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class AbstractPhase {
-    protected String name;
+public abstract class AbstractPhase implements IPhase{
     protected AbstractPhaseScene phaseScene;
 
     public GameController controller;
@@ -14,14 +13,17 @@ public abstract class AbstractPhase {
         this.controller = controller;
     }
 
+    @Override
     public void changePhase(IPhase phase) {
         controller.setPhase(phase);
     }
 
+    @Override
     public GameController getController() {
         return controller;
     }
 
+    @Override
     public AbstractPhaseScene getPhaseScene() {
         return this.phaseScene;
     }

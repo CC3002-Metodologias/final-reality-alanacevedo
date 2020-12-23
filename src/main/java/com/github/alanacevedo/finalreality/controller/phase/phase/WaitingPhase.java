@@ -5,16 +5,14 @@ import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
 import com.github.alanacevedo.finalreality.gui.phaseScene.WaitingPhaseScene;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Class that represents the phase in battle in which there are no characters in the turns queue.
+ */
 public class WaitingPhase extends AbstractPhase implements IPhase{
 
     public WaitingPhase(@NotNull GameController controller) {
         super(controller);
-        name = "Waiting";
         phaseScene = new WaitingPhaseScene(controller);
-    }
-
-    public String getName() {
-        return this.name;
     }
 
     @Override

@@ -5,6 +5,9 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.Inve
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
+/**
+ * Returns to the previous phase
+ */
 public class GoBackCommand extends AbstractCommand implements ICommand {
     public GoBackCommand(IPhase phase) {
         super(phase);

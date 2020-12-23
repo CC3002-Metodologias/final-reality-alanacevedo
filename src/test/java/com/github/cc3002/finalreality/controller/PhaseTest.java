@@ -69,6 +69,7 @@ public class PhaseTest {
         controller.getCharacterFactory().addKnightToPlayerParty("caballero3");
         controller.getCharacterFactory().addKnightToPlayerParty("caballero1");
         controller.equipWeaponToCharacter(0,0);
+        controller.equipWeaponToCharacter(0,0);
 
         controller.setCurrentChar(controller.getPlayer().getCharacterFromParty(0));
         controller.setPhase(new ActionSelectionPhase(controller));

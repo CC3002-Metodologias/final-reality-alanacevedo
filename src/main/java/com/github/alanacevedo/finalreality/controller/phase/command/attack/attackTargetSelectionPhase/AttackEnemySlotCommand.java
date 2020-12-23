@@ -4,6 +4,9 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.IPhase;
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
+/**
+ * Attacks the corresponding enemy
+ */
 public class AttackEnemySlotCommand extends AbstractCommand implements ICommand {
     private final int slot;
 

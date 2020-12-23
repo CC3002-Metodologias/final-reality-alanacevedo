@@ -15,7 +15,6 @@ public class ActionSelectionPhase extends AbstractPhase implements IPhase{
     protected AttackCommand attackCommand;
     protected ICommand magicCommand;
     protected InventoryCommand inventoryCommand;
-    protected String name = "Action Selection";
 
 
     public ActionSelectionPhase(@NotNull GameController controller) {
@@ -31,18 +30,23 @@ public class ActionSelectionPhase extends AbstractPhase implements IPhase{
         return phaseScene;
     }
 
+    /**
+     * Returns the command attack, which changes the game phase to AttackTargetSelectionPhase
+     */
     public AttackCommand getAttackCommand() {
         return attackCommand;
     }
 
+    /**
+     * Returns the command attack, which changes the game phase to MagicSelectionPhase
+     */
     public ICommand getMagicCommand() {
         return magicCommand;
     }
 
-    public InventoryCommand getInventoryCommand() {
+    /**
+     * Returns the command attack, which changes the game phase to InventoryPhase
+     */    public InventoryCommand getInventoryCommand() {
         return inventoryCommand;
-    }
-    public String getName() {
-        return this.name;
     }
 }

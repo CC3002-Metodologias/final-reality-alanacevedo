@@ -5,6 +5,9 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.Inve
 import com.github.alanacevedo.finalreality.controller.phase.command.AbstractCommand;
 import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 
+/**
+ * Equips the selected weapon to the current character
+ */
 public class EquipCommand extends AbstractCommand implements ICommand {
 
     public EquipCommand(IPhase phase) {
