@@ -8,7 +8,7 @@ import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 /**
  * Scrolls the visible inventory slots upwards
  */
-public class ScrollUpCommand extends AbstractCommand implements ICommand {
+public class ScrollUpCommand extends AbstractCommand  {
 
     public ScrollUpCommand(IPhase phase) {
         super(phase);

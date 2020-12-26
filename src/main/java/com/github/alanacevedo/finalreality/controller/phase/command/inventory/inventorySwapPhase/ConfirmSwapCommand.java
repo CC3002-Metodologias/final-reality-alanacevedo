@@ -8,7 +8,7 @@ import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 /**
  * Confirms swapping the two selected weapons
  */
-public class ConfirmSwapCommand extends AbstractCommand implements ICommand {
+public class ConfirmSwapCommand extends AbstractCommand {
     public ConfirmSwapCommand(IPhase phase) {
         super(phase);
     }

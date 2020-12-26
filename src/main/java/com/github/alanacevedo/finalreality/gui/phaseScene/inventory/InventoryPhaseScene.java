@@ -5,9 +5,7 @@ import com.github.alanacevedo.finalreality.controller.Settings;
 import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventoryPhase;
 import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
 import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommandButton;
-import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -18,6 +16,9 @@ import javafx.scene.text.TextAlignment;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+     * Graphic scene for InventoryPhase
+ */
 public class InventoryPhaseScene extends AbstractPhaseScene {
     private GameController controller;
     private Group root = new Group();

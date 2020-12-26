@@ -8,7 +8,7 @@ import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.Inve
 /**
  * Changes the game phase to InventoryPhase
  */
-public class InventoryCommand extends AbstractCommand implements ICommand {
+public class InventoryCommand extends AbstractCommand {
     public InventoryCommand(IPhase phase) {
         super(phase);
     }

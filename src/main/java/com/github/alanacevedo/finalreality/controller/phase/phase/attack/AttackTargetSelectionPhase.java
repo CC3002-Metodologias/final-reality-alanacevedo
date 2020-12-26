@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Class that represents
  */
-public class AttackTargetSelectionPhase extends AbstractPhase implements IPhase {
+public class AttackTargetSelectionPhase extends AbstractPhase {
 
     protected AttackEnemySlotCommand attackCommand0;
     protected AttackEnemySlotCommand attackCommand1;

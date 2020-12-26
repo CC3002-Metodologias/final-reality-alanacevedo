@@ -12,6 +12,9 @@ import javafx.scene.text.Text;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Manages various graphic elements that are common for all the battle phases.
+ */
 public class CommonBattlePhaseElements {
     private final GameController controller;
     private final Group root = new Group();
@@ -80,7 +83,9 @@ public class CommonBattlePhaseElements {
         root.getChildren().add(thief.getNode());
 
     }
-
+    /**
+     * Manages varying scene elements.
+     */
     public void handleTimer() {
         partyStatus.handleTimer();
         enemy0.updateHealthBar(controller.getEnemyGroup().getEnemy(0).getHP());
@@ -88,6 +93,9 @@ public class CommonBattlePhaseElements {
         enemy2.updateHealthBar(controller.getEnemyGroup().getEnemy(2).getHP());
     }
 
+    /**
+     * Returns the root node containing the rest of the graphic elements.
+     */
     public Group getNode() {
         return root;
     }

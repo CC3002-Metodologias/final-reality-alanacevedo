@@ -16,6 +16,9 @@ import javafx.scene.text.Text;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Class in charge of creating a pane where the party's characters HP are displayed.
+ */
 public class PartyStatus {
     Pane root = new Pane();
     Text char0Label;
@@ -72,10 +75,16 @@ public class PartyStatus {
         root.getChildren().addAll(char0Label, char1Label, char2Label);
     }
 
+    /**
+     * Returns the node containing the root node for the pane.
+     */
     public Node getNode() {
         return root;
     }
 
+    /**
+     * Manages varying scene elements of the pane.
+     */
     public void handleTimer() {
         char0Label.setText(char0.getName() + "   HP: "+ char0.getHP() +"/" + char0.getMaxHP());
         char1Label.setText(char1.getName() + "   HP: "+ char1.getHP() +"/" + char1.getMaxHP());

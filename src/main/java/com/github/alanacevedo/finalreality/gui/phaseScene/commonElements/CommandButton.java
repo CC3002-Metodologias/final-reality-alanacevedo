@@ -14,6 +14,10 @@ import javafx.scene.text.TextAlignment;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * This class manages graphic buttons on the screen. When pressed, the button will trigger an action
+ * in the controller.
+ */
 public class CommandButton {
     private final StackPane pane = new StackPane();
     private final Text commandText = new Text();
@@ -46,10 +50,16 @@ public class CommandButton {
         pane.getChildren().addAll(background, commandText);
     }
 
+    /**
+     * Returns the node containing the button.
+     */
     public StackPane getNode() {
         return pane;
     }
 
+    /**
+     * Sets the text shown in the button.
+     */
     public void setText(String newText) {
         commandText.setText(newText);
     }

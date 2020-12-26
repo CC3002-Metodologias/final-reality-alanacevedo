@@ -8,7 +8,7 @@ import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 /**
  * Equips the selected weapon to the current character
  */
-public class EquipCommand extends AbstractCommand implements ICommand {
+public class EquipCommand extends AbstractCommand {
 
     public EquipCommand(IPhase phase) {
         super(phase);

@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * Class represeting the phase in which the player chooses enemy to cast the selected spell on.
  * Not yet implemented.
  */
-public class MagicTargetSelectionPhase extends AbstractPhase implements IPhase {
+public class MagicTargetSelectionPhase extends AbstractPhase {
 
     IMagicSpell spell;
     CastOnEnemySlotCommand castCommand0;
