@@ -23,6 +23,10 @@ by [_Square Enix_](https://www.square-enix.com)
 ---
 Description
 ----------------
+
+<img width="599" alt="finalreality" src="https://user-images.githubusercontent.com/62122041/103233191-34942200-491b-11eb-9996-a0935f5fe1fb.png">
+
+
 Final Reality is a turn-based combat game. You control a party of 3 characters and your goal is to strategically choose actions to
 to defeat the enemies. 
 
@@ -34,13 +38,14 @@ There a 5 weapon types: Sword, Axe, Bow, Knife, and Staff.
 
 The following table shows which weapons are equippable by which classes:
 
-# | Knight | Thief | Black Mage | White Mage | Engineer 
---- | --- | --- | --- |--- |--- 
-Sword| Yes | Yes | No | No | No 
-Knife| Yes | Yes | Yes | No | No 
-Axe| Yes | Yes | No | No | No 
-Bow| No | Yes | No | No | Yes 
-Staff| No | No | Yes | Yes | No 
+
+T | Knight | Thief | Black Mage | White Mage | Engineer |
+--- | --- | --- | --- |--- |--- |
+Sword| Yes | Yes | No | No | No |
+Knife| Yes | Yes | Yes | No | No |
+Axe| Yes | Yes | No | No | No |
+Bow| No | Yes | No | No | Yes |
+Staff| No | No | Yes | Yes | No| 
 
 
 ---
