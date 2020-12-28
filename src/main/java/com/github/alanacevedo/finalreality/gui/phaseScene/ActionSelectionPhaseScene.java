@@ -4,11 +4,7 @@ import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.controller.Settings;
 import com.github.alanacevedo.finalreality.controller.phase.phase.ActionSelectionPhase;
 import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommandButton;
-import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
 import javafx.scene.Group;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -19,13 +15,14 @@ import javafx.scene.text.TextAlignment;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Graphic scene for ActionSelectionPhase
+ */
 public class ActionSelectionPhaseScene extends AbstractPhaseScene {
-    private final GameController controller;
     private final Group root = new Group();
     private Text centerText = new Text();
 
     public ActionSelectionPhaseScene(GameController controller){
-        this.controller = controller;
         StackPane attackButton = (new CommandButton("Attack")).getNode();
         root.getChildren().add(attackButton);
         attackButton.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -72,10 +69,12 @@ public class ActionSelectionPhaseScene extends AbstractPhaseScene {
         centerText.setTextAlignment(TextAlignment.CENTER);
     }
 
+    @Override
     public void handleTimer() {
 
     }
 
+    @Override
     public Group getRoot() {
         return root;
     }

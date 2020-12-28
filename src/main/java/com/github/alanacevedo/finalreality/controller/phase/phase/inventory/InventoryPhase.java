@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * then decides to equip it or to swap it with other weapon in the inventory
  */
 
-public class InventoryPhase extends AbstractPhase implements IPhase {
+public class InventoryPhase extends AbstractPhase {
 
     protected ICommand goBackCommand;
     protected HighlightSlotCommand highlightCommand0;

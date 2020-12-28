@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * Class that represents the game phase in which the player swaps two items
  * form his inventory.
  */
-public class InventorySwapPhase extends AbstractPhase implements IPhase {
+public class InventorySwapPhase extends AbstractPhase  {
 
     private int firstSlot;
     private int currentTopSlot;

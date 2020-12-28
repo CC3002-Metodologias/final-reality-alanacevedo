@@ -5,7 +5,6 @@ import com.github.alanacevedo.finalreality.controller.Settings;
 import com.github.alanacevedo.finalreality.controller.phase.phase.inventory.InventorySwapPhase;
 import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
 import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommandButton;
-import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
 import javafx.scene.Group;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
@@ -17,6 +16,9 @@ import javafx.scene.text.TextAlignment;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Graphic scene for InventorySwapPhase
+ */
 public class InventorySwapPhaseScene extends AbstractPhaseScene {
     private final GameController controller;
     private final Group root = new Group();

@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import com.github.alanacevedo.finalreality.controller.phase.command.magic.magicSelectionPhase.*;
 
 // Select Skill, then select enemy to use skill on
-public class MagicSelectionPhase extends AbstractPhase implements IPhase {
+public class MagicSelectionPhase extends AbstractPhase {
 
     private final GoBackCommand goBackCommand;
     private SelectSpellCommand spellCommand0;
@@ -29,22 +29,3 @@ public class MagicSelectionPhase extends AbstractPhase implements IPhase {
         return goBackCommand;
     }
 }
-/*
-
-
-    public SelectSpellCommand getSpellCommand0() {
-        return spellCommand0;
-    }
-
-    public SelectSpellCommand getSpellCommand1() {
-        return spellCommand1;
-    }
-
-    public SelectSpellCommand getSpellCommand2() {
-        return spellCommand2;
-    }
-
-}
-
-
- */

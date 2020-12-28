@@ -2,13 +2,10 @@ package com.github.alanacevedo.finalreality.gui;
 
 import com.github.alanacevedo.finalreality.controller.GameController;
 import com.github.alanacevedo.finalreality.controller.Settings;
-import com.github.alanacevedo.finalreality.gui.phaseScene.AbstractPhaseScene;
-import com.github.alanacevedo.finalreality.gui.phaseScene.WaitingPhaseScene;
 import com.github.alanacevedo.finalreality.gui.phaseScene.commonElements.CommonBattlePhaseElements;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.media.MediaPlayer;
@@ -18,17 +15,15 @@ import java.nio.file.Paths;
 
 /**
  * Main entry point for the application.
- * <p>
- * <Complete here with the details of the implemented application>
+ * Initializes a game controller, launches common elements, and then starts a battle.
  *
  * @author Ignacio Slater Muñoz.
  * @author Michael Alan Acevedo Salazar
  */
 public class FinalReality extends Application {
-  private static final String RESOURCE_PATH = "src/main/resources/";
   private final GameController controller = new GameController();
   private MediaPlayer mediaPlayer;
-  private Group root = new Group();
+  private final Group root = new Group();
   private Scene scene;
   private CommonBattlePhaseElements commonElements;
   private Group commonElementsNode;
@@ -59,6 +54,9 @@ public class FinalReality extends Application {
     primaryStage.show();
   }
 
+  /**
+   * Handles varying interface elements.
+   */
   private void setupTimer() {
 
     AnimationTimer timer = new AnimationTimer() {

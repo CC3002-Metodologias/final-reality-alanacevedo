@@ -9,7 +9,7 @@ import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
  * Changes the game phase to AttackTargetSelectionPhase
  * Can only be used if the current character has a weapon equipped.
  */
-public class AttackCommand extends AbstractCommand implements ICommand {
+public class AttackCommand extends AbstractCommand {
     public AttackCommand(IPhase phase) {
         super(phase);
 

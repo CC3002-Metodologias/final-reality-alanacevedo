@@ -7,7 +7,7 @@ import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 /**
  * Attacks the corresponding enemy
  */
-public class AttackEnemySlotCommand extends AbstractCommand implements ICommand {
+public class AttackEnemySlotCommand extends AbstractCommand {
     private final int slot;
 
     public AttackEnemySlotCommand(IPhase phase, int slot) {

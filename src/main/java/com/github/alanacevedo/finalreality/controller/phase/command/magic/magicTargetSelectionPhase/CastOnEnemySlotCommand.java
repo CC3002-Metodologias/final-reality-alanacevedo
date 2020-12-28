@@ -9,7 +9,7 @@ import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 /**
  * Casts previously selected spell onto a character.
  */
-public class CastOnEnemySlotCommand extends AbstractCommand implements ICommand {
+public class CastOnEnemySlotCommand extends AbstractCommand  {
     private final int slot;
 
     public CastOnEnemySlotCommand(IPhase phase, int slot) {

@@ -23,7 +23,9 @@ import javafx.scene.text.TextAlignment;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-
+/**
+ * Graphic scene for AttackTargetSelectionPhase
+ */
 public class AttackTargetSelectionPhaseScene extends AbstractPhaseScene {
     private final Group root = new Group();
 

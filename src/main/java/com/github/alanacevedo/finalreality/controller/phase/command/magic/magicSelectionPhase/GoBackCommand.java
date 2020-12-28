@@ -8,7 +8,7 @@ import com.github.alanacevedo.finalreality.controller.phase.command.ICommand;
 /**
  * Returns to the previous phase
  */
-public class GoBackCommand extends AbstractCommand implements ICommand {
+public class GoBackCommand extends AbstractCommand  {
     public GoBackCommand(IPhase phase) {
         super(phase);
     }

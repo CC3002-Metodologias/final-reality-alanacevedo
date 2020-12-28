@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Class that represents the phase in battle in which there are no characters in the turns queue.
  */
-public class WaitingPhase extends AbstractPhase implements IPhase{
+public class WaitingPhase extends AbstractPhase {
 
     public WaitingPhase(@NotNull GameController controller) {
         super(controller);

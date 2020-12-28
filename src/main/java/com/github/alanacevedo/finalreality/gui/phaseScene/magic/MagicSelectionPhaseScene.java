@@ -23,12 +23,13 @@ import javafx.scene.text.TextAlignment;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * Graphic scene for MagicSelectionPhase
+ */
 public class MagicSelectionPhaseScene extends AbstractPhaseScene {
-    private GameController controller;
     private Group root = new Group();
 
     public MagicSelectionPhaseScene(GameController controller) {
-        this.controller = controller;
 
         StackPane backButton = (new CommandButton("Return")).getNode();
         backButton.setLayoutY(540);

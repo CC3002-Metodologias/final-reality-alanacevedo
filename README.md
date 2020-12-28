@@ -6,40 +6,69 @@ Final Reality
 This work is licensed under a 
 [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/)
 
+DISCLAIMER: I DO NOT OWN ANY ARTISTIC ASSET USED IN THIS PROJECT. THIS INCLUDES VISUAL AND AUDITORY ELEMENTS.
+THIS PROJECT WILL NEVER BE SOLD OR MONETIZED IN ANY WAY. 
+
+Sources:
+Character sprites: Fire Emblem Awakening - Nintendo, Intelligent Systems
+Background image: Final Fantasy 6 - Nintendo, Square Enix
+Background music: Etrian Odyssey 3 - Atlus
+
 Context
 -------
 
 This project's goal is to create a (simplified) clone of _Final Fantasy_'s combat, a game developed
 by [_Square Enix_](https://www.square-enix.com)
-Broadly speaking for the combat the player has a group of characters to control and a group of 
-enemies controlled by the computer.
 
 ---
-Entrega 2
+Description
 ----------------
-Para esta entrega el programa presenta funcionalidad parcial, sólamente habiendo batallas que utilizan la cola de turnos
-de forma que genera un intercambio aleatorio de ataques entre personajes de la party y los enemigos.
+Final Reality is a turn-based combat game. You control a party of 3 characters and your goal is to strategically choose actions to
+to defeat the enemies. 
 
-Dentro del modelo se encuentran personajes, que pueden diferenciarse
-a gran escala como personajes de la party del guador (PC) y enemigos
-que no son controlados por el jugador (NPC). Los PC pueden ser una de las
-5 clases Knight, Thief, Engineer, Black Mage, y White Mage, siendo estos últimos
-un tipo de "PC Mago", que tiene un atributo adicional relacionado con la magia que se
-implementará en un futuro. 
+There are 5 character classes: Knight, Thief, Engineer, Black Mage, and White Mage.
 
-Los PC pueden equiparse armas que son representadas como un objeto. Las armas se pueden clasificar como
-arcos, espadas, hachas, bastones, y cuchillos. Dependiendo de la clase del PC, estos pueden equiparse sólo
-ciertos tipos de armas. 
+You have an inventory that consists of 10 slots in which weapons can be stored.
 
-El jugador tiene un grupo de 3 personajes controlables llamado _party_, y maneja un inventario que tiene 20 _slots_
-en los cuales se pueden guardar armas. 
+There a 5 weapon types: Sword, Axe, Bow, Knife, and Staff.
 
-Los enemigos se agrupan en _enemy groups_ o _mobs_, que pueden contener hasta 4 enemigos.
+The following table shows which weapons are equippable by which classes:
 
-Las batallas son gestionadas por el _Game Controller_, que maneja una cola de turnos en la cual los personajes van
-ingresando repetidamente, después de haber esperado un periodo de tiempo proporcional a su peso,luego de haber realizado 
-su turno. Cada personaje se encarga de "contar" cuánto tiempo debe esperar para que sea nuevamente su turno, y se
-comunica con el controlador mediante handlers que implementan el patrón de diseño de observador.
+# | Knight | Thief | Black Mage | White Mage | Engineer 
+--- | --- | --- | --- |--- |--- 
+Sword| Yes | Yes | No | No | No 
+Knife| Yes | Yes | Yes | No | No 
+Axe| Yes | Yes | No | No | No 
+Bow| No | Yes | No | No | Yes 
+Staff| No | No | Yes | Yes | No 
+
+
+---
+Instructions
+--------------
+
+
+Combat instructions:
+
+Your characters and the enemies will take turns to damage each other. When either all enemies or all the characters
+from your party are dead, combat will end. Enemies heath is displayed as green bars above them and you party's
+health will be displayed in the bottom right corner of the window.
+
+At the start of each turn you can choose between Attack, Inventory, and Magic. To choose an action, click on the corresponding
+button. 
+
+-Attack: Click on an enemy to attack it with the equipped weapon.
+Note: You won't be able to click this command if the character doesn't have a weapon equipped.
+All your characters start without a weapon equipped so you will have to equip them with one before being able to attack an enemy.
+
+-Inventory: 3 slots from your inventory will are shown at a time. You can scroll up and down this list by
+clicking the "scroll Up" and "scroll Down" buttons. After clicking a slot, you can choose to either
+equip the weapon in that slot, or swap it with other slot's weapon. If you chose to swap, you'll have to
+click another slot and then "Confirm swap". Click on the return button after managing
+your inventory and equipping a weapon to be able to choose Attack.
+
+-Magic: Not yet implemented.
+
 
 
 

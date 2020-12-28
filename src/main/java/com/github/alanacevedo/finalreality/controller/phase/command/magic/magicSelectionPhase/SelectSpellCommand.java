@@ -10,7 +10,7 @@ import com.github.alanacevedo.finalreality.model.magic.IMagicSpell;
 /**
  * Selects one of the mage's spells.
  */
-public class SelectSpellCommand extends AbstractCommand implements ICommand {
+public class SelectSpellCommand extends AbstractCommand {
     int slot;
     IMagicSpell spell;
 

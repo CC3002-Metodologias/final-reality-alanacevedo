@@ -8,7 +8,7 @@ import com.github.alanacevedo.finalreality.gui.phaseScene.ActionSelectionPhaseSc
 import com.github.alanacevedo.finalreality.gui.phaseScene.WaitingPhaseScene;
 import org.jetbrains.annotations.NotNull;
 
-public class ActionSelectionPhase extends AbstractPhase implements IPhase{
+public class ActionSelectionPhase extends AbstractPhase {
     //Select between Attack, Skill, Inventory
     //Skill solo tiene efecto si es un personaje mago
 
